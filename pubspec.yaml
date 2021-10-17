@@ -40,6 +40,7 @@ dependencies:
   ionicons: ^0.1.2
   sleek_circular_slider: ^2.0.1
   persistent_bottom_nav_bar: ^4.0.2
+  flutter_login: ^3.0.0-beta.2
 
 dev_dependencies:
   flutter_test:
@@ -90,5 +91,20 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
+  fonts:
+    - family: iranSans
+      fonts:
+        - asset: assets/fonts/IRANSans100.ttf
+        - weight: 100
+        - asset: assets/fonts/IRANSans200.ttf
+        - weight: 200
+        - asset: assets/fonts/IRANSans300.ttf
+        - weight: 300
+        - asset: assets/fonts/IRANSans400.ttf
+        - weight: 400
+        - asset: assets/fonts/IRANSans600.ttf
+        - weight: 600
+        - asset: assets/fonts/IRANSans700.ttf
+          weight: 700
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

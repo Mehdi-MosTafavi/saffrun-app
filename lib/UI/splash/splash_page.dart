@@ -2,9 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nb_utils/nb_utils.dart';
+import 'package:saffrun_app/UI/utils/circular_progressbar_component.dart';
 import 'package:saffrun_app/constants/const.dart';
-import 'package:sleek_circular_slider/sleek_circular_slider.dart';
+import 'package:saffrun_app/constants/theme_color.dart';
+import 'package:saffrun_app/logical/general/size_function.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class SplashPageState extends State<SplashPage> {
   }
 
   void navigationToHomePage() {
-    Get.offNamed(HOME_PAGE_PATH);
+    Get.offNamed(AUTH_MENU_PATH);
   }
 
   @override
@@ -34,33 +35,27 @@ class SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: const EdgeInsets.all(10),
-        decoration: boxDecorationDefault(color: Colors.white),
+        height: getHeight(),
+        width: getWidth(),
+        // padding: const EdgeInsets.all(10),
+        decoration: const BoxDecoration(color: colorBackgroundSplash),
         child: Column(
           children: [
             Expanded(
               flex: 2,
-              child: Container(
-                  color: Colors.white,
-                  child: Center(
-                    child: Container(
-                      decoration: const BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage('assets/images/logo.jpg'))),
-                    ),
-                  )),
+              child: Center(
+                child: FractionallySizedBox(
+                  widthFactor: 0.6,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            scale: 0.1,
+                            image: AssetImage('assets/images/logo.png'))),
+                  ),
+                ),
+              ),
             ),
-            SleekCircularSlider(
-                appearance: CircularSliderAppearance(
-              spinnerDuration: 1500,
-              size: 50,
-              customColors: CustomSliderColors(
-                  dynamicGradient: true,
-                  progressBarColors: [Color(0xffEA005E), Color(0xffE81123)],
-                  trackColors: [Color(0xffD13438), Color(0xffCA5010)],
-                  dotColor: Color(0xffEA005E)),
-              spinnerMode: true,
-            )),
+            const CircularProgressBar(),
           ],
         ),
       ),
