@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:saffrun_app/constants/theme_color.dart';
 
 class NavigationBar extends StatelessWidget {
   final PersistentTabController controller;
@@ -68,7 +69,7 @@ class NavigationBar extends StatelessWidget {
           // key: IntroRepository.introHomePage.keys[3] ,
         ),
         // title: ("Home"),
-        activeColorPrimary: const Color(0xffea004e),
+        activeColorPrimary: colorBottomNavigation,
         inactiveColorPrimary: CupertinoColors.inactiveGray,
       ),
       PersistentBottomNavBarItem(
@@ -77,7 +78,7 @@ class NavigationBar extends StatelessWidget {
           // key: IntroRepository.introHomePage.keys[4] ,
         ),
         // title: ("Settings"),
-        activeColorPrimary: const Color(0xffea004e),
+        activeColorPrimary: colorBottomNavigation,
         inactiveColorPrimary: CupertinoColors.inactiveGray,
       ),
       PersistentBottomNavBarItem(
@@ -86,7 +87,7 @@ class NavigationBar extends StatelessWidget {
           // key: IntroRepository.introHomePage.keys[5] ,
         ),
         // title: ("Settings"),
-        activeColorPrimary: const Color(0xffea004e),
+        activeColorPrimary: colorBottomNavigation,
         inactiveColorPrimary: CupertinoColors.inactiveGray,
       ),
       PersistentBottomNavBarItem(
@@ -98,7 +99,7 @@ class NavigationBar extends StatelessWidget {
           // key: IntroRepository.introHomePage.keys[6] ,
         ),
         // title: ("Settings"),
-        activeColorPrimary: const Color(0xffea004e),
+        activeColorPrimary: colorBottomNavigation,
         inactiveColorPrimary: CupertinoColors.inactiveGray,
       ),
       PersistentBottomNavBarItem(
@@ -107,7 +108,7 @@ class NavigationBar extends StatelessWidget {
           // key: IntroRepository.introHomePage.keys[7] ,
         ),
         // title: ("Settings"),
-        activeColorPrimary: const Color(0xffea004e),
+        activeColorPrimary: colorBottomNavigation,
         inactiveColorPrimary: CupertinoColors.inactiveGray,
       ),
     ];

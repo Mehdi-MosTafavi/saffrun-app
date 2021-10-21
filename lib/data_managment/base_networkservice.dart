@@ -1,0 +1,3 @@
+class BaseNetworkService {
+  String urlServer = "";
+}
