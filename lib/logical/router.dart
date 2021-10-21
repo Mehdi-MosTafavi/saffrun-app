@@ -16,7 +16,7 @@ class AppRouter {
       case HOME_PAGE_PATH:
         return MaterialPageRoute(builder: (context) => const MainPage());
       case AUTH_MENU_PATH:
-        return MaterialPageRoute(builder: (context) => const LoginPage());
+        return MaterialPageRoute(builder: (context) => LoginPage());
       default:
         return null;
     }

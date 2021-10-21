@@ -1,12 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:saffrun_app/UI/utils/circular_progressbar_component.dart';
 import 'package:saffrun_app/constants/const.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
-import 'package:saffrun_app/logical/general/size_function.dart';
-
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
 
@@ -21,7 +19,7 @@ class SplashPageState extends State<SplashPage> {
   }
 
   void navigationToHomePage() {
-    Get.offNamed(AUTH_MENU_PATH);
+    Navigator.pushReplacementNamed(context, AUTH_MENU_PATH);
   }
 
   @override
@@ -35,8 +33,8 @@ class SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        height: getHeight(),
-        width: getWidth(),
+        height: context.height(),
+        width: context.width(),
         // padding: const EdgeInsets.all(10),
         decoration: const BoxDecoration(color: colorBackgroundSplash),
         child: Column(
