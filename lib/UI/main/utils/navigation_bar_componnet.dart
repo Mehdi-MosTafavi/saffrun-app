@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:saffrun_app/UI/search/search_page.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 
 class NavigationBar extends StatelessWidget {
@@ -25,13 +26,13 @@ class NavigationBar extends StatelessWidget {
       // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
       decoration: const NavBarDecoration(
           // borderRadius: BorderRadius.circular(10.0),
-          // colorBehindNavBar: Colors.white60
-          // colorBehindNavBar: Colors.transparent
+          colorBehindNavBar: Colors.white60
+          // colorBehindNavBar: Colors.white
           ),
       // padding: NavBarPadding.only(bottom: height*0.08),
       bottomScreenMargin: 0,
 
-      navBarStyle: NavBarStyle.style8,
+      navBarStyle: NavBarStyle.style5,
       hideNavigationBarWhenKeyboardShows: true,
       // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
       popAllScreensOnTapOfSelectedTab: true,
@@ -54,7 +55,7 @@ class NavigationBar extends StatelessWidget {
   _buildScreens() {
     return [
       Container(),
-      Container(),
+      const SearchPage(),
       Container(),
       Container(),
       Container(),
