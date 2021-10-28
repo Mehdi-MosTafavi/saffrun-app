@@ -42,6 +42,10 @@ dependencies:
   sleek_circular_slider: ^2.0.1
   persistent_bottom_nav_bar: ^4.0.2
   flutter_login: ^3.0.0-beta.2
+  carousel_slider: ^4.0.0
+  comment_box: ^0.0.16
+  google_fonts: ^2.0.0
+  cached_network_image: ^3.0.0
 
 dev_dependencies:
   flutter_test:
