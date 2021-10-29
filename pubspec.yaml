@@ -46,6 +46,7 @@ dependencies:
   comment_box: ^0.0.16
   google_fonts: ^2.0.0
   cached_network_image: ^3.0.0
+  persian_datetime_picker: ^2.3.0
 
 dev_dependencies:
   flutter_test:
