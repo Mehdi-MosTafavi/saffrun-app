@@ -19,7 +19,7 @@ class SplashPageState extends State<SplashPage> {
   }
 
   void navigationToHomePage() {
-    Navigator.pushReplacementNamed(context, EVENT_PAGE_PATH);
+    Navigator.pushReplacementNamed(context, HOME_PAGE_PATH);
   }
 
   @override
