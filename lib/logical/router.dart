@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:saffrun_app/UI/authentication/login/login_page.dart';
+import 'package:saffrun_app/UI/eventPage/event_page.dart';
 import 'package:saffrun_app/UI/main/main_page.dart';
 import 'package:saffrun_app/UI/splash/splash_page.dart';
 import 'package:saffrun_app/constants/const.dart';
-import 'package:saffrun_app/UI/eventPage/event_page.dart';
 
 class AppRouter {
   AppRouter();
@@ -19,7 +19,7 @@ class AppRouter {
       case AUTH_MENU_PATH:
         return MaterialPageRoute(builder: (context) => LoginPage());
       case EVENT_PAGE_PATH:
-        return MaterialPageRoute(builder: (context) => const EventPage());
+        return MaterialPageRoute(builder: (context) => EventPage());
       default:
         return null;
     }

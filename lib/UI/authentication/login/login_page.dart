@@ -48,7 +48,7 @@ class LoginBody extends StatelessWidget {
         }
       },
       onRecoverPassword: (userName) {},
-      title: 'Saffrun',
+      title: 'صَفران',
       logo: 'assets/images/logo.png',
       theme: loginTheme,
       userValidator: (value) {

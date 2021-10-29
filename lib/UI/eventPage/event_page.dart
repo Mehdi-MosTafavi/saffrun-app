@@ -36,10 +36,13 @@ class _EventPageState extends State<EventPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.add),
-        backgroundColor: colorPallet5,
+      floatingActionButton: Align(
+        alignment: Alignment(-1, 0.85),
+        child: FloatingActionButton(
+          onPressed: () {},
+          child: Icon(Icons.add),
+          backgroundColor: colorPallet5,
+        ),
       ),
       body: SafeArea(
         child: Container(

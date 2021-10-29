@@ -122,8 +122,10 @@ class _FilterButtonWidgetState extends State<FilterButtonWidget> {
             );
           }
           try {
-            startDate = picked!.start;
-            endDate = picked.end;
+            setState(() {
+              startDate = picked!.start;
+              endDate = picked.end;
+            });
           } catch (e) {
             print(e);
           }

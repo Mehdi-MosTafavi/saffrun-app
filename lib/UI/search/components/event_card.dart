@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:saffrun_app/UI/eventPage/event_page.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/models/event/event_modle.dart';
 
@@ -76,10 +77,16 @@ class EventCardWidget extends StatelessWidget {
                         ],
                       ),
                       SizedBox(height: 16),
-                      Text('جزئیات',
-                          style:
-                              primaryTextStyle(size: 16, color: colorPallet4),
-                          maxLines: 2),
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => EventPage()));
+                        },
+                        child: Text('جزئیات',
+                            style:
+                                primaryTextStyle(size: 16, color: colorPallet4),
+                            maxLines: 2),
+                      ),
                     ],
                   ),
                 ),

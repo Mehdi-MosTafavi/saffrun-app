@@ -21,7 +21,6 @@ class NavigationBar extends StatelessWidget {
       screens: _buildScreens(),
       items: _navBarsItems(),
       stateManagement: true,
-
       resizeToAvoidBottomInset: false,
       // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
       decoration: const NavBarDecoration(
