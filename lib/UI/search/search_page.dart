@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -6,6 +7,7 @@ import 'package:saffrun_app/models/event/event_modle.dart';
 import 'package:saffrun_app/state_managment/search/search_cubit.dart';
 
 import 'components/event_card.dart';
+import 'components/filter_button.dart';
 import 'components/shimmer_component.dart';
 import 'components/text_field_search.dart';
 
@@ -25,54 +27,61 @@ class _SearchPageState extends State<SearchPage> {
         textDirection: TextDirection.rtl,
         child: Scaffold(
           resizeToAvoidBottomInset: false,
-          body: Container(
-            decoration: BoxDecoration(gradient: linearBackgroundGradiant),
-            child: BlocBuilder<SearchCubit, SearchState>(
-              builder: (context, state) {
-                return Stack(
-                  children: [
-                    Align(
-                      alignment: Alignment.topCenter,
-                      child: SizedBox(
+          body: InkWell(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+            },
+            child: Container(
+              decoration: BoxDecoration(gradient: linearBackgroundGradiant),
+              child: BlocBuilder<SearchCubit, SearchState>(
+                builder: (context, state) {
+                  return Stack(
+                    children: [
+                      SizedBox(
                         height: 100,
-                        child: TextFieldSearchWidget(
-                          onChanged: (value) {
-                            if (value.length < 3) {
-                              return;
-                            }
-                            if (state is SearchLoadedState) {
-                              if (value == state.textSearched) {
+                        child: Align(
+                          alignment: const Alignment(0, 3),
+                          child: TextFieldSearchWidget(
+                            onChanged: (value) {
+                              if (value.length < 3) {
                                 return;
                               }
-                            }
-                            BlocProvider.of<SearchCubit>(context)
-                                .loadEventHandler(value);
-                          },
+                              if (state is SearchLoadedState) {
+                                if (value == state.textSearched) {
+                                  return;
+                                }
+                              }
+                              BlocProvider.of<SearchCubit>(context)
+                                  .loadEventHandler(value);
+                            },
+                          ),
                         ),
                       ),
-                    ),
-                    Expanded(
-                      child: DraggableScrollableSheet(
-                          expand: true,
-                          minChildSize: 0.8,
-                          initialChildSize: 0.85,
-                          builder: (context, listScrollController) {
-                            return Container(
-                                decoration: boxDecorationWithRoundedCorners(
-                                    backgroundColor: Colors.white,
-                                    borderRadius: const BorderRadius.only(
-                                        topRight: Radius.circular(40),
-                                        topLeft: Radius.circular(40))),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: BodySearchWidget(
-                                      controller: listScrollController),
-                                ));
-                          }),
-                    )
-                  ],
-                );
-              },
+                      SizedBox(
+                        height: context.height(),
+                        width: context.width(),
+                        child: DraggableScrollableSheet(
+                            expand: true,
+                            minChildSize: 0.8,
+                            initialChildSize: 0.82,
+                            builder: (context, listScrollController) {
+                              return Container(
+                                  decoration: boxDecorationWithRoundedCorners(
+                                      backgroundColor: Colors.white,
+                                      borderRadius: const BorderRadius.only(
+                                          topRight: Radius.circular(40),
+                                          topLeft: Radius.circular(40))),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: BodySearchWidget(
+                                        controller: listScrollController),
+                                  ));
+                            }),
+                      )
+                    ],
+                  );
+                },
+              ),
             ),
           ),
         ),
@@ -119,9 +128,12 @@ class ListViewForCardSearch extends StatelessWidget {
         if (state is SearchLoadedState) {
           return ListView.builder(
             controller: controller,
-            itemCount: state.events.length,
-            itemBuilder: (context, index) {
-              print(index);
+            itemCount: state.events.length + 1,
+            itemBuilder: (context, i) {
+              if (i == 0) {
+                return const FilterButtonWidget();
+              }
+              int index = i - 1;
               Event event = state.events[index];
               return EventCardWidget(event: event);
             },
