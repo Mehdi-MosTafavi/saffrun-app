@@ -68,6 +68,8 @@ class EventCardWidget extends StatelessWidget {
                                     ],
                                   ),
                                   Text(event.description,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                       style: primaryTextStyle(
                                           size: 16, color: Colors.blueGrey)),
                                 ],
