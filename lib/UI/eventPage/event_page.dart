@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
+import 'package:saffrun_app/UI/eventPage/components/add_button.dart';
 
 class EventPage extends StatefulWidget {
   const EventPage({Key? key}) : super(key: key);
@@ -37,10 +38,12 @@ class _EventPageState extends State<EventPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: Align(
-        alignment: Alignment(-1, 0.85),
+        alignment: const Alignment(-1, 0.85),
         child: FloatingActionButton(
-          onPressed: () {},
-          child: Icon(Icons.add),
+          onPressed: () {
+            showDialogForParticipantEvent(context);
+          },
+          child: const Icon(Icons.add),
           backgroundColor: colorPallet5,
         ),
       ),
