@@ -28,6 +28,7 @@ class _FilterButtonWidgetState extends State<FilterButtonWidget> {
       builder: (context, state) {
         return InkWell(
           onTap: () {
+            FocusScope.of(context).unfocus();
             showDialog(
                 context: context,
                 // useSafeArea: false,
@@ -39,7 +40,7 @@ class _FilterButtonWidgetState extends State<FilterButtonWidget> {
                       backgroundColor: Colors.white,
                       shape: const RoundedRectangleBorder(
                           borderRadius:
-                              BorderRadius.all(Radius.circular(10.0))),
+                          BorderRadius.all(Radius.circular(10.0))),
                       // contentPadding: const EdgeInsets.all(0.0),
                       content: Container(
                         height: context.height() * 0.43,
@@ -63,37 +64,15 @@ class _FilterButtonWidgetState extends State<FilterButtonWidget> {
                                   CustomPaint(painter: DashedLinePainter()),
                                   filterOwner(context, setState),
                                   CustomPaint(painter: DashedLinePainter()),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        child: Align(
-                                          alignment: Alignment.center,
-                                          child: Text(
-                                            'انتخاب دسته بندی',
-                                            textDirection: TextDirection.rtl,
-                                            style: boldTextStyle(
-                                                color: colorPallet4),
-                                          ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: EnhancedDropDown.withEndpoint(
-                                            dropdownLabelTitle: "",
-                                            defaultOptionText: "Choose",
-                                            urlToFetchData: Uri.https(
-                                                "run.mocky.io",
-                                                "/v3/babc0845-8163-4f1e-80df-9bcabd3d4c43"),
-                                            valueReturned: (chosen) {
-                                              category = chosen;
-                                              print(chosen);
-                                            }),
-                                      ),
-                                    ],
-                                  ),
+                                  EnhancedDropDown.withEndpoint(
+                                      dropdownLabelTitle: "",
+                                      defaultOptionText: "Choose",
+                                      urlToFetchData: Uri.https("run.mocky.io",
+                                          "/v3/babc0845-8163-4f1e-80df-9bcabd3d4c43"),
+                                      valueReturned: (chosen) {
+                                        category = chosen;
+                                        print(chosen);
+                                      }),
                                   CustomPaint(painter: DashedLinePainter()),
                                   filterSortField(context, setState),
                                   MaterialButton(
@@ -105,8 +84,8 @@ class _FilterButtonWidgetState extends State<FilterButtonWidget> {
                                       height: 50,
                                       width: 100,
                                       decoration:
-                                          boxDecorationWithRoundedCorners(
-                                              backgroundColor: colorPallet3),
+                                      boxDecorationWithRoundedCorners(
+                                          backgroundColor: colorPallet3),
                                       child: Center(
                                         child: Text(
                                           'تایید',
@@ -145,84 +124,88 @@ class _FilterButtonWidgetState extends State<FilterButtonWidget> {
   }
 
   Widget filterTime(BuildContext context, StateSetter setState) {
-    return FittedBox(
-      fit: BoxFit.scaleDown,
-      child: TextButton(
-        onPressed: () async {
-          JalaliRange? picked;
-          try {
-            picked = await showPersianDateRangePicker(
-              context: context,
-              initialEntryMode: PDatePickerEntryMode.input,
-              helpText: 'دیتا',
-              initialDateRange: JalaliRange(start: startDate, end: endDate),
-              firstDate: Jalali(1385, 8),
-              lastDate: Jalali(1450, 9),
-            );
-          } catch (e) {
-            picked = await showPersianDateRangePicker(
-              context: context,
-              initialEntryMode: PDatePickerEntryMode.input,
-              firstDate: Jalali(1385, 8),
-              lastDate: Jalali(1450, 9),
-            );
-          }
-          try {
-            setState(() {
-              startDate = picked!.start;
-              endDate = picked.end;
-            });
-          } catch (e) {
-            print(e);
-          }
-        },
-        style: const ButtonStyle(
-          alignment: Alignment.centerRight,
-        ),
-        child: Directionality(
-          textDirection: TextDirection.rtl,
-          child: Row(
-            children: [
-              Text(
-                'فیلتر زمانی',
-                textDirection: TextDirection.rtl,
-                style: boldTextStyle(color: colorPallet3),
-              ),
-              5.width,
-              startDate != Jalali(1, 1, 1) && endDate != Jalali(1, 1, 1)
-                  ? FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            startDate.formatter.yyyy +
-                                '/' +
-                                startDate.formatter.mm +
-                                '/' +
-                                startDate.formatter.dd +
-                                ' - ' +
-                                endDate.formatter.yyyy +
-                                '/' +
-                                endDate.formatter.mm +
-                                '/' +
-                                endDate.formatter.dd,
-                            textDirection: TextDirection.rtl,
-                          ),
-                          10.width,
-                          InkWell(
-                              onTap: () {
-                                setState(() {
-                                  startDate = Jalali(1, 1, 1);
-                                  endDate = Jalali(1, 1, 1);
-                                });
-                              },
-                              child: const Icon(Icons.cancel_sharp))
-                        ],
-                      ),
-                    )
-                  : Container()
-            ],
+    return Align(
+      alignment: Alignment.centerRight,
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: TextButton(
+          onPressed: () async {
+            JalaliRange? picked;
+            try {
+              picked = await showPersianDateRangePicker(
+                context: context,
+                initialEntryMode: PDatePickerEntryMode.input,
+                helpText: 'دیتا',
+                initialDateRange: JalaliRange(start: startDate, end: endDate),
+                firstDate: Jalali(1385, 8),
+                lastDate: Jalali(1450, 9),
+              );
+            } catch (e) {
+              picked = await showPersianDateRangePicker(
+                context: context,
+                initialEntryMode: PDatePickerEntryMode.input,
+                firstDate: Jalali(1385, 8),
+                lastDate: Jalali(1450, 9),
+              );
+            }
+            try {
+              setState(() {
+                startDate = picked!.start;
+                endDate = picked.end;
+              });
+            } catch (e) {
+              print(e);
+            }
+          },
+          style: const ButtonStyle(
+            alignment: Alignment.centerRight,
+          ),
+          child: Directionality(
+            textDirection: TextDirection.rtl,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  'فیلتر زمانی',
+                  textDirection: TextDirection.rtl,
+                  style: boldTextStyle(color: colorPallet3),
+                ),
+                5.width,
+                startDate != Jalali(1, 1, 1) && endDate != Jalali(1, 1, 1)
+                    ? FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              startDate.formatter.yyyy +
+                                  '/' +
+                                  startDate.formatter.mm +
+                                  '/' +
+                                  startDate.formatter.dd +
+                                  ' - ' +
+                                  endDate.formatter.yyyy +
+                                  '/' +
+                                  endDate.formatter.mm +
+                                  '/' +
+                                  endDate.formatter.dd,
+                              textDirection: TextDirection.rtl,
+                            ),
+                            10.width,
+                            InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    startDate = Jalali(1, 1, 1);
+                                    endDate = Jalali(1, 1, 1);
+                                  });
+                                },
+                                child: const Icon(Icons.cancel_sharp))
+                          ],
+                        ),
+                      )
+                    : Container()
+              ],
+            ),
           ),
         ),
       ),
@@ -230,19 +213,22 @@ class _FilterButtonWidgetState extends State<FilterButtonWidget> {
   }
 
   Widget filterOwner(BuildContext context, StateSetter setState) {
-    return FittedBox(
-      fit: BoxFit.scaleDown,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          TextButton(
-              onPressed: () {},
-              child: Text(
-                'انتخاب کارفرما',
-                textDirection: TextDirection.rtl,
-                style: boldTextStyle(color: colorPallet4),
-              ))
-        ],
+    return Align(
+      alignment: Alignment.centerRight,
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            TextButton(
+                onPressed: () {},
+                child: Text(
+                  'انتخاب کارفرما',
+                  textDirection: TextDirection.rtl,
+                  style: boldTextStyle(color: colorPallet4),
+                ))
+          ],
+        ),
       ),
     );
   }

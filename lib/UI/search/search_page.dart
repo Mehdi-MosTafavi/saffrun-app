@@ -19,6 +19,8 @@ class SearchPage extends StatefulWidget {
   _SearchPageState createState() => _SearchPageState();
 }
 
+final GlobalKey<ScaffoldState> scaffoldKeySearchPage = GlobalKey();
+
 class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class _SearchPageState extends State<SearchPage> {
       child: Directionality(
         textDirection: TextDirection.rtl,
         child: Scaffold(
+          key: scaffoldKeySearchPage,
           resizeToAvoidBottomInset: false,
           body: InkWell(
             onTap: () {
@@ -55,9 +58,9 @@ class _SearchPageState extends State<SearchPage> {
                               if (state is SearchLoadedState) {
                                 BlocProvider.of<SearchCubit>(context)
                                     .loadEventHandler(value,
-                                        startDate: state.startDate,
-                                        endDate: state.endDate,
-                                        sort: state.sort);
+                                    startDate: state.startDate,
+                                    endDate: state.endDate,
+                                    sort: state.sort);
                               } else {
                                 BlocProvider.of<SearchCubit>(context)
                                     .loadEventHandler(value);
