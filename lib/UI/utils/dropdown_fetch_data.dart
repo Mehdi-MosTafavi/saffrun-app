@@ -3,6 +3,7 @@ import 'dart:convert' as convert;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:nb_utils/nb_utils.dart';
+import 'package:saffrun_app/constants/theme_color.dart';
 
 class EnhancedDropDown extends StatefulWidget {
   final ValueChanged<String> valueReturned;
@@ -41,12 +42,15 @@ class EnhancedDropDown extends StatefulWidget {
 
 class _EnhancedDropDownState extends State<EnhancedDropDown> {
   List<DropdownMenuItem<String>> _data = [];
-  String _selected = "انتخاب کنید...";
+  String _selected = "";
+  List<String> data = [];
+  late bool openList;
 
   @override
   void initState() {
     super.initState();
     _loadDataForDropdown();
+    openList = false;
   }
 
   /// Responsible for loading the data that the dropdown uses
@@ -64,6 +68,7 @@ class _EnhancedDropDownState extends State<EnhancedDropDown> {
       if (response.statusCode == 200) {
         Map<String, dynamic> jsonResponse = convert.jsonDecode(response.body);
         jsonResponse.forEach((key, value) {
+          data.add(value);
           menuItems.add(new DropdownMenuItem(
             child: new Text(value.toString()),
             value: value.toString(),
@@ -96,25 +101,126 @@ class _EnhancedDropDownState extends State<EnhancedDropDown> {
               fit: BoxFit.scaleDown, child: CircularProgressIndicator())
           .paddingAll(8);
     } else {
-      return Container(
-          // height: 100,
-          child: Column(
+      return Column(
         // crossAxisAlignment:CrossAxisAlignment.start ,
-        mainAxisSize: MainAxisSize.max,
+        //   mainAxisSize: MainAxisSize.max,
         children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          openList = !openList;
+                        });
+                      },
+                      child: Icon(
+                        !openList
+                            ? Icons.add_box_rounded
+                            : Icons.remove_rounded,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      _selected == "" ? 'انتخاب دسته بندی' : _selected,
+                      textDirection: TextDirection.rtl,
+                      style: boldTextStyle(color: colorPallet4),
+                    ),
+                  ),
+                ],
+              ),
+              _selected != ""
+                  ? Center(
+                      child: InkWell(
+                        onTap: () {
+                          setState(() {
+                            _selected = "";
+                          });
+                        },
+                        child: Icon(
+                          Icons.cancel_outlined,
+                          color: colorPallet1,
+                          size: 20,
+                        ),
+                      ),
+                    )
+                  : Container()
+              // _selected != ""
+              //     ? Row(
+              //         children: [
+              //
+              //           5.width,
+              //           Align(
+              //             alignment: Alignment.center,
+              //             child: Text(
+              //               _selected,
+              //               textDirection: TextDirection.rtl,
+              //               style: boldTextStyle(color: colorPallet4),
+              //             ),
+              //           ),
+              //         ],
+              //       )
+              //     : Container(),
+            ],
+          ).paddingSymmetric(vertical: 12),
+          openList
+              ? Container(
+                  height: 100,
+                  child: ListView.builder(
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          setState(() {
+                            _selected = data[index];
+                          });
+                        },
+                        child: Text(
+                          data[index],
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      );
+                    },
+                    itemCount: data.length,
+                  ))
+              : Container()
           // new Text(widget.dropdownLabelTitle,
           //     textDirection: TextDirection.ltr),
-          DropdownButton(
-              value: _selected,
-              items: _data,
-              hint: new Text(widget.defaultOptionText),
-              onChanged: (value) {
-                _selected = value as String;
-                widget.valueReturned(_selected);
-                setState(() {});
-              })
+          // DropdownSearch<String>(
+          // mode: Mode.BOTTOM_SHEET,
+          //     showSelectedItems: true,
+          //     items: data,
+          //     showAsSuffixIcons: true,
+          //     // popupItemDisabled: (String s) => s.startsWith('I'),
+          //   dropdownSearchDecoration: InputDecoration(
+          //     contentPadding: EdgeInsets.all(3),
+          //     border: OutlineInputBorder(
+          //       borderRadius: BorderRadius.circular(10)
+          //     ),
+          //
+          //   ),
+          //
+          //     onChanged: (value) {
+          //       _selected = value as String;
+          //       widget.valueReturned(_selected);
+          //       setState(() {});
+          //     },).paddingAll(10),// DropdownButton(
+          //     value: _selected,
+          //     items: _data,
+          //     hint: new Text(widget.defaultOptionText),
+          //     onChanged: (value) {
+          //       _selected = value as String;
+          //       widget.valueReturned(_selected);
+          //       setState(() {});
+          //     })
         ],
-          ));
+      );
     }
   }
 }
