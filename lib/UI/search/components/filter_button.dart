@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
+import 'package:saffrun_app/UI/utils/dropdown_fetch_data.dart';
 import 'package:saffrun_app/UI/utils/painter/dash.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/state_managment/search/search_cubit.dart';
@@ -40,7 +41,7 @@ class _FilterButtonWidgetState extends State<FilterButtonWidget> {
                               BorderRadius.all(Radius.circular(10.0))),
                       // contentPadding: const EdgeInsets.all(0.0),
                       content: Container(
-                        height: context.height() * 0.35,
+                        height: context.height() * 0.4,
                         width: context.width() * 0.8,
                         child: Column(
                           children: [
@@ -60,6 +61,23 @@ class _FilterButtonWidgetState extends State<FilterButtonWidget> {
                                   filterTime(context, setState),
                                   CustomPaint(painter: DashedLinePainter()),
                                   filterOwner(context, setState),
+                                  CustomPaint(painter: DashedLinePainter()),
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text(
+                                      'انتخاب دسته بندی',
+                                      textDirection: TextDirection.rtl,
+                                      style: boldTextStyle(color: colorPallet4),
+                                    ),
+                                  ),
+                                  EnhancedDropDown.withEndpoint(
+                                      dropdownLabelTitle: "",
+                                      defaultOptionText: "Choose",
+                                      urlToFetchData: Uri.https("run.mocky.io",
+                                          "/v3/babc0845-8163-4f1e-80df-9bcabd3d4c43"),
+                                      valueReturned: (chosen) {
+                                        print(chosen);
+                                      }),
                                   CustomPaint(painter: DashedLinePainter()),
                                   filterSortField(context, setState),
                                   MaterialButton(
