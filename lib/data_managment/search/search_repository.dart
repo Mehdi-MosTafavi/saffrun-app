@@ -8,12 +8,17 @@ class SearchRepository {
     searchNetworkService = SearchNetworkService();
   }
 
-  Future<List<Event>> loadEventFromRepository(String value, int page) async {
+  Future<List<Event>> loadEventFromRepository(
+      Map<String, String> searchAndFilterProperty, int page) async {
     try {
-      await searchNetworkService.searchEventFromServer(value, page);
-      await Future.delayed(const Duration(seconds: 2));
-      return Event.events;
+      Map<String, dynamic> response = await searchNetworkService
+          .searchEventFromServer(searchAndFilterProperty, page);
+      if (response == null) {
+        return [];
+      }
+      return Event.fromJson(response['events']);
     } catch (e) {
+      print(e);
       rethrow;
     }
   }

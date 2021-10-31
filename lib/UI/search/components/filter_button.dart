@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
+import 'package:saffrun_app/UI/utils/dropdown_fetch_data.dart';
 import 'package:saffrun_app/UI/utils/painter/dash.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
+import 'package:saffrun_app/state_managment/search/search_cubit.dart';
 
 late Jalali startDate = Jalali(1, 1, 1);
 late Jalali endDate = Jalali(1, 1, 1);
 late String sortField = "";
+late String category;
 
 class FilterButtonWidget extends StatefulWidget {
-  const FilterButtonWidget({
-    Key? key,
-  }) : super(key: key);
+  Function confirmFilter;
+
+  FilterButtonWidget({Key? key, required this.confirmFilter}) : super(key: key);
 
   @override
   State<FilterButtonWidget> createState() => _FilterButtonWidgetState();
@@ -20,81 +24,123 @@ class FilterButtonWidget extends StatefulWidget {
 class _FilterButtonWidgetState extends State<FilterButtonWidget> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        showDialog(
-            context: context,
-            // useSafeArea: false,
-            // useRootNavigator: false,
-            barrierDismissible: false,
-            builder: (context) {
-              return StatefulBuilder(builder: (context, setState) {
-                return AlertDialog(
-                  backgroundColor: Colors.white,
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                  // contentPadding: const EdgeInsets.all(0.0),
-                  content: Container(
-                    height: context.height() * 0.35,
-                    width: context.width() * 0.8,
-                    child: Column(
-                      children: [
-                        Text(
-                          'فیلتر کردن رویداد',
-                          style: boldTextStyle(),
-                          textDirection: TextDirection.rtl,
-                        ),
-                        const Divider(
-                          height: 10,
-                          thickness: 2,
-                          color: Colors.black,
-                        ),
-                        Expanded(
-                          child: ListView(
-                            children: [
-                              filterTime(context, setState),
-                              CustomPaint(painter: DashedLinePainter()),
-                              filterOwner(context, setState),
-                              CustomPaint(painter: DashedLinePainter()),
-                              filterSortField(context, setState),
-                              MaterialButton(
-                                onPressed: () {},
-                                child: Container(
-                                  height: 50,
-                                  width: 100,
-                                  decoration: boxDecorationWithRoundedCorners(
-                                      backgroundColor: colorPallet3),
-                                  child: Center(
-                                    child: Text(
-                                      'تایید',
-                                      style: boldTextStyle(color: Colors.white),
-                                    ),
+    return BlocBuilder<SearchCubit, SearchState>(
+      builder: (context, state) {
+        return InkWell(
+          onTap: () {
+            showDialog(
+                context: context,
+                // useSafeArea: false,
+                // useRootNavigator: false,
+                barrierDismissible: false,
+                builder: (context) {
+                  return StatefulBuilder(builder: (context, setState) {
+                    return AlertDialog(
+                      backgroundColor: Colors.white,
+                      shape: const RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(10.0))),
+                      // contentPadding: const EdgeInsets.all(0.0),
+                      content: Container(
+                        height: context.height() * 0.43,
+                        width: context.width() * 0.8,
+                        child: Column(
+                          children: [
+                            Text(
+                              'فیلتر کردن رویداد',
+                              style: boldTextStyle(),
+                              textDirection: TextDirection.rtl,
+                            ),
+                            const Divider(
+                              height: 10,
+                              thickness: 2,
+                              color: Colors.black,
+                            ),
+                            Expanded(
+                              child: ListView(
+                                children: [
+                                  filterTime(context, setState),
+                                  CustomPaint(painter: DashedLinePainter()),
+                                  filterOwner(context, setState),
+                                  CustomPaint(painter: DashedLinePainter()),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Expanded(
+                                        flex: 1,
+                                        child: Align(
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            'انتخاب دسته بندی',
+                                            textDirection: TextDirection.rtl,
+                                            style: boldTextStyle(
+                                                color: colorPallet4),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 1,
+                                        child: EnhancedDropDown.withEndpoint(
+                                            dropdownLabelTitle: "",
+                                            defaultOptionText: "Choose",
+                                            urlToFetchData: Uri.https(
+                                                "run.mocky.io",
+                                                "/v3/babc0845-8163-4f1e-80df-9bcabd3d4c43"),
+                                            valueReturned: (chosen) {
+                                              category = chosen;
+                                              print(chosen);
+                                            }),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              )
-                            ],
-                          ),
+                                  CustomPaint(painter: DashedLinePainter()),
+                                  filterSortField(context, setState),
+                                  MaterialButton(
+                                    onPressed: () {
+                                      widget.confirmFilter();
+                                      finish(context);
+                                    },
+                                    child: Container(
+                                      height: 50,
+                                      width: 100,
+                                      decoration:
+                                          boxDecorationWithRoundedCorners(
+                                              backgroundColor: colorPallet3),
+                                      child: Center(
+                                        child: Text(
+                                          'تایید',
+                                          style: boldTextStyle(
+                                              color: Colors.white),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-                );
-              });
-            });
-      },
-      child: Align(
-        alignment: Alignment.centerRight,
-        child: Row(
-          children: [
-            const Icon(
-              Icons.filter_alt_rounded,
-              color: Colors.black,
+                      ),
+                    );
+                  });
+                });
+          },
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: Row(
+              children: [
+                const Icon(
+                  Icons.filter_alt_rounded,
+                  color: Colors.black,
+                ),
+                5.width,
+                const Text('فیلتر')
+              ],
             ),
-            5.width,
-            const Text('فیلتر')
-          ],
-        ),
-      ).paddingSymmetric(vertical: 10, horizontal: 15),
+          ).paddingSymmetric(vertical: 10, horizontal: 15),
+        );
+      },
     );
   }
 
@@ -139,6 +185,7 @@ class _FilterButtonWidgetState extends State<FilterButtonWidget> {
             children: [
               Text(
                 'فیلتر زمانی',
+                textDirection: TextDirection.rtl,
                 style: boldTextStyle(color: colorPallet3),
               ),
               5.width,
@@ -238,7 +285,7 @@ class _FilterButtonWidgetState extends State<FilterButtonWidget> {
                   unselectedWidgetColor: colorPallet5,
                 ),
                 child: Radio(
-                  value: 'discount',
+                  value: 'start_datetime',
                   fillColor: MaterialStateProperty.all(colorPallet2),
                   groupValue: sortField,
                   onChanged: (dynamic value) {
@@ -253,7 +300,7 @@ class _FilterButtonWidgetState extends State<FilterButtonWidget> {
                 data: Theme.of(context)
                     .copyWith(unselectedWidgetColor: colorPallet5),
                 child: Radio(
-                  value: 'time',
+                  value: 'start_datetime',
                   groupValue: sortField,
                   fillColor: MaterialStateProperty.all(colorPallet2),
                   onChanged: (dynamic value) {

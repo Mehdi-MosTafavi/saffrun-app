@@ -7,17 +7,18 @@ class AuthRepository {
     authNetworkService = AuthNetworkService();
   }
 
-  loginHandlerToRepository(String username, String password) {
+  loginHandlerToRepository(String username, String password) async {
     try {
-      authNetworkService.sendLoginDataToServer(username, password);
+      return await authNetworkService.sendLoginDataToServer(username, password);
     } catch (error) {
       rethrow;
     }
   }
 
-  signUpHandlerToRepository(String username, String password) {
+  signUpHandlerToRepository(String username, String password) async {
     try {
-      authNetworkService.sendSignUpDataToServer(username, password);
+      return await authNetworkService.sendSignUpDataToServer(
+          username, password);
     } catch (error) {
       rethrow;
     }

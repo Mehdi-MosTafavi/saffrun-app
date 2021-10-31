@@ -9,7 +9,6 @@ class SplashCubit extends Cubit<SplashState> {
 
   SplashCubit() : super(SplashInitial()) {
     splashRepository = SplashRepository();
-    emit(SplashInitial());
   }
 
   Future<void> handlerSplashNavigation() async {

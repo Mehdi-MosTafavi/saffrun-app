@@ -1,5 +1,18 @@
 import 'package:saffrun_app/data_managment/base_networkservice.dart';
 
 class SearchNetworkService extends BaseNetworkService {
-  Future<void> searchEventFromServer(String value, int page) async {}
+  Future<dynamic> searchEventFromServer(
+      Map<String, String> body, int page) async {
+    try {
+      print(body);
+      dynamic? jsonResponse = await getTemplate('/event/get-all/', body);
+      if (jsonResponse == null) {
+        return null;
+      }
+      print(jsonResponse);
+      return jsonResponse;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

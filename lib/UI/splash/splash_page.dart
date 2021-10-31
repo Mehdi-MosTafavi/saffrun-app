@@ -22,10 +22,13 @@ class SplashPageState extends State<SplashPage> {
     Navigator.pushReplacementNamed(context, AUTH_MENU_PATH);
   }
 
+  late bool startApp;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    startApp = true;
   }
 
   @override
@@ -35,7 +38,6 @@ class SplashPageState extends State<SplashPage> {
       child: Scaffold(
           body: BlocListener<SplashCubit, SplashState>(
         listener: (context, state) {
-          print(state);
 
           if (state is SplashGoToLoginPage) {
             navigationToAuthPage();
@@ -46,7 +48,8 @@ class SplashPageState extends State<SplashPage> {
         },
         child: BlocBuilder<SplashCubit, SplashState>(
           builder: (context, state) {
-            if (state is SplashInitial) {
+            if (state is SplashInitial && startApp) {
+              startApp = false;
               BlocProvider.of<SplashCubit>(context).handlerSplashNavigation();
             }
             return Container(

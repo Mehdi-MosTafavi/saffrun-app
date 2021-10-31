@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/models/event/event_modle.dart';
 import 'package:saffrun_app/state_managment/search/search_cubit.dart';
@@ -51,8 +52,16 @@ class _SearchPageState extends State<SearchPage> {
                                   return;
                                 }
                               }
-                              BlocProvider.of<SearchCubit>(context)
-                                  .loadEventHandler(value);
+                              if (state is SearchLoadedState) {
+                                BlocProvider.of<SearchCubit>(context)
+                                    .loadEventHandler(value,
+                                        startDate: state.startDate,
+                                        endDate: state.endDate,
+                                        sort: state.sort);
+                              } else {
+                                BlocProvider.of<SearchCubit>(context)
+                                    .loadEventHandler(value);
+                              }
                             },
                           ),
                         ),
@@ -119,19 +128,35 @@ class ListViewForCardSearch extends StatelessWidget {
   ScrollController controller;
 
   ListViewForCardSearch({Key? key, required this.controller}) : super(key: key);
+  late BuildContext contextBloc;
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return BlocBuilder<SearchCubit, SearchState>(
       builder: (context, state) {
+        contextBloc = context;
         if (state is SearchLoadedState) {
           return ListView.builder(
             controller: controller,
             itemCount: state.events.length + 1,
             itemBuilder: (context, i) {
               if (i == 0) {
-                return const FilterButtonWidget();
+                return FilterButtonWidget(
+                  confirmFilter: () async {
+                    if (state is SearchLoadedState) {
+                      BlocProvider.of<SearchCubit>(contextBloc)
+                          .loadEventHandler(state.textSearched,
+                              startDate: startDate == Jalali(1, 1, 1, 0, 0, 0)
+                                  ? null
+                                  : startDate,
+                              endDate: endDate == Jalali(1, 1, 1, 0, 0, 0)
+                                  ? null
+                                  : endDate,
+                              sort: sortField);
+                    }
+                  },
+                );
               }
               int index = i - 1;
               Event event = state.events[index];

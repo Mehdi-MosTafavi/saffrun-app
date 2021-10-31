@@ -38,6 +38,8 @@ class LoginBody extends StatelessWidget {
             .loginHandler(LoginData.name, LoginData.password);
         if (status) {
           Navigator.pushReplacementNamed(context, HOME_PAGE_PATH);
+        } else {
+          return 'نام کاربری یا رمز عبور اشتباه است';
         }
       },
       onSignup: (LoginData) async {
@@ -45,6 +47,8 @@ class LoginBody extends StatelessWidget {
             .signUpHandler(LoginData.name ?? "", LoginData.password ?? "");
         if (status) {
           Navigator.pushReplacementNamed(context, HOME_PAGE_PATH);
+        } else {
+          return 'ثبت نام با مشکل مواجه شده است';
         }
       },
       onRecoverPassword: (userName) {},
@@ -61,6 +65,7 @@ class LoginBody extends StatelessWidget {
           return "رمزعبور را وارد نمایید";
         }
       },
+      disableCustomPageTransformer: true,
       loginAfterSignUp: true,
       messages: LoginMessages(
         userHint: 'نام کاریری',

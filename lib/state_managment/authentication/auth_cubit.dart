@@ -14,9 +14,15 @@ class AuthCubit extends Cubit<AuthState> {
   Future<bool> loginHandler(String username, String password) async {
     emit(AuthSendingToServerState());
     try {
-      await authRepository.loginHandlerToRepository(username, password);
-      emit(AuthGotoHomeState());
-      return true;
+      bool status =
+          await authRepository.loginHandlerToRepository(username, password);
+      print(status);
+      if (status) {
+        emit(AuthGotoHomeState());
+      } else {
+        emit(AuthErrorSendToServerState());
+      }
+      return status;
     } catch (error) {
       emit(AuthErrorSendToServerState());
       return false;
@@ -26,9 +32,14 @@ class AuthCubit extends Cubit<AuthState> {
   Future<bool> signUpHandler(String username, String password) async {
     emit(AuthSendingToServerState());
     try {
-      await authRepository.signUpHandlerToRepository(username, password);
-      emit(AuthGoToPrivacyState());
-      return true;
+      bool status =
+          await authRepository.signUpHandlerToRepository(username, password);
+      if (status) {
+        emit(AuthGoToPrivacyState());
+      } else {
+        emit(AuthErrorSendToServerState());
+      }
+      return status;
     } catch (error) {
       emit(AuthErrorSendToServerState());
       return false;
