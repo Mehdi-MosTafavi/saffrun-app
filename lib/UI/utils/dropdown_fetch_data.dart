@@ -2,6 +2,7 @@ import 'dart:convert' as convert;
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:nb_utils/nb_utils.dart';
 
 class EnhancedDropDown extends StatefulWidget {
   final ValueChanged<String> valueReturned;
@@ -40,7 +41,7 @@ class EnhancedDropDown extends StatefulWidget {
 
 class _EnhancedDropDownState extends State<EnhancedDropDown> {
   List<DropdownMenuItem<String>> _data = [];
-  String _selected = "Chosen Value";
+  String _selected = "انتخاب کنید...";
 
   @override
   void initState() {
@@ -91,24 +92,28 @@ class _EnhancedDropDownState extends State<EnhancedDropDown> {
   @override
   Widget build(BuildContext context) {
     if (_data.length == 0) {
-      return new Container();
+      return const FittedBox(
+              fit: BoxFit.scaleDown, child: CircularProgressIndicator())
+          .paddingAll(8);
     } else {
-      return new Container(
-          height: 100,
-          child: new Column(
-            children: <Widget>[
-              new Text(widget.dropdownLabelTitle,
-                  textDirection: TextDirection.ltr),
-              DropdownButton(
-                  value: _selected,
-                  items: _data,
-                  hint: new Text(widget.defaultOptionText),
-                  onChanged: (value) {
-                    _selected = value as String;
-                    widget.valueReturned(_selected);
-                    setState(() {});
-                  })
-            ],
+      return Container(
+          // height: 100,
+          child: Column(
+        // crossAxisAlignment:CrossAxisAlignment.start ,
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          // new Text(widget.dropdownLabelTitle,
+          //     textDirection: TextDirection.ltr),
+          DropdownButton(
+              value: _selected,
+              items: _data,
+              hint: new Text(widget.defaultOptionText),
+              onChanged: (value) {
+                _selected = value as String;
+                widget.valueReturned(_selected);
+                setState(() {});
+              })
+        ],
           ));
     }
   }

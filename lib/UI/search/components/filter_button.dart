@@ -10,6 +10,7 @@ import 'package:saffrun_app/state_managment/search/search_cubit.dart';
 late Jalali startDate = Jalali(1, 1, 1);
 late Jalali endDate = Jalali(1, 1, 1);
 late String sortField = "";
+late String category;
 
 class FilterButtonWidget extends StatefulWidget {
   Function confirmFilter;
@@ -41,7 +42,7 @@ class _FilterButtonWidgetState extends State<FilterButtonWidget> {
                               BorderRadius.all(Radius.circular(10.0))),
                       // contentPadding: const EdgeInsets.all(0.0),
                       content: Container(
-                        height: context.height() * 0.4,
+                        height: context.height() * 0.43,
                         width: context.width() * 0.8,
                         child: Column(
                           children: [
@@ -62,22 +63,37 @@ class _FilterButtonWidgetState extends State<FilterButtonWidget> {
                                   CustomPaint(painter: DashedLinePainter()),
                                   filterOwner(context, setState),
                                   CustomPaint(painter: DashedLinePainter()),
-                                  Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Text(
-                                      'انتخاب دسته بندی',
-                                      textDirection: TextDirection.rtl,
-                                      style: boldTextStyle(color: colorPallet4),
-                                    ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Expanded(
+                                        flex: 1,
+                                        child: Align(
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            'انتخاب دسته بندی',
+                                            textDirection: TextDirection.rtl,
+                                            style: boldTextStyle(
+                                                color: colorPallet4),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 1,
+                                        child: EnhancedDropDown.withEndpoint(
+                                            dropdownLabelTitle: "",
+                                            defaultOptionText: "Choose",
+                                            urlToFetchData: Uri.https(
+                                                "run.mocky.io",
+                                                "/v3/babc0845-8163-4f1e-80df-9bcabd3d4c43"),
+                                            valueReturned: (chosen) {
+                                              category = chosen;
+                                              print(chosen);
+                                            }),
+                                      ),
+                                    ],
                                   ),
-                                  EnhancedDropDown.withEndpoint(
-                                      dropdownLabelTitle: "",
-                                      defaultOptionText: "Choose",
-                                      urlToFetchData: Uri.https("run.mocky.io",
-                                          "/v3/babc0845-8163-4f1e-80df-9bcabd3d4c43"),
-                                      valueReturned: (chosen) {
-                                        print(chosen);
-                                      }),
                                   CustomPaint(painter: DashedLinePainter()),
                                   filterSortField(context, setState),
                                   MaterialButton(
@@ -169,6 +185,7 @@ class _FilterButtonWidgetState extends State<FilterButtonWidget> {
             children: [
               Text(
                 'فیلتر زمانی',
+                textDirection: TextDirection.rtl,
                 style: boldTextStyle(color: colorPallet3),
               ),
               5.width,
