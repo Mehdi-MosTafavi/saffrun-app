@@ -1,8 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/UI/eventPage/components/add_button.dart';
+import 'package:saffrun_app/constants/theme_color.dart';
 
 class EventPage extends StatefulWidget {
   const EventPage({Key? key}) : super(key: key);
@@ -168,6 +168,21 @@ class _EventPageState extends State<EventPage> {
                               ).paddingLeft(10),
                             ),
                           ),
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.category_outlined,
+                                color: colorPallet2,
+                              ),
+                              Container(
+                                child: Text(
+                                  "سرگرمی",
+                                  style: primaryTextStyle(
+                                      color: colorPallet2, size: 18),
+                                ),
+                              ),
+                            ],
+                          ),
                           const SizedBox(
                             height: 20.0,
                             width: 20.0,
@@ -177,28 +192,6 @@ class _EventPageState extends State<EventPage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Align(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      const Icon(
-                                        Icons.supervised_user_circle_sharp,
-                                        color: colorPallet3,
-                                      ),
-                                      Container(
-                                        padding: const EdgeInsets.all(5),
-                                        child: Center(
-                                          child: Text(
-                                            "10",
-                                            style: primaryTextStyle(
-                                              color: colorPallet3,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
                                 Container(
                                   decoration: BoxDecoration(
                                       border: Border.all(color: colorPallet5),
@@ -238,7 +231,29 @@ class _EventPageState extends State<EventPage> {
                                       ).paddingSymmetric(horizontal: 10),
                                     ],
                                   ),
-                                )
+                                ),
+                                Align(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      const Icon(
+                                        Icons.supervised_user_circle_sharp,
+                                        color: colorPallet3,
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.all(5),
+                                        child: Center(
+                                          child: Text(
+                                            "10",
+                                            style: primaryTextStyle(
+                                              color: colorPallet3,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -384,14 +399,15 @@ class _DescriptionTextWidgetState extends State<DescriptionTextWidget> {
               textAlign: TextAlign.start,
             )
           : Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
                   flag ? (firstHalf + "...") : (firstHalf + secondHalf),
-                  textAlign: TextAlign.justify,
+                  textAlign: TextAlign.start,
                 ),
                 InkWell(
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Text(
                         flag ? "بیشتر" : "کمتر",
@@ -399,13 +415,13 @@ class _DescriptionTextWidgetState extends State<DescriptionTextWidget> {
                       ),
                     ],
                   ),
-                  onTap: () {
-                    setState(() {
-                      flag = !flag;
-                    });
-                  },
-                ),
-              ],
+            onTap: () {
+              setState(() {
+                flag = !flag;
+              });
+            },
+          ),
+        ],
             ),
     );
   }

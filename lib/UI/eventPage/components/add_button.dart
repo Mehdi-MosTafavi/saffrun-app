@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:persian_datetime_picker/persian_datetime_picker.dart';
-import 'package:saffrun_app/UI/utils/painter/dash.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
-import 'package:saffrun_app/UI/eventPage/event_page.dart';
 
 void showDialogForParticipantEvent(BuildContext context)
 {
@@ -20,22 +17,29 @@ void showDialogForParticipantEvent(BuildContext context)
                 borderRadius: BorderRadius.all(Radius.circular(10.0))),
             // contentPadding: const EdgeInsets.all(0.0),
             content: Container(
-              height: context.height() * 0.35,
+              height: context.height() * 0.29,
               width: context.width() * 0.8,
               child: Center(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SizedBox(
-                      height: context.height() * 0.1,
-                    ),
                     Text(
                       'اضافه شدن به رویداد؟',
                       style: boldTextStyle(),
                       textDirection: TextDirection.rtl,
                     ),
-                    SizedBox(
-                      height: context.height() * 0.1,
+                    ClipRRect(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(8),
+                          topRight: Radius.circular(8)),
+                      child: Image(
+                          width: MediaQuery.of(context).size.width,
+                          image: AssetImage(
+                              'assets/images/widget_participant.jpg'),
+                          height: 120,
+                          fit: BoxFit.cover),
                     ),
+                    20.height,
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
