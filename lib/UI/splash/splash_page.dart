@@ -19,7 +19,7 @@ class SplashPageState extends State<SplashPage> {
   }
 
   void navigationToAuthPage() {
-    Navigator.pushReplacementNamed(context, AUTH_MENU_PATH);
+    Navigator.pushReplacementNamed(context, ADMIN_PAGE_PATH);
   }
 
   @override
