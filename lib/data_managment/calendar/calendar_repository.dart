@@ -21,7 +21,7 @@ class CalendarRepository {
   Future<List<Event>> getEventOfDate(DateTime date) async {
     if (days.containsKey(date)) {
       await calendarNetworkService.getEventFromServer(date);
-      return Event.events;
+      return Event.events.sublist(0, 3);
     }
     return [];
   }

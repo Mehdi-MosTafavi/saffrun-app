@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:saffrun_app/UI/search/components/event_card.dart';
 import 'package:saffrun_app/UI/utils/calender/shared/utils.dart';
 import 'package:saffrun_app/UI/utils/table_calender/jalali_table_calendar.dart';
 import 'package:saffrun_app/state_managment/calender/calendar_cubit.dart';
@@ -48,7 +49,6 @@ class _CalenderPageState extends State<CalenderPage> {
           child: BlocBuilder<CalendarCubit, CalendarState>(
             builder: (context, state) {
               contextCubit = context;
-              print(state);
               if (state is CalendarInitial) {
                 BlocProvider.of<CalendarCubit>(context).initCalendar();
                 return const Center(
@@ -62,6 +62,9 @@ class _CalenderPageState extends State<CalenderPage> {
               }
               if (state is CalendarLoadedDateEvent) {
                 days = state.days;
+                DateTime now = DateTime.now();
+                BlocProvider.of<CalendarCubit>(context)
+                    .selectDate(DateTime(now.year, now.month, now.day));
               }
               return ListView(
                 children: [
@@ -109,6 +112,24 @@ class _CalenderPageState extends State<CalenderPage> {
                       alignment: Alignment.centerRight,
                     ),
                   ),
+                  if (state is CalendarLoadedData)
+                    ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return EventCardWidget(
+                          event: state.events[index],
+                        );
+                      },
+                      itemCount: state.events.length,
+                    ),
+                  if (state is CalendarSelectDate)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const CircularProgressIndicator(),
+                      ],
+                    ),
                   const Divider(
                     color: Color(0xffEFF0F6),
                     thickness: 5,
