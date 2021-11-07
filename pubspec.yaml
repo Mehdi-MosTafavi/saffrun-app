@@ -48,6 +48,9 @@ dependencies:
   cached_network_image: ^3.0.0
   persian_datetime_picker: ^2.3.0
   dropdown_search: ^2.0.0
+  intl: ^0.17.0
+  simple_gesture_detector: ^0.2.0
+  shamsi_date: ^1.0.0
 
 dev_dependencies:
   flutter_test:
