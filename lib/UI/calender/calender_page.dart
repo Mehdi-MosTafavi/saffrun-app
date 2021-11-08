@@ -4,6 +4,7 @@ import 'package:saffrun_app/UI/search/components/event_card.dart';
 import 'package:saffrun_app/UI/utils/calender/shared/utils.dart';
 import 'package:saffrun_app/UI/utils/table_calender/jalali_table_calendar.dart';
 import 'package:saffrun_app/state_managment/calender/calendar_cubit.dart';
+import 'package:saffrun_app/state_managment/calender/components/reserve_card.dart';
 
 class CalenderPage extends StatefulWidget {
   const CalenderPage({Key? key}) : super(key: key);
@@ -126,8 +127,8 @@ class _CalenderPageState extends State<CalenderPage> {
                   if (state is CalendarSelectDate)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const CircularProgressIndicator(),
+                      children: const [
+                        CircularProgressIndicator(),
                       ],
                     ),
                   const Divider(
@@ -145,6 +146,25 @@ class _CalenderPageState extends State<CalenderPage> {
                       alignment: Alignment.centerRight,
                     ),
                   ),
+                  if (state is CalendarLoadedData)
+                    ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.only(bottom: 60),
+                      itemBuilder: (context, index) {
+                        return ReserveCard(
+                          reserve: state.reserves[index],
+                        );
+                      },
+                      itemCount: state.events.length,
+                    ),
+                  if (state is CalendarSelectDate)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        CircularProgressIndicator(),
+                      ],
+                    ),
                 ],
               );
             },

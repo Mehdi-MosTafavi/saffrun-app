@@ -28,8 +28,10 @@ class CalendarSelectDate extends CalendarState {
 
 class CalendarLoadedData extends CalendarState {
   List<Event> events;
+  List<Reserve> reserves;
 
-  CalendarLoadedData(DateTime date, this.events) : super(dateTime: date);
+  CalendarLoadedData(DateTime date, this.events, this.reserves)
+      : super(dateTime: date);
 }
 
 class CalendarErrorData extends CalendarState {
