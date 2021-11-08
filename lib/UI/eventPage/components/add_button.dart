@@ -17,7 +17,7 @@ void showDialogForParticipantEvent(BuildContext context)
                 borderRadius: BorderRadius.all(Radius.circular(10.0))),
             // contentPadding: const EdgeInsets.all(0.0),
             content: Container(
-              height: context.height() * 0.45,
+              height: context.height() * 0.36,
               width: context.width() * 0.8,
               child: Center(
                 child: Column(
@@ -28,16 +28,19 @@ void showDialogForParticipantEvent(BuildContext context)
                       style: boldTextStyle(),
                       textDirection: TextDirection.rtl,
                     ),
-                    ClipRRect(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(8),
-                          topRight: Radius.circular(8)),
-                      child: Image(
-                          width: MediaQuery.of(context).size.width,
-                          image: AssetImage(
-                              'assets/images/widget_participant.jpg'),
-                          height: context.height() * 0.25,
-                          fit: BoxFit.cover),
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(8),
+                            topRight: Radius.circular(8)),
+                        child: Image(
+                            width: MediaQuery.of(context).size.width,
+                            image: AssetImage(
+                                'assets/images/widget_participant.jpg'),
+                            height: context.height() * 0.25,
+                            fit: BoxFit.cover),
+                      ),
                     ),
                     20.height,
                     Row(
@@ -60,12 +63,14 @@ void showDialogForParticipantEvent(BuildContext context)
                           ),
                         ),
                         MaterialButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            finish(context);
+                          },
                           child: Container(
                             height: 50,
                             width: 100,
                             decoration: boxDecorationWithRoundedCorners(
-                                backgroundColor: Colors.white,
+                              backgroundColor: Colors.white,
                               border: Border.all(
                                 color: colorPallet3,
                                 width: 5,
