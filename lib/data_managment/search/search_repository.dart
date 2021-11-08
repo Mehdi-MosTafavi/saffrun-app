@@ -1,5 +1,5 @@
 import 'package:saffrun_app/data_managment/search/search_networkservice.dart';
-import 'package:saffrun_app/models/event/event_modle.dart';
+import 'package:saffrun_app/models/event/event_model.dart';
 
 class SearchRepository {
   late SearchNetworkService searchNetworkService;

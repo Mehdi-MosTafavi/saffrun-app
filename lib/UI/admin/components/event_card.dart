@@ -15,7 +15,7 @@ class EventCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+      margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
       decoration: BoxDecoration(
           boxShadow: defaultBoxShadow(),
           borderRadius: BorderRadius.circular(12)),
@@ -34,7 +34,7 @@ class EventCardWidget extends StatelessWidget {
               const SizedBox(width: 10),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: Column(
                     children: <Widget>[
                       Row(
@@ -47,14 +47,14 @@ class EventCardWidget extends StatelessWidget {
                           // ),
                           Expanded(
                             child: Container(
-                              padding: const EdgeInsets.only(left: 16),
+                              padding: const EdgeInsets.only(left: 10),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(event.title,
                                           style: boldTextStyle(
@@ -69,14 +69,14 @@ class EventCardWidget extends StatelessWidget {
                                   ),
                                   Text(event.description,
                                       style: primaryTextStyle(
-                                          size: 16, color: Colors.blueGrey)),
+                                          size: 10, color: Colors.blueGrey)),
                                 ],
                               ),
                             ),
                           )
                         ],
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: 10),
                       InkWell(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
@@ -84,7 +84,7 @@ class EventCardWidget extends StatelessWidget {
                         },
                         child: Text('جزئیات',
                             style:
-                                primaryTextStyle(size: 16, color: colorPallet4),
+                            primaryTextStyle(size: 10, color: colorPallet4),
                             maxLines: 2),
                       ),
                     ],
