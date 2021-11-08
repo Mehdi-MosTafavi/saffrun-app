@@ -1,5 +1,6 @@
 import 'package:saffrun_app/data_managment/calendar/calendar_networkservice.dart';
 import 'package:saffrun_app/models/event/event_modle.dart';
+import 'package:saffrun_app/models/reserve/reserve.dart';
 
 class CalendarRepository {
   late CalendarNetworkService calendarNetworkService;
@@ -18,12 +19,16 @@ class CalendarRepository {
     DateTime(2021, 4, 19): [6, 5, 465, 1, 66546],
   };
 
-  Future<List<Event>> getEventOfDate(DateTime date) async {
+  Future<Map<String, List>> getEventOfDate(DateTime date) async {
     if (days.containsKey(date)) {
       await calendarNetworkService.getEventFromServer(date);
-      return Event.events.sublist(0, 3);
+      Map<String, List> data = {
+        'event': Event.events.sublist(0, 3),
+        'reserve': Reserve.reserve
+      };
+      return data;
     }
-    return [];
+    return {};
   }
 
   Future<Map<DateTime, List<dynamic>>> getDateOfEvents() async {
