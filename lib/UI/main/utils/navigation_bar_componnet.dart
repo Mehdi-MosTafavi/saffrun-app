@@ -94,10 +94,10 @@ class NavigationBar extends StatelessWidget {
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(
-          Icons.favorite_rounded,
+          CupertinoIcons.calendar_circle_fill,
         ),
         inactiveIcon: const Icon(
-          Icons.favorite_outline,
+          CupertinoIcons.calendar_circle,
           // key: IntroRepository.introHomePage.keys[6] ,
         ),
         // title: ("Settings"),
