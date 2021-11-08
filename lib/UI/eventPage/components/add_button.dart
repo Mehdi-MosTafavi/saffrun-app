@@ -17,7 +17,7 @@ void showDialogForParticipantEvent(BuildContext context)
                 borderRadius: BorderRadius.all(Radius.circular(10.0))),
             // contentPadding: const EdgeInsets.all(0.0),
             content: Container(
-              height: context.height() * 0.29,
+              height: context.height() * 0.45,
               width: context.width() * 0.8,
               child: Center(
                 child: Column(
@@ -36,7 +36,7 @@ void showDialogForParticipantEvent(BuildContext context)
                           width: MediaQuery.of(context).size.width,
                           image: AssetImage(
                               'assets/images/widget_participant.jpg'),
-                          height: 120,
+                          height: context.height() * 0.25,
                           fit: BoxFit.cover),
                     ),
                     20.height,
@@ -65,11 +65,16 @@ void showDialogForParticipantEvent(BuildContext context)
                             height: 50,
                             width: 100,
                             decoration: boxDecorationWithRoundedCorners(
-                                backgroundColor: colorPallet3),
+                                backgroundColor: Colors.white,
+                              border: Border.all(
+                                color: colorPallet3,
+                                width: 5,
+                              ),
+                            ),
                             child: Center(
                               child: Text(
                                 'لغو',
-                                style: boldTextStyle(color: Colors.white),
+                                style: boldTextStyle(color: colorPallet3),
                               ),
                             ),
                           ),
