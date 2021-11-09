@@ -3,6 +3,7 @@ import 'dart:html';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:saffrun_app/UI/admin/components/my_column.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/models/admin/admin_model.dart';
 import 'package:saffrun_app/models/event/event_model.dart';
@@ -196,7 +197,7 @@ class _AdminPageState extends State<AdminPage> {
                             ),
                           ),
                           SizedBox(
-                            height: context.height() * 0.07,
+                            height: context.height() * 0.2,
                             child: Align(
                               alignment: Alignment.centerRight,
                               child: Row(
@@ -215,85 +216,44 @@ class _AdminPageState extends State<AdminPage> {
                                       15.width,
                                       Column(
                                         children: [
+                                          const SizedBox(
+                                            height: 20.0,
+                                            width: 20.0,
+                                          ),
                                           Row(children: [
-                                            Column(
-                                              children: [
-                                                Container(
-                                                  child: Center(
-                                                    child: Text(
-                                                      "10",
-                                                      style: boldTextStyle(
-                                                        color: colorPallet5,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  child: Center(
-                                                    child: Text(
-                                                      "following",
-                                                      style: boldTextStyle(
-                                                        color: colorPallet5,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
+                                            MyColumn(first_text: admin.getFollowing().length, second_text: 'following'),
+                                            const SizedBox(
+                                              height: 20.0,
+                                              width: 20.0,
                                             ),
-                                            Column(
-                                              children: [
-                                                Container(
-                                                  child: Center(
-                                                    child: Text(
-                                                      "20",
-                                                      style: boldTextStyle(
-                                                        color: colorPallet5,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  child: Center(
-                                                    child: Text(
-                                                      "follower",
-                                                      style: boldTextStyle(
-                                                        color: colorPallet5,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
+                                            MyColumn(first_text: admin.getFollowers().length, second_text: 'follower'),
+                                            const SizedBox(
+                                              height: 20.0,
+                                              width: 25.0,
                                             ),
-                                            Column(
-                                              children: [
-                                                Container(
-                                                  child: Center(
-                                                    child: Text(
-                                                      "5",
-                                                      style: boldTextStyle(
-                                                        color: colorPallet5,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  child: Center(
-                                                    child: Text(
-                                                      "events",
-                                                      style: boldTextStyle(
-                                                        color: colorPallet5,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
+                                            MyColumn(first_text: admin.getEvents().length, second_text: 'events'),
                                           ],
+                                          ),
+                                          MaterialButton(
+                                            onPressed: () {},
+                                            child: Container(
+                                              height: 25,
+                                              width: 300,
+                                              decoration: boxDecorationWithRoundedCorners(
+                                                  backgroundColor: colorPallet3),
+                                              child: Center(
+                                                child: Text(
+                                                  'Follow',
+                                                  style: boldTextStyle(color: Colors.white),
+                                                ),
+                                              ),
+                                            ),
                                           ),
                                         ],
                                       ),
                                     ],
                                   ),
+
 
                                 ],
                               ).paddingLeft(10),
