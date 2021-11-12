@@ -6,8 +6,10 @@ import 'package:shamsi_date/shamsi_date.dart';
 
 class ReserveCard extends StatelessWidget {
   final Reserve reserve;
+  final Function onTapCard;
 
-  const ReserveCard({Key? key, required this.reserve}) : super(key: key);
+  const ReserveCard({Key? key, required this.reserve, required this.onTapCard})
+      : super(key: key);
 
   String getStringFormatJalali(Jalali date) {
     var d = date.formatter;
@@ -95,7 +97,9 @@ class ReserveCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          onTapCard();
+                        },
                         child: Text('جزئیات',
                             style:
                                 primaryTextStyle(size: 16, color: colorPallet4),

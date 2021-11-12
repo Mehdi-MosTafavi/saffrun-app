@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:saffrun_app/UI/eventPage/event_page.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
-import 'package:saffrun_app/models/event/event_modle.dart';
+import 'package:saffrun_app/models/event/event_model.dart';
 
 class EventCardWidget extends StatelessWidget {
   const EventCardWidget({

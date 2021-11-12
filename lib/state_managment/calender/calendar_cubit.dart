@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:saffrun_app/data_managment/calendar/calendar_repository.dart';
-import 'package:saffrun_app/models/event/event_modle.dart';
+import 'package:saffrun_app/models/event/event_model.dart';
 import 'package:saffrun_app/models/reserve/reserve.dart';
 
 part 'calendar_state.dart';

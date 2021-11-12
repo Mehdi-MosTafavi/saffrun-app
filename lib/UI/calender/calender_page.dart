@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:saffrun_app/UI/admin/admin_page.dart';
 import 'package:saffrun_app/UI/search/components/event_card.dart';
 import 'package:saffrun_app/UI/utils/calender/shared/utils.dart';
 import 'package:saffrun_app/UI/utils/table_calender/jalali_table_calendar.dart';
@@ -153,10 +154,14 @@ class _CalenderPageState extends State<CalenderPage> {
                       padding: const EdgeInsets.only(bottom: 60),
                       itemBuilder: (context, index) {
                         return ReserveCard(
+                          onTapCard: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const AdminPage()));
+                          },
                           reserve: state.reserves[index],
                         );
                       },
-                      itemCount: state.events.length,
+                      itemCount: state.reserves.length,
                     ),
                   if (state is CalendarSelectDate)
                     Row(

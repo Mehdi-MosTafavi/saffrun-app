@@ -140,6 +140,7 @@ class ListViewForCardSearch extends StatelessWidget {
       builder: (context, state) {
         contextBloc = context;
         if (state is SearchLoadedState) {
+          print(state.events);
           return ListView.builder(
             controller: controller,
             itemCount: state.events.length + 1,
@@ -151,12 +152,12 @@ class ListViewForCardSearch extends StatelessWidget {
                       BlocProvider.of<SearchCubit>(contextBloc)
                           .loadEventHandler(state.textSearched,
                               startDate: startDate == Jalali(1, 1, 1, 0, 0, 0)
-                                  ? null
-                                  : startDate,
-                              endDate: endDate == Jalali(1, 1, 1, 0, 0, 0)
-                                  ? null
-                                  : endDate,
-                              sort: sortField);
+                              ? null
+                              : startDate,
+                          endDate: endDate == Jalali(1, 1, 1, 0, 0, 0)
+                              ? null
+                              : endDate,
+                          sort: sortField);
                     }
                   },
                 );

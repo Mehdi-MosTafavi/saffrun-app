@@ -1,5 +1,5 @@
 import 'package:saffrun_app/data_managment/calendar/calendar_networkservice.dart';
-import 'package:saffrun_app/models/event/event_modle.dart';
+import 'package:saffrun_app/models/event/event_model.dart';
 import 'package:saffrun_app/models/reserve/reserve.dart';
 
 class CalendarRepository {

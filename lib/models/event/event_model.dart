@@ -107,7 +107,7 @@ class Event {
         id: element['id'] ?? -1,
         title: element['title'],
         description: element['description'],
-        imageUrl: element['image'],
+        imageUrl: element['image'] ?? "",
         discount: element['discount'],
         startTime: DateTime(2020),
         finishTime: DateTime(2021),

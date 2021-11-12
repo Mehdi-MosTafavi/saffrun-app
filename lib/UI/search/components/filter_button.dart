@@ -260,7 +260,7 @@ class _FilterButtonWidgetState extends State<FilterButtonWidget> {
                   onChanged: (dynamic value) {
                     setState(() {
                       sortField = value;
-                      toast("$sortField Selected");
+                      // toast("$sortField Selected");
                     });
                   },
                 ),
@@ -292,7 +292,7 @@ class _FilterButtonWidgetState extends State<FilterButtonWidget> {
                   onChanged: (dynamic value) {
                     setState(() {
                       sortField = value;
-                      toast("$sortField Selected");
+                      // toast("$sortField Selected");
                     });
                   },
                 ),

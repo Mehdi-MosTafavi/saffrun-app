@@ -325,7 +325,7 @@ class CalendarDayPicker extends StatelessWidget {
               gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: [Color(0xff6D07CB), Color(0xffEFADFF)]),
+                  colors: [Color(0xff660000), Color(0xff8C001A)]),
               borderRadius: BorderRadius.circular(6),
               color: Colors.red,
               shape: BoxShape.rectangle);
@@ -341,8 +341,8 @@ class CalendarDayPicker extends StatelessWidget {
                 .copyWith(color: haveEvent ? Colors.black : Colors.white);
             decoration = BoxDecoration(
                 borderRadius: BorderRadius.circular(60),
-                border: haveEvent ? Border.all(color: Colors.blue) : null,
-                color: haveEvent ? Colors.white : Colors.blue);
+                border: haveEvent ? Border.all(color: Color(0xffFF9000)) : null,
+                color: haveEvent ? Colors.white : Color(0xffFF9000));
           } else if (getHolidy.isHoliday) {
             // The current day gets a different text color.
             itemStyle =
