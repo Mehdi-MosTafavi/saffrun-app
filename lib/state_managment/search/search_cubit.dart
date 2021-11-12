@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:saffrun_app/data_managment/search/search_repository.dart';
-import 'package:saffrun_app/models/event/event_modle.dart';
+import 'package:saffrun_app/models/event/event_model.dart';
 
 part 'search_state.dart';
 
