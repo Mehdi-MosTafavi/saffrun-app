@@ -3,14 +3,32 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:saffrun_app/UI/eventPage/event_page.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/models/event/event_model.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+
+
+final List<String> imgList2 = [
+  'assets/images/mafia1.jpg',
+  'assets/images/mafia1.jpg',
+  'assets/images/mafia1.jpg',
+  'assets/images/mafia1.jpg'
+];
+
 
 class EventCardWidget extends StatelessWidget {
-  const EventCardWidget({
+  EventCardWidget({
     Key? key,
     required this.event,
   }) : super(key: key);
 
   final Event event;
+  final String item='assets/images/mafia1.jpg';
+
+
+
+  int current = 0;
+  final CarouselController controller = CarouselController();
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -37,14 +55,40 @@ class EventCardWidget extends StatelessWidget {
                   padding: const EdgeInsets.all(10.0),
                   child: Column(
                     children: <Widget>[
+                      // CachedNetworkImage(
+                      //   placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
+                      //   imageUrl: mFavouriteList[index].image,
+                      //   width: width / 5,
+                      //   height: 100,
+                      // ),
+                      Container(
+                        child: Image(
+                          image: AssetImage(item),
+                        ),
+                      ),
+                      const SizedBox(width: 10,height: 10,),
+
+                  // Container(
+                  // height: context.height(),
+                  // width: context.width(),
+                  // decoration: const BoxDecoration(color: colorPallet5),
+                  // child: Stack(
+                  //   children: [
+                  //     CarouselSlider(
+                  //       items: imageSliders,
+                  //       carouselController: controller,
+                  //       options: CarouselOptions(
+                  //           autoPlay: true,
+                  //           enlargeCenterPage: true,
+                  //           aspectRatio: 2.0,
+                  //           ),
+                  //     ),
+                  //     ],
+                  // ),
+                  // ),
                       Row(
                         children: <Widget>[
-                          // CachedNetworkImage(
-                          //   placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
-                          //   imageUrl: mFavouriteList[index].image,
-                          //   width: width / 5,
-                          //   height: 100,
-                          // ),
+
                           Expanded(
                             child: Container(
                               padding: const EdgeInsets.only(left: 10),
@@ -57,26 +101,43 @@ class EventCardWidget extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(event.title,
-                                          style: boldTextStyle(
-                                              color: Colors.black),
-                                          maxLines: 2),
+                                        style: boldTextStyle(
+                                            color: Colors.black),
+                                        maxLines: 2),
                                       Text("کافه رخ",
                                           style: primaryTextStyle(
                                               weight: FontWeight.w500,
+                                              size: 15,
                                               color: colorPallet5),
                                           maxLines: 2),
                                     ],
                                   ),
-                                  Text(event.description,
-                                      style: primaryTextStyle(
-                                          size: 10, color: Colors.blueGrey)),
+                                  Row(
+                                    children: [
+                                      const Icon(
+                                        Icons
+                                            .supervised_user_circle_sharp,
+                                        size: 20,
+                                        color: colorPallet3,
+                                      ),
+                                      Text("سرگرمی",
+                                        style: boldTextStyle(
+                                            size: 10, color: colorPallet5),
+                                      ),
+
+
+                                    ],
+                                  ),
+                                  // Text(event.description,
+                                  //     style: primaryTextStyle(
+                                  //         size: 10, color: Colors.blueGrey)),
                                 ],
                               ),
                             ),
                           )
                         ],
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 16),
                       InkWell(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
@@ -84,7 +145,7 @@ class EventCardWidget extends StatelessWidget {
                         },
                         child: Text('جزئیات',
                             style:
-                            primaryTextStyle(size: 10, color: colorPallet4),
+                            primaryTextStyle(size: 15, color: colorPallet4),
                             maxLines: 2),
                       ),
                     ],
@@ -98,3 +159,21 @@ class EventCardWidget extends StatelessWidget {
     );
   }
 }
+
+
+final List<Widget> imageSliders = imgList2
+    .map((item) => Container(
+  child: Container(
+    margin: const EdgeInsets.all(5.0),
+    child: ClipRRect(
+        borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+        child: Stack(
+          children: <Widget>[
+            Image(
+              image: AssetImage(item),
+            ),
+          ],
+        )),
+  ),
+))
+    .toList();

@@ -1,6 +1,7 @@
 import 'dart:html';
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:saffrun_app/UI/admin/components/my_column.dart';
@@ -126,14 +127,14 @@ class _AdminPageState extends State<AdminPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // floatingActionButton: Align(
-      //   alignment: Alignment(-1, 0.85),
-      //   child: FloatingActionButton(
-      //     onPressed: () {},
-      //     child: Icon(Icons.add),
-      //     backgroundColor: colorPallet5,
-      //   ),
-      // ),
+      floatingActionButton: Align(
+        alignment: Alignment(-1, 0.85),
+        child: FloatingActionButton(
+          onPressed: () {},
+          child: Icon(CupertinoIcons.calendar_circle_fill),
+          backgroundColor: colorPallet5,
+        ),
+      ),
       body: SafeArea(
         child: Container(
           height: context.height(),
@@ -370,28 +371,28 @@ class _AdminPageState extends State<AdminPage> {
                           ),
                           Container(
                             margin: EdgeInsets.symmetric(vertical: 20.0),
-                            height: 300.0,
+                            height: context.height()*0.37,
                             child: ListView(
                               scrollDirection: Axis.horizontal,
                               children: <Widget>[
                                 Container(
-                                    width: 300.0,
+                                    width: context.width()*0.5,
                                     // color: Colors.red,
                                     child: EventCardWidget(event: events[0])),
                                 Container(
-                                    width: 300,
+                                    width: context.width()*0.5,
                                     // color: Colors.blue,
                                     child: EventCardWidget(event: events[1])),
                                 Container(
-                                    width: 300.0,
+                                    width: context.width()*0.5,
                                     // color: Colors.green,
                                     child: EventCardWidget(event: events[2])),
                                 Container(
-                                    width: 300.0,
+                                    width: context.width()*0.5,
                                     // color: Colors.yellow,
                                     child: EventCardWidget(event: events[3])),
                                 Container(
-                                    width: 300.0,
+                                    width: context.width()*0.5,
                                     // color: Colors.orange,
                                     child: EventCardWidget(event: events[4])),
                               ],
