@@ -1,12 +1,7 @@
-import 'dart:html';
 
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
-import 'package:saffrun_app/models/admin/admin_model.dart';
-import 'package:saffrun_app/models/event/event_model.dart';
-import 'package:saffrun_app/UI/admin/components/event_card.dart';
 
 class MyColumn extends StatelessWidget {
   const MyColumn({

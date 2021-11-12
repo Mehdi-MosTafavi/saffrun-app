@@ -1,15 +1,14 @@
-import 'dart:html';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:saffrun_app/UI/admin/components/event_card.dart';
 import 'package:saffrun_app/UI/admin/components/my_column.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/models/admin/admin_model.dart';
 import 'package:saffrun_app/models/event/event_model.dart';
-import 'package:saffrun_app/UI/admin/components/event_card.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class AdminPage extends StatefulWidget {
   const AdminPage({Key? key}) : super(key: key);
@@ -353,7 +352,7 @@ class _AdminPageState extends State<AdminPage> {
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: Text(
-                                    'درباره ایونت:',
+                                    'درباره کارفرما:',
                                     style: boldTextStyle(),
                                   ),
                                 ),
@@ -371,16 +370,16 @@ class _AdminPageState extends State<AdminPage> {
                           ),
                           Container(
                             margin: EdgeInsets.symmetric(vertical: 20.0),
-                            height: context.height()*0.37,
+                            height: 250,
                             child: ListView(
                               scrollDirection: Axis.horizontal,
                               children: <Widget>[
                                 Container(
-                                    width: context.width()*0.5,
+                                    width: context.width() * 0.5,
                                     // color: Colors.red,
                                     child: EventCardWidget(event: events[0])),
                                 Container(
-                                    width: context.width()*0.5,
+                                    width: context.width() * 0.5,
                                     // color: Colors.blue,
                                     child: EventCardWidget(event: events[1])),
                                 Container(
