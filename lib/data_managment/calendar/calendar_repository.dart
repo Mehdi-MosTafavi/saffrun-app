@@ -24,7 +24,7 @@ class CalendarRepository {
       await calendarNetworkService.getEventFromServer(date);
       Map<String, List> data = {
         'event': Event.events.sublist(0, 3),
-        'reserve': Reserve.reserve
+        'reserve': Reserve.reserve[0]
       };
       return data;
     }

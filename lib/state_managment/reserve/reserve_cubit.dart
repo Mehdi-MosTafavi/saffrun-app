@@ -13,8 +13,9 @@ class ReserveCubit extends Cubit<ReserveState> {
   }
 
   Future<void> loadTimeReserve() async {
-    emit(ReserveLoadingTime());
     try {
+      emit(ReserveLoadingTime(isActive: true));
+
       Map<String, dynamic> data = await reserveRepository.getTimesForReserve();
 
       emit(ReserveLoadedTime(
