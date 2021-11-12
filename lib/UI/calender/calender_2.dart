@@ -84,7 +84,7 @@ class _CalenderPage2State extends State<CalenderPage2> {
                   defaultDecoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(6)),
                   weekendDecoration: BoxDecoration(),
-                  selectedDecoration: BoxDecoration(
+                  selectedDecoration: const BoxDecoration(
                       gradient: LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,

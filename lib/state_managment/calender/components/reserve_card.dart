@@ -38,44 +38,56 @@ class ReserveCard extends StatelessWidget {
               const SizedBox(width: 10),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 16.0, horizontal: 5),
                   child: Column(
                     children: <Widget>[
                       Row(
+                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          // CachedNetworkImage(
-                          //   placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
-                          //   imageUrl: mFavouriteList[index].image,
-                          //   width: width / 5,
-                          //   height: 100,
-                          // ),
+                          const CircleAvatar(
+                            backgroundImage:
+                                AssetImage('assets/images/profile.png'),
+                          ),
                           Expanded(
-                            child: Container(
-                              padding: const EdgeInsets.only(left: 16),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(reserve.adminName,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: boldTextStyle(
-                                              size: 16, color: Colors.black)),
-                                      Text(
-                                          getStringFormatJalali(endDateJalali) +
-                                              '  -  ' +
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Container(
+                                padding: const EdgeInsets.only(left: 5),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          child: Text(reserve.adminName,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: boldTextStyle(
+                                                  size: 16,
+                                                  color: Colors.black)),
+                                        ),
+                                        25.width,
+                                        FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          child: Text(
                                               getStringFormatJalali(
-                                                  startDateJalali),
-                                          style: primaryTextStyle(
-                                              color: Colors.blueGrey),
-                                          maxLines: 2)
-                                    ],
-                                  ),
-                                ],
+                                                      endDateJalali) +
+                                                  ' - ' +
+                                                  getStringFormatJalali(
+                                                      startDateJalali),
+                                              style: primaryTextStyle(
+                                                  color: Colors.blueGrey),
+                                              maxLines: 2),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           )

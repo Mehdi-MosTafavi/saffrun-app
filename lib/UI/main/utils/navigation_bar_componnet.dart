@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:saffrun_app/UI/calender/calender_page.dart';
+import 'package:saffrun_app/UI/reserve/reserve_page.dart';
 import 'package:saffrun_app/UI/search/search_page.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 
@@ -56,7 +57,7 @@ class NavigationBar extends StatelessWidget {
     return [
       Container(),
       const SearchPage(),
-      Container(),
+      const ReservePage(),
       const CalenderPage(),
       // const CalenderPage2(),
       Container()
