@@ -20,18 +20,34 @@ class CalendarRepository {
   };
 
   Future<Map<String, List>> getEventOfDate(DateTime date) async {
-    if (days.containsKey(date)) {
-      await calendarNetworkService.getEventFromServer(date);
+    try {
+      Map<String, dynamic> response =
+          await calendarNetworkService.getEventFromServer(date);
       Map<String, List> data = {
-        'event': Event.events.sublist(0, 3),
+        'event': Event.fromJsonCalendar(response['events']),
         'reserve': Reserve.reserve[0]
       };
       return data;
+    } catch (e) {
+      return {};
     }
-    return {};
   }
 
   Future<Map<DateTime, List<dynamic>>> getDateOfEvents() async {
-    return days;
+    try {
+      var response = await calendarNetworkService.getDatesOfServer();
+      List<dynamic> dateEvent = response['dates'];
+      Map<DateTime, List<dynamic>> dates = <DateTime, List<dynamic>>{};
+      dateEvent.forEach((element) {
+        List<String> splitedDate = element.split('-');
+        dates[DateTime(int.parse(splitedDate[0]), int.parse(splitedDate[1]),
+            int.parse(splitedDate[2]))] = [];
+      });
+
+      return dates;
+    } catch (e) {
+      print(e);
+      return <DateTime, List<dynamic>>{};
+    }
   }
 }

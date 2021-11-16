@@ -5,7 +5,7 @@ class SearchNetworkService extends BaseNetworkService {
       Map<String, String> body, int page) async {
     try {
       print(body);
-      dynamic? jsonResponse = await getTemplate('/event/get-all/', body);
+      dynamic? jsonResponse = await getTemplate('/event/get-all/', body: body);
       if (jsonResponse == null) {
         return null;
       }

@@ -6,6 +6,7 @@ import 'package:nb_utils/nb_utils.dart';
 Map<String, String> header = {
   'Accept': 'application/json',
   'Content-Type': 'application/json; charset=utf-8',
+  'Client': 'app'
 };
 
 class BaseNetworkService {
@@ -43,12 +44,14 @@ class BaseNetworkService {
     }
   }
 
-  Future<dynamic>? getTemplate(String url, Map<String, String> body) async {
+  Future<dynamic>? getTemplate(String url, {Map<String, String>? body}) async {
     try {
       String urlOfBody = '?';
-      body.forEach((key, value) {
-        urlOfBody = urlOfBody + key + '=' + value + '&';
-      });
+      if (body != null) {
+        body.forEach((key, value) {
+          urlOfBody = urlOfBody + key + '=' + value + '&';
+        });
+      }
       print(urlServer + url + urlOfBody);
       http.Response response = await http
           .get(Uri.parse(urlServer + url + urlOfBody), headers: header);
