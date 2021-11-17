@@ -29,7 +29,7 @@ class CalendarRepository {
       };
       return data;
     } catch (e) {
-      return {};
+      return {'event': [], 'reserve': Reserve.reserve[0]};
     }
   }
 
@@ -44,9 +44,10 @@ class CalendarRepository {
             int.parse(splitedDate[2]))] = [];
       });
 
-      return dates;
+      return days;
     } catch (e) {
       print(e);
+      return days;
       return <DateTime, List<dynamic>>{};
     }
   }

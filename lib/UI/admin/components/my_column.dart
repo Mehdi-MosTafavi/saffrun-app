@@ -16,11 +16,14 @@ class MyColumn extends StatelessWidget {
     return Column(
       children: [
         Container(
+          padding: const EdgeInsets.all(12),
+          decoration:
+              BoxDecoration(shape: BoxShape.circle, color: colorPallet3),
           child: Center(
             child: Text(
               '$first_text',
               style: boldTextStyle(
-                color: colorPallet5,
+                color: Colors.white,
               ),
             ),
           ),
@@ -30,7 +33,7 @@ class MyColumn extends StatelessWidget {
             child: Text(
               second_text,
               style: boldTextStyle(
-                color: colorPallet5,
+                color: colorPallet3,
               ),
             ),
           ),

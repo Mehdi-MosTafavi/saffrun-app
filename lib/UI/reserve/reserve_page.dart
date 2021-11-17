@@ -66,15 +66,17 @@ class _ReservePageState extends State<ReservePage> {
             if (state is ReserveLoadedTime) {
               nearReserve = state.nearest;
               listReserves = state.reserves;
-              listReserves![0].removeAt(0);
+              try {
+                listReserves![0].removeAt(0);
+              } catch (e) {}
             }
 
             return Directionality(
               textDirection: TextDirection.rtl,
               child: ListView(
                 controller: controller,
-                // physics: const NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.only(top: 65),
+                physics: const ClampingScrollPhysics(),
+                padding: const EdgeInsets.only(top: 65),
                 children: [
                   SizedBox(
                     height: context.height() * 0.16,
