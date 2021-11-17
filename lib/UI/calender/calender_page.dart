@@ -153,6 +153,7 @@ class _CalenderPageState extends State<CalenderPage> {
                       shrinkWrap: true,
                       padding: const EdgeInsets.only(bottom: 60),
                       itemBuilder: (context, index) {
+                        print(state.reserves.length);
                         return ReserveCard(
                           onTapCard: () {
                             Navigator.of(context).push(MaterialPageRoute(

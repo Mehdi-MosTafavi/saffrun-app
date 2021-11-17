@@ -189,23 +189,17 @@ class _AdminPageState extends State<AdminPage> {
                               topLeft: Radius.circular(25),
                               topRight: Radius.circular(25))),
                       child: ListView(
+                        physics: const ClampingScrollPhysics(),
                         controller: scrollController,
                         children: [
-                          const SizedBox(
-                            height: 50.0,
-                            width: 2.0,
-                            child: Divider(
-                              color: Colors.red,
-                              indent: 100,
-                              endIndent: 100,
-                            ),
-                          ),
+                          30.height,
                           SizedBox(
                             // height: context.height() * 0.2,
                             child: Align(
                               alignment: Alignment.centerRight,
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Column(
                                     children: [
@@ -213,16 +207,15 @@ class _AdminPageState extends State<AdminPage> {
                                         child: Text(
                                           admin.getName(),
                                           style: boldTextStyle(
-                                              color: colorPallet1,
-                                              size: 20),
+                                              color: colorPallet1, size: 20),
                                         ),
                                       ),
+                                      5.height,
                                       SizedBox(
                                         // height: context.height() * 0.07,
                                         child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment
-                                                  .spaceBetween,
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Align(
                                               child: Row(
@@ -230,21 +223,19 @@ class _AdminPageState extends State<AdminPage> {
                                                     MainAxisAlignment.start,
                                                 children: [
                                                   const Icon(
-                                                    Icons
-                                                        .supervised_user_circle_sharp,
-                                                    color: colorPallet3,
+                                                    Icons.category_outlined,
+                                                    color: colorPallet5,
                                                   ),
                                                   Container(
                                                     padding:
-                                                        const EdgeInsets
-                                                            .all(5),
+                                                    const EdgeInsets
+                                                        .all(5),
                                                     child: Center(
                                                       child: Text(
                                                         admin.getCategory(),
                                                         style:
-                                                            primaryTextStyle(
-                                                          color:
-                                                              colorPallet3,
+                                                        primaryTextStyle(
+                                                          color: colorPallet5,
                                                         ),
                                                       ),
                                                     ),
@@ -262,30 +253,22 @@ class _AdminPageState extends State<AdminPage> {
                                     // height: 20.0,
                                     width: 20.0,
                                   ),
-                                  Row(
-                                    children: [
-                                      // MyColumn(
-                                      //     first_text: admin
-                                      //         .getFollowing()
-                                      //         .length,
-                                      //     second_text: 'following'),
-                                      const SizedBox(
-                                        // height: 20.0,
-                                        width: 20.0,
+                                  MaterialButton(
+                                    onPressed: () {},
+                                    child: Container(
+                                      height: 50,
+                                      width: 100,
+                                      decoration:
+                                          boxDecorationWithRoundedCorners(
+                                              backgroundColor: colorPallet3),
+                                      child: Center(
+                                        child: Text(
+                                          'دنبال کردن',
+                                          style: boldTextStyle(
+                                              color: Colors.white),
+                                        ),
                                       ),
-                                      MyColumn(
-                                          first_text:
-                                              admin.getFollowers().length,
-                                          second_text: 'دنبال کننده'),
-                                      const SizedBox(
-                                        // height: 20.0,
-                                        width: 25.0,
-                                      ),
-                                      MyColumn(
-                                          first_text:
-                                              admin.getEvents().length,
-                                          second_text: 'رویداد ها'),
-                                    ],
+                                    ),
                                   ),
                                 ],
                               ).paddingLeft(10),
@@ -298,20 +281,28 @@ class _AdminPageState extends State<AdminPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              MaterialButton(
-                                onPressed: () {},
-                                child: Container(
-                                  height: 50,
-                                  width: 100,
-                                  decoration: boxDecorationWithRoundedCorners(
-                                      backgroundColor: colorPallet3),
-                                  child: Center(
-                                    child: Text(
-                                      'دنبال کردن',
-                                      style: boldTextStyle(color: Colors.white),
-                                    ),
+                              Row(
+                                children: [
+                                  // MyColumn(
+                                  //     first_text: admin
+                                  //         .getFollowing()
+                                  //         .length,
+                                  //     second_text: 'following'),
+                                  const SizedBox(
+                                    // height: 20.0,
+                                    width: 20.0,
                                   ),
-                                ),
+                                  MyColumn(
+                                      first_text: admin.getFollowers().length,
+                                      second_text: 'دنبال کننده'),
+                                  const SizedBox(
+                                    // height: 20.0,
+                                    width: 25.0,
+                                  ),
+                                  MyColumn(
+                                      first_text: admin.getEvents().length,
+                                      second_text: 'رویداد ها'),
+                                ],
                               ),
                               // const SizedBox(
                               //   // height: 20.0,
@@ -323,8 +314,8 @@ class _AdminPageState extends State<AdminPage> {
                                   rating: 2.75,
                                   itemBuilder: (context, index) => Icon(
                                     Icons.star,
-                                    color: Colors.amber,
-                                  ),
+                                        color: Colors.amber,
+                                      ),
                                   itemCount: 5,
                                   itemSize: 25.0,
                                   direction: Axis.horizontal,
@@ -368,32 +359,25 @@ class _AdminPageState extends State<AdminPage> {
                               endIndent: 100,
                             ),
                           ),
+                          6.height,
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              'رویداد های اخیر:',
+                              style: boldTextStyle(),
+                            ),
+                          ),
                           Container(
                             margin: EdgeInsets.symmetric(vertical: 20.0),
-                            height: 250,
+                            height: 280,
                             child: ListView(
                               scrollDirection: Axis.horizontal,
                               children: <Widget>[
-                                Container(
-                                    width: context.width() * 0.5,
-                                    // color: Colors.red,
-                                    child: EventCardWidget(event: events[0])),
-                                Container(
-                                    width: context.width() * 0.5,
-                                    // color: Colors.blue,
-                                    child: EventCardWidget(event: events[1])),
-                                Container(
-                                    width: context.width()*0.5,
-                                    // color: Colors.green,
-                                    child: EventCardWidget(event: events[2])),
-                                Container(
-                                    width: context.width()*0.5,
-                                    // color: Colors.yellow,
-                                    child: EventCardWidget(event: events[3])),
-                                Container(
-                                    width: context.width()*0.5,
-                                    // color: Colors.orange,
-                                    child: EventCardWidget(event: events[4])),
+                                EventCardWidget(event: events[0]),
+                                EventCardWidget(event: events[1]),
+                                EventCardWidget(event: events[2]),
+                                EventCardWidget(event: events[3]),
+                                EventCardWidget(event: events[4]),
                               ],
                             ),
                           ),
@@ -413,7 +397,10 @@ class _AdminPageState extends State<AdminPage> {
                               ),
                               TextButton(
                                 onPressed: () {},
-                                child: const Text('نظر دهید ...'),
+                                child: const Text(
+                                  'نظر دهید ...',
+                                  style: TextStyle(color: colorPallet3),
+                                ),
                               )
                             ],
                           ),
@@ -425,14 +412,14 @@ class _AdminPageState extends State<AdminPage> {
                               itemBuilder: (context, index) {
                                 return ListTile(
                                   contentPadding:
-                                      const EdgeInsets.symmetric(vertical: 10),
+                                  const EdgeInsets.symmetric(vertical: 10),
                                   leading: const CircleAvatar(
                                     backgroundColor: colorPallet1,
                                     child: Icon(Icons.house_rounded),
                                   ),
                                   title: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         'بابک بهکام کیا',
@@ -523,7 +510,7 @@ class _DescriptionTextWidgetState extends State<DescriptionTextWidget> {
                 ),
                 InkWell(
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Text(
                         flag ? "بیشتر" : "کمتر",

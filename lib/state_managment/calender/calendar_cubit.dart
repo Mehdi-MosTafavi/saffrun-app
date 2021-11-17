@@ -20,6 +20,7 @@ class CalendarCubit extends Cubit<CalendarState> {
       emit(CalendarLoadedData(date, data['event']!.cast<Event>(),
           data['reserve']!.cast<Reserve>()));
     } catch (e) {
+      print(e);
       emit(CalendarErrorData(date: date));
     }
   }

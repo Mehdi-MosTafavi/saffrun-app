@@ -31,6 +31,7 @@ class EventCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 200,
       margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
       decoration: BoxDecoration(
           boxShadow: defaultBoxShadow(),
@@ -100,31 +101,33 @@ class EventCardWidget extends StatelessWidget {
                                 children: <Widget>[
                                   Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(event.title,
                                           style: boldTextStyle(
-                                              color: Colors.black),
+                                              color: colorPallet2),
                                           maxLines: 2),
                                       Text("کافه رخ",
-                                          style: primaryTextStyle(
-                                              weight: FontWeight.w500,
+                                          style: boldTextStyle(
+                                              // weight: FontWeight.w500,
                                               size: 15,
                                               color: colorPallet5),
                                           maxLines: 2),
                                     ],
                                   ),
+                                  5.height,
                                   Row(
                                     children: [
+                                      8.width,
                                       const Icon(
                                         Icons.supervised_user_circle_sharp,
                                         size: 20,
-                                        color: colorPallet3,
+                                        color: colorPallet5,
                                       ),
                                       3.width,
                                       Text(
                                         "سرگرمی",
-                                        style: boldTextStyle(
+                                        style: primaryTextStyle(
                                             size: Theme.of(context)
                                                 .textTheme
                                                 .bodyText1!
@@ -155,6 +158,7 @@ class EventCardWidget extends StatelessWidget {
                               primaryTextStyle(size: 15, color: colorPallet4),
                           maxLines: 2),
                     ),
+                    10.height,
                   ],
                 ),
               )
