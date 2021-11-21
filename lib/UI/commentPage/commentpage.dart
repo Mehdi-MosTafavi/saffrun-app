@@ -5,6 +5,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:saffrun_app/UI/commentPage/components/comments.dart';
+// import 'package:saffrun_app/UI/utils/calender/shared/utils.dart';
+import 'package:saffrun_app/models/user/user.dart';
+import 'package:saffrun_app/constants/theme_color.dart';
+// import 'package:swipe_to/swipe_to.dart';
+
+// import 'components/add_comment.dart';
+import 'components/message.dart';
+// import 'package:like_button/like_button.dart';
+
 // import '../AppBar.dart';
 
 class CommentPage extends StatefulWidget {
@@ -18,22 +27,60 @@ class CommentPage extends StatefulWidget {
 
 class CommentPageState extends State<CommentPage>
     with SingleTickerProviderStateMixin {
+
+
+
+
   int repIndex = -1;
 
   bool Refresh = true;
   bool Add = true;
   bool _IsLoading = false;
-  ScrollController _listScrrollController =  ScrollController();
+  ScrollController _listScrrollController = ScrollController();
   int currentpage = 1;
 
   String message = "";
+
   // late AnimationController sendAnimation;
 
-  var textcontroller =  TextEditingController(text: '0');
+  var textcontroller = TextEditingController(text: '0');
 
   List<Comment> comments = <Comment>[];
   var formkey;
   late bool f;
+
+  // babak variables
+
+  var replyComment;
+
+  User babak = User(
+      Name: 'babak',
+      LastName: 'behkam',
+      Phone: '123456789',
+      Address: 'tabriz',
+      Type: 0,
+      cmText: 'my name is babak');
+  User javad = User(
+      Name: 'javad',
+      LastName: 'tabar',
+      Phone: '123456789',
+      Address: 'babol',
+      Type: 0,
+      cmText: 'سلام خوشگلا');
+  User amir = User(
+      Name: 'amir',
+      LastName: 'samavat',
+      Phone: '123456789',
+      Address: 'tehran',
+      Type: 0,
+      cmText: 'فشار بخور');
+  User ali = User(
+      Name: 'ali',
+      LastName: 'alamdari',
+      Phone: '123456789',
+      Address: 'semnan',
+      Type: 0,
+      cmText: 'my name is ali');
 
   @override
   void initState() {
@@ -43,7 +90,9 @@ class CommentPageState extends State<CommentPage>
     //     AnimationController(vsync: this, duration: Duration(milliseconds: 400));
     formkey = GlobalKey<FormState>();
     // TODO: implement initState
+
     comments = Comment.comments;
+
     super.initState();
     _listScrrollController.addListener(() async {
       double maxScroll = _listScrrollController.position.maxScrollExtent;
@@ -67,9 +116,9 @@ class CommentPageState extends State<CommentPage>
     AutoSizeGroup myGroup = AutoSizeGroup();
     return Form(
       key: formkey,
-      child:  Directionality(
+      child: Directionality(
           textDirection: TextDirection.rtl,
-          child:  Scaffold(
+          child: Scaffold(
               // resizeToAvoidBottomPadding: false,
               resizeToAvoidBottomInset: false,
               body: Builder(
@@ -141,51 +190,14 @@ class CommentPageState extends State<CommentPage>
                                                 },
                                                 child: Column(
                                                   children: [
-                                                    Align(
-                                                      alignment:
-                                                          Alignment.centerRight,
-                                                      child: AutoSizeText(
-                                                        comments[index]
-                                                            .user
-                                                            .Name,
-                                                        maxFontSize: 14,
-                                                        maxLines: 10,
-                                                        minFontSize: 11,
-                                                        style: const TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w700,
-                                                        ),
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 0.004 * height,
-                                                    ),
-                                                    Align(
-                                                      alignment:
-                                                          Alignment.centerRight,
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                right: 0.017 *
-                                                                    width),
-                                                        child: AutoSizeText(
-                                                          comments[index]
-                                                              .cmText,
-                                                          maxFontSize: 14,
-                                                          maxLines: 10,
-                                                          minFontSize: 11,
-                                                          style:
-                                                              const TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                          ),
-                                                          textAlign:
-                                                              TextAlign.start,
-                                                        ),
-                                                      ),
-                                                    ),
+                                                Message(
+                                                  comment: comments[index],
+                                                  // height: context.height() *
+                                                  //     0.05,
+                                                  // width:
+                                                  //     context.width() * 0.6,
+                                                  clr: colorPallet5,
+                                                ),
                                                     SizedBox(
                                                       height: 0.004 * height,
                                                     ),
@@ -258,20 +270,7 @@ class CommentPageState extends State<CommentPage>
                                                           }
                                                         });
                                                       },
-                                                      child: Container(
-                                                          width: 0.05 * width,
-                                                          height: 0.05 * width,
-                                                          child: LayoutBuilder(
-                                                              builder: (context,
-                                                                      constraint) =>
-                                                                  Icon(
-                                                                    Icons.reply,
-                                                                    size: constraint
-                                                                        .biggest
-                                                                        .height,
-                                                                    color: Colors
-                                                                        .red,
-                                                                  )))),
+                                                      child: Container()),
                                                   (comments[index]
                                                               .subComments
                                                               .length !=
@@ -349,65 +348,16 @@ class CommentPageState extends State<CommentPage>
                                                         flex: 5,
                                                         child: Column(
                                                           children: [
-                                                            Align(
-                                                              alignment: Alignment
-                                                                  .centerRight,
-                                                              child:
-                                                                  AutoSizeText(
-                                                                comments[index]
-                                                                    .subComments[
-                                                                        i]
-                                                                    .user
-                                                                    .Name,
-                                                                maxFontSize: 14,
-                                                                maxLines: 10,
-                                                                minFontSize: 11,
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700,
-                                                                ),
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .start,
-                                                              ),
+                                                            Message(
+                                                              comment: comments[index+1],
+                                                              // height: context.height() *
+                                                              //     0.1,
+                                                              // width:
+                                                              // context.width() * 0.8,
+                                                              clr: colorPallet4,
                                                             ),
-                                                            SizedBox(
-                                                              height: 0.004 *
-                                                                  height,
-                                                            ),
-                                                            Align(
-                                                              alignment: Alignment
-                                                                  .centerRight,
-                                                              child: Padding(
-                                                                padding: EdgeInsets.only(
-                                                                    right: 0.017 *
-                                                                        width),
-                                                                child:
-                                                                    AutoSizeText(
-                                                                  comments[
-                                                                          index]
-                                                                      .subComments[
-                                                                          i]
-                                                                      .cmText,
-                                                                  maxFontSize:
-                                                                      14,
-                                                                  maxLines: 10,
-                                                                  minFontSize:
-                                                                      11,
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                  ),
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .start,
-                                                                ),
-                                                              ),
-                                                            ),
+
+
                                                             SizedBox(
                                                               height: 0.004 *
                                                                   height,
@@ -586,7 +536,7 @@ class CommentPageState extends State<CommentPage>
                           bottom: 0,
                           child: Container(
                             width: width,
-                            height: 80,
+                            height: context.height() * 0.08,
                             color: Colors.grey[100],
                             alignment: Alignment.center,
                             padding:
@@ -596,15 +546,44 @@ class CommentPageState extends State<CommentPage>
                               children: [
                                 Expanded(
                                   flex: 7,
-                                  child:  TextFormField(
+                                  child: TextFormField(
                                     controller: textcontroller,
-                                    onSaved: (String? value) {
+                                    onChanged: (String? value){
                                       message = value!;
                                     },
+                                    // onSaved: (String? value) {
+                                    //   message = value!;
+                                    // },
+
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintText: 'نظر دهید...'),
                                     maxLines: 6,
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: TextButton(
+                                    onPressed: (){
+                                      setState(() {
+                                        if(message!='') {
+                                          Comment new_comment = Comment(
+                                              user: User.test_user,
+                                              cmText: message,
+                                              likeCount: 0,
+                                              dislikeCount: 0,
+                                              time: '22:30',
+                                              date: DateTime(10, 10, 2020),
+                                              subComments: []);
+                                          comments.add(new_comment);
+                                          message = '';
+                                        }
+                                      });
+                                      // CreateNewComment(user: comments[1].user,text: message);
+
+                                    },
+                                    child: Icon(Icons.send,
+                                        size: 25, color: Colors.green),
                                   ),
                                 ),
                                 //  Expanded(
@@ -704,7 +683,6 @@ class CommentPageState extends State<CommentPage>
               ))),
     );
   }
-
 }
 /*
 
