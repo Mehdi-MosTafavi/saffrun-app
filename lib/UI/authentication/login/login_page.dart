@@ -7,6 +7,8 @@ import 'package:saffrun_app/state_managment/authentication/auth_cubit.dart';
 import 'theme_login_page.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
+
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
