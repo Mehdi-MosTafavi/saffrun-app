@@ -46,6 +46,7 @@ class _HomePageState extends State<HomePage> {
               ),
         backgroundColor: Colors.white,
         body: ListView(
+          padding: const EdgeInsets.only(bottom: 100),
           // crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             // mToolbar(context, social_lbl_dashboard, social_ic_setting, onTap: () {
