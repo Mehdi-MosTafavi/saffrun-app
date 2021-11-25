@@ -9,7 +9,7 @@ class SplashNetworkService extends BaseNetworkService {
       }
       Map<String, String> body = {"token": token};
       print(body);
-      dynamic? jsonResponse = await postTemplate('/api/auth/verify/', body);
+      dynamic? jsonResponse = await postTemplate('/auth/verify/', body);
       if (jsonResponse == null) {
         return false;
       }

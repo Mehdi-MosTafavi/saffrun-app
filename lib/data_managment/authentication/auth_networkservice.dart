@@ -5,7 +5,7 @@ class AuthNetworkService extends BaseNetworkService {
     try {
       Map<String, String> body = {"username": username, "password": password};
       print(body);
-      dynamic jsonResponse = await postTemplate('/api/auth/login/', body);
+      dynamic jsonResponse = await postTemplate('/auth/login/', body);
       print(jsonResponse);
       if (jsonResponse == null) {
         return false;
@@ -24,7 +24,7 @@ class AuthNetworkService extends BaseNetworkService {
     try {
       Map<String, String> body = {"username": username, "password": password};
       print(body);
-      dynamic? jsonResponse = await postTemplate('/api/auth/register/', body);
+      dynamic? jsonResponse = await postTemplate('/auth/register/', body);
       if (jsonResponse == null) {
         return false;
       }
