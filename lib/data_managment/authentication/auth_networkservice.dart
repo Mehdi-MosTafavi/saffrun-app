@@ -10,7 +10,6 @@ class AuthNetworkService extends BaseNetworkService {
       if (jsonResponse == null) {
         return false;
       }
-      print(jsonResponse);
       saveToken(jsonResponse['access']);
       setTokenToHeader();
       return true;

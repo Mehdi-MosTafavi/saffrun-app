@@ -13,6 +13,7 @@ class SearchRepository {
     try {
       Map<String, dynamic> response = await searchNetworkService
           .searchEventFromServer(searchAndFilterProperty, page);
+      print(response);
       if (response == null) {
         return [];
       }

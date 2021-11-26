@@ -52,20 +52,22 @@ class ReserveCard extends StatelessWidget {
                                 AssetImage('assets/images/profile.png'),
                           ),
                           Expanded(
-                            child: FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: Container(
-                                padding: const EdgeInsets.only(left: 5),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        FittedBox(
+                            child: Container(
+                              padding: const EdgeInsets.only(left: 5),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      5.width,
+                                      Expanded(
+                                        flex: 1,
+                                        child: FittedBox(
                                           fit: BoxFit.scaleDown,
+                                          alignment: Alignment.centerRight,
                                           child: Text(reserve.adminName,
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
@@ -73,8 +75,11 @@ class ReserveCard extends StatelessWidget {
                                                   size: 16,
                                                   color: Colors.black)),
                                         ),
-                                        25.width,
-                                        FittedBox(
+                                      ),
+                                      25.width,
+                                      Expanded(
+                                        flex: 1,
+                                        child: FittedBox(
                                           fit: BoxFit.scaleDown,
                                           child: Text(
                                               getStringFormatJalali(
@@ -85,11 +90,11 @@ class ReserveCard extends StatelessWidget {
                                               style: primaryTextStyle(
                                                   color: Colors.blueGrey),
                                               maxLines: 2),
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ],
                               ),
                             ),
                           )

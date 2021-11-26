@@ -108,7 +108,7 @@ const String description =
     "به‌طور کلی در این بازی قدرت تکلم، حفظ خونسردی و آوردن استدلال‌های منطقی نقش بسزایی در پیروزی دارد. بازیکنان به‌طور مخفیانه نقش شان مشخص می‌شود؛ مافیاها همدیگر را می‌شناسند و شهروند که تنها از تعداد افراد مافیا آگاه هستند و عده معدودی از آن‌ها از برخی نقش‌ها اطلاع دارند. در فاز شب بازی، افراد مافیا به صورت مخفیانه یک شهروند را به قتل می‌رسانند. پزشک سعی می‌کند فردی که مافیا او را می‌خواهند به قتل برسانند را نجات دهد. کارآگاه نیز در پی شناختن مافیا است و اگر مافیا را شناسایی کند باید با استدلال به بقیه شهروندان ثابت کند او مافیا است. مافیا، پزشک، شهروند و کارآگاه شخصیت‌های اصلی بازی هستند و ممکن است در بازی‌های دیگر شخصیت‌های دیگری مانند تک تیرانداز هم به بازی اضافه شود. در طول فاز روز، تمام بازیکنان بازمانده در مورد هویت‌های مافیایی بحث می‌کنند و برای حذف یک مظنون رای‌گیری می‌کنند. بازی ادامه می‌یابد تا زمانی که همهٔ مافیاها از بازی بیرون بروند (برد شهروندان) یا تعداد مافیاها و شهروندان برابر شود (برد مافیا) یا یکی از شخصیت‌های مستقل که هر کدام شرایط برد متفاوتی دارد، برنده بازی شود. در یک بازی معمولاً نقش‌ها باید به گونه‌ای چیده شود که برای هر شخصیت، شخصیت‌های مقابل و مکمل قرار گیرد. مجموعه نمایش خانگی شب‌های مافیا و فیلم‌های گرگ‌بازی، گرگینه، آدمکش و همچنین بازی میان ما و اپیک از روی این بازی ساخته شده‌اند. همچنین مسابقه‌ای با عنوان شهروند و مافیا از شبکهٔ سلامت ایران به نمایش درآمد.";
 
 Admin admin = Admin(1, 'بابک بهکام کیا', description, 'سرگرمی', imgList,
-    imgList, imgList, imgList, imgList, '5');
+    imgList.length, imgList.length, imgList, imgList, '5');
 
 int current = 0;
 final CarouselController controller = CarouselController();
@@ -189,89 +189,80 @@ class _AdminPageState extends State<AdminPage> {
                               topLeft: Radius.circular(25),
                               topRight: Radius.circular(25))),
                       child: ListView(
+                        padding: EdgeInsets.zero,
                         physics: const ClampingScrollPhysics(),
                         controller: scrollController,
                         children: [
                           30.height,
-                          SizedBox(
-                            // height: context.height() * 0.2,
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
                                 children: [
-                                  Column(
-                                    children: [
-                                      Text(
-                                        admin.getName(),
-                                        style: boldTextStyle(
-                                            color: colorPallet1, size: 20),
-                                      ),
-                                      5.height,
-                                      SizedBox(
-                                        // height: context.height() * 0.07,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Align(
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  const Icon(
-                                                    Icons.category_outlined,
-                                                    color: colorPallet5,
-                                                  ),
-                                                  Container(
-                                                    padding:
-                                                    const EdgeInsets
-                                                        .all(5),
-                                                    child: Center(
-                                                      child: Text(
-                                                        admin.getCategory(),
-                                                        style:
-                                                        primaryTextStyle(
-                                                          color: colorPallet5,
-                                                        ),
-                                                      ),
+                                  Text(
+                                    admin.getName(),
+                                    style: boldTextStyle(
+                                        color: colorPallet1, size: 20),
+                                  ),
+                                  5.height,
+                                  SizedBox(
+                                    // height: context.height() * 0.07,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Align(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              const Icon(
+                                                Icons.category_outlined,
+                                                color: colorPallet5,
+                                              ),
+                                              Container(
+                                                padding:
+                                                    const EdgeInsets.all(5),
+                                                child: Center(
+                                                  child: Text(
+                                                    admin.getCategory(),
+                                                    style: primaryTextStyle(
+                                                      color: colorPallet5,
                                                     ),
                                                   ),
-                                                ],
+                                                ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  15.width,
-                                  const SizedBox(
-                                    // height: 20.0,
-                                    width: 20.0,
-                                  ),
-                                  MaterialButton(
-                                    onPressed: () {},
-                                    child: Container(
-                                      height: 50,
-                                      width: 100,
-                                      decoration:
-                                          boxDecorationWithRoundedCorners(
-                                              backgroundColor: colorPallet3),
-                                      child: Center(
-                                        child: Text(
-                                          'دنبال کردن',
-                                          style: boldTextStyle(
-                                              color: Colors.white),
-                                        ),
-                                      ),
+                                      ],
                                     ),
                                   ),
                                 ],
-                              ).paddingLeft(10),
-                            ),
-                          ),
+                              ),
+                              15.width,
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: MaterialButton(
+                                  padding: EdgeInsets.zero,
+                                  onPressed: () {},
+                                  child: Container(
+                                    height: 50,
+                                    width: 100,
+                                    decoration: boxDecorationWithRoundedCorners(
+                                        backgroundColor: colorPallet3),
+                                    child: Center(
+                                      child: Text(
+                                        'دنبال کردن',
+                                        style:
+                                            boldTextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ).paddingLeft(10),
                           const SizedBox(
                             height: 20.0,
                             width: 20.0,
@@ -291,7 +282,7 @@ class _AdminPageState extends State<AdminPage> {
                                     width: 20.0,
                                   ),
                                   MyColumn(
-                                      first_text: admin.getFollowers().length,
+                                      first_text: admin.getFollowers(),
                                       second_text: 'دنبال کننده'),
                                   const SizedBox(
                                     // height: 20.0,

@@ -60,7 +60,7 @@ class EventCardWidget extends StatelessWidget {
                                           style: boldTextStyle(
                                               color: Colors.black),
                                           maxLines: 2),
-                                      Text("کافه رخ",
+                                      Text(event.ownerName,
                                           style: primaryTextStyle(
                                               weight: FontWeight.w500,
                                               color: colorPallet5),

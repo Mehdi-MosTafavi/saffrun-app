@@ -3,6 +3,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 
 import 'components/nearest_event_reserve_page.dart';
+import 'components/offer_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -46,6 +47,7 @@ class _HomePageState extends State<HomePage> {
               ),
         backgroundColor: Colors.white,
         body: ListView(
+          padding: const EdgeInsets.only(bottom: 100),
           // crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             // mToolbar(context, social_lbl_dashboard, social_ic_setting, onTap: () {
@@ -140,7 +142,7 @@ class _HomePageState extends State<HomePage> {
             ),
             // const SizedBox(height: 16),
             if (selectedPos == 1) const NearestEventReservePage(),
-            // if (selectedPos == 2) SocialHomeStatus(),
+            if (selectedPos == 2) const OfferPage(),
             // if (selectedPos == 3) SocialHomeCalls()
           ],
         ));
