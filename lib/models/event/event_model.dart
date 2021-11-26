@@ -8,6 +8,7 @@ class Event {
   DateTime startTime;
   DateTime finishTime;
   String comments;
+  String ownerName;
 
   Event(
       {required this.id,
@@ -18,7 +19,8 @@ class Event {
       required this.ownerId,
       required this.startTime,
       required this.finishTime,
-      required this.comments});
+      required this.comments,
+      this.ownerName = ""});
 
   static List<Event> events = [
     Event(
@@ -113,7 +115,7 @@ class Event {
         finishTime: DateTime(2021),
         comments: '',
         ownerId: element['owner'],
-      ));
+          ownerName: 'کافه رخ'));
     });
     return events;
   }
@@ -122,16 +124,16 @@ class Event {
     List<Event> events = [];
     response.forEach((element) {
       events.add(Event(
-        id: element['id'] ?? -1,
-        title: element['title'],
-        description: element['description'],
-        imageUrl: element['image'] ?? "",
-        discount: element['discount'] ?? 0,
-        startTime: DateTime(2020),
-        finishTime: DateTime(2021),
-        comments: '',
-        ownerId: element['owner'] ?? -1,
-      ));
+          id: element['id'] ?? -1,
+          title: element['title'],
+          description: element['description'],
+          imageUrl: element['image'] ?? "",
+          discount: element['discount'] ?? 0,
+          startTime: DateTime(2020),
+          finishTime: DateTime(2021),
+          comments: '',
+          ownerId: element['owner']['id'] ?? -1,
+          ownerName: element['owner']['username']));
     });
     return events;
   }
