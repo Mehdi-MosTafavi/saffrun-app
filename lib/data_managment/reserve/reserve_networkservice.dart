@@ -17,4 +17,17 @@ class ReserveNetworkService extends BaseNetworkService {
       return false;
     }
   }
+
+  Future<bool> sendReserveId(int id) async {
+    try {
+      dynamic response =
+          await postTemplate('/reserve/reserve-employee/', {"reserve_id": id});
+      if (response == null) {
+        return false;
+      }
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }

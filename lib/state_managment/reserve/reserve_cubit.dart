@@ -31,4 +31,16 @@ class ReserveCubit extends Cubit<ReserveState> {
   void selectedReserve(Reserve id) {
     emit(ReserveSelectedTime(selectReserve: id));
   }
+
+  Future<bool> sendReserveId(Reserve selectedReserveId) async {
+    emit(ReserveSendingTime());
+    try {
+      await reserveRepository.sendReserveId(selectedReserveId.id);
+      emit(ReserveSendSuccess());
+      return true;
+    } catch (e) {
+      emit(ReserveSelectedTime(selectReserve: selectedReserveId));
+      return false;
+    }
+  }
 }

@@ -18,11 +18,12 @@ class ReservePage extends StatefulWidget {
 }
 
 class _ReservePageState extends State<ReservePage> {
-  int? selectedReserveId;
+  Reserve? selectedReserve;
   late Reserve? nearReserve;
   late List<List<Reserve>>? listReserves;
   late ScrollController controller;
   late ScrollController controllerInLiner;
+  late BuildContext contextCubit;
 
   @override
   void initState() {
@@ -47,10 +48,15 @@ class _ReservePageState extends State<ReservePage> {
         floatingActionButton: Align(
           alignment: const Alignment(-1, 0.85),
           child: FloatingActionButton(
-            onPressed: () {
-              if (selectedReserveId == null) {
+            onPressed: () async {
+              if (selectedReserve == null) {
                 toast('لطفا یک زمان انتخاب کنید');
                 return;
+              }
+              bool status = await BlocProvider.of<ReserveCubit>(contextCubit)
+                  .sendReserveId(selectedReserve!);
+              if (status) {
+                toast('نوبت با موفقیت گرفته شد');
               }
             },
             child: const Icon(Icons.check_rounded),
@@ -60,6 +66,7 @@ class _ReservePageState extends State<ReservePage> {
         body: BlocBuilder<ReserveCubit, ReserveState>(
           builder: (context, state) {
             print(state);
+            contextCubit = context;
             if (state is ReserveInitial) {
               BlocProvider.of<ReserveCubit>(context).loadTimeReserve(2);
             }
@@ -116,13 +123,15 @@ class _ReservePageState extends State<ReservePage> {
                                     15.width,
                                     InkWell(
                                         onTap: () {
-                                          selectedReserveId = nearReserve!.id;
+                                          selectedReserve = nearReserve!;
                                           BlocProvider.of<ReserveCubit>(context)
                                               .selectedReserve(nearReserve!);
                                           controller.animateToPosition(0);
                                         },
                                         child: TimeWidget(
-                                          selected: (selectedReserveId ?? -1) ==
+                                          selected: (selectedReserve == null
+                                                  ? -1
+                                                  : selectedReserve!.id) ==
                                               nearReserve!.id,
                                           reserve: nearReserve!,
                                         ))
@@ -195,10 +204,9 @@ class _ReservePageState extends State<ReservePage> {
                                             listReserves![index][i];
                                             return InkWell(
                                                 onTap: () {
-                                                  selectedReserveId =
-                                                      reserve.id;
+                                                  selectedReserve = reserve;
                                                   BlocProvider.of<ReserveCubit>(
-                                                      context)
+                                                          context)
                                                       .selectedReserve(reserve);
                                                   controller.animateToPosition(
                                                       controller.position
@@ -206,8 +214,7 @@ class _ReservePageState extends State<ReservePage> {
                                                 },
                                                 child: TimeWidget(
                                                   selected:
-                                                  (selectedReserveId ??
-                                                      -1) ==
+                                                  (selectedReserve ?? -1) ==
                                                       reserve.id,
                                                   reserve: reserve,
                                                 ));

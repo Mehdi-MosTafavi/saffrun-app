@@ -29,4 +29,9 @@ class ReserveRepository {
       };
     }
   }
+
+  Future<bool> sendReserveId(int id) async {
+    await reserveNetworkService.sendReserveId(id);
+    return true;
+  }
 }

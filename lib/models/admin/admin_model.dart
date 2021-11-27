@@ -80,7 +80,20 @@ class Admin {
         'ایشون ادم بسیار فهمیده ای هستن',
         'دسته بندی',
         [
-          'https://www.iberdrola.com/wcorp/gc/prod/en_US/comunicacion/polinizacion_natural_mult_1_res/Polinizacion_1_746x419.jpg'
+          'https://res.cloudinary.com/culturemap-com/image/upload/ar_4:3,c_fill,g_faces:center,w_980/v1519064369/photos/269761_original.jpg'
+        ],
+        20,
+        20,
+        [''],
+        [''],
+        '3.5'),
+    Admin(
+        1,
+        'امیر مهدی ایکانی',
+        'ایشون ادم بسیار فهمیده ای هستن',
+        'دسته بندی',
+        [
+          'https://res.cloudinary.com/culturemap-com/image/upload/ar_4:3,c_fill,g_faces:center,w_980/v1519064369/photos/269761_original.jpg'
         ],
         20,
         20,
