@@ -44,7 +44,7 @@ class BaseNetworkService {
     }
   }
 
-  Future<dynamic>? getTemplate(String url, {Map<String, String>? body}) async {
+  Future<dynamic>? getTemplate(String url, {Map<String, dynamic>? body}) async {
     try {
       String urlOfBody = '?';
       if (body != null) {

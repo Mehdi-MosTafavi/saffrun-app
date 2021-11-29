@@ -12,21 +12,35 @@ class ReserveCubit extends Cubit<ReserveState> {
     reserveRepository = ReserveRepository();
   }
 
-  Future<void> loadTimeReserve() async {
+  Future<void> loadTimeReserve(int adminId) async {
     try {
       emit(ReserveLoadingTime(isActive: true));
 
-      Map<String, dynamic> data = await reserveRepository.getTimesForReserve();
-
+      Map<String, dynamic> data =
+          await reserveRepository.getTimesForReserve(adminId);
+      print(data);
       emit(ReserveLoadedTime(
           nearest: data['nearest'], reserves: data['list_reserve']));
     } catch (e) {
       print(e);
+      print('error injas');
       emit(ReserveError());
     }
   }
 
   void selectedReserve(Reserve id) {
     emit(ReserveSelectedTime(selectReserve: id));
+  }
+
+  Future<bool> sendReserveId(Reserve selectedReserveId) async {
+    emit(ReserveSendingTime());
+    try {
+      await reserveRepository.sendReserveId(selectedReserveId.id);
+      emit(ReserveSendSuccess());
+      return true;
+    } catch (e) {
+      emit(ReserveSelectedTime(selectReserve: selectedReserveId));
+      return false;
+    }
   }
 }

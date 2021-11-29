@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:nb_utils/nb_utils.dart';
+import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/models/admin/admin_model.dart';
 
 class OfferPage extends StatefulWidget {
@@ -53,14 +55,14 @@ class _OfferPageState extends State<OfferPage> {
                             width: width * 0.32,
                           ),
                         ),
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: Container(
-                            margin: const EdgeInsets.only(right: 10, top: 10),
-                            child: const Icon(Icons.favorite_border,
-                                color: Colors.red, size: 20),
-                          ),
-                        ),
+                        // Align(
+                        //   alignment: Alignment.topRight,
+                        //   child: Container(
+                        //     margin: const EdgeInsets.only(right: 10, top: 10),
+                        //     child: const Icon(Icons.favorite_border,
+                        //         color: Colors.red, size: 20),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
@@ -72,7 +74,7 @@ class _OfferPageState extends State<OfferPage> {
                         text(
                           mListings[index].getName(),
                           textColor: Colors.black,
-                        ),
+                            fontWeight: FontWeight.bold),
                         text(mListings[index].getDescription(),
                             maxLine: 1, textColor: Colors.black, fontSize: 13),
                         SizedBox(height: 2),
@@ -95,13 +97,28 @@ class _OfferPageState extends State<OfferPage> {
                                 textColor: Colors.white, fontSize: 13),
                           ],
                         ),
-                        text(mListings[index].getFollowers().toString(),
-                            textColor: Colors.black, fontSize: 13),
-                        text(mListings[index].getRate(),
-                            maxLine: 1,
-                            isLongText: true,
-                            textColor: Colors.black,
-                            fontSize: 13),
+                        Container(
+                          padding: const EdgeInsets.all(3),
+                          decoration: boxDecorationWithRoundedCorners(
+                              backgroundColor: colorPallet1),
+                          child: FittedBox(
+                            child: Row(
+                              children: [
+                                text('تعداد دنبال کننده ها: ',
+                                    textColor: Colors.white, fontSize: 13),
+                                text(mListings[index].getFollowers().toString(),
+                                    fontWeight: FontWeight.bold,
+                                    textColor: Colors.white,
+                                    fontSize: 13),
+                              ],
+                            ),
+                          ),
+                        ),
+                        // text(mListings[index].getRate(),
+                        //     maxLine: 1,
+                        //     isLongText: true,
+                        //     textColor: Colors.black,
+                        //     fontSize: 13),
                         const SizedBox(height: 8),
                         // const Divider(height: 0.5, color: Colors.black, thickness: 1)
                       ],
