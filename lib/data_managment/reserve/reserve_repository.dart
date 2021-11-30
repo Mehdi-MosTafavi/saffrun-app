@@ -12,21 +12,15 @@ class ReserveRepository {
     try {
       // await Future.delayed(Duration(seconds: 1));
       dynamic result = await reserveNetworkService.getReserveTime(adminId);
-      if (result == null)
-        return {
-          'nearest': Reserve.reserve[0][0],
-          'list_reserve': Reserve.reserve
-        };
+      if (result == null || result["nearest"] == "")
+        throw Exception();
       Reserve nearest = Reserve.fromNearest(result['nearest'], adminId);
       List<List<Reserve>> reserves = Reserve.fromJsonOfNextSeven(
           result['next_seven_days'], adminId, nearest.id);
       return {'nearest': nearest, 'list_reserve': reserves};
     } catch (e) {
       print(e);
-      return {
-        'nearest': Reserve.reserve[0][0],
-        'list_reserve': Reserve.reserve
-      };
+      rethrow;
     }
   }
 

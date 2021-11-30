@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/src/extensions/widget_extensions.dart';
+import 'package:saffrun_app/constants/theme_color.dart';
 
 import 'appbar_base.dart';
 
@@ -20,6 +21,7 @@ class AppBarTitleProfile extends AppBarWidget {
       title,
       style: TextStyle(
           fontWeight: FontWeight.w700,
+          color: colorPallet1,
           fontSize: Theme.of(context).textTheme.headline6!.fontSize! * 0.8),
     );
   }

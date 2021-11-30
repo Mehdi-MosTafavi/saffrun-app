@@ -25,7 +25,7 @@ class ProfileListItem extends StatelessWidget {
     final double height = context.height();
     final double width = context.width();
     return Container(
-      height: height * 0.075,
+      // height: height * 0.08,
       margin: EdgeInsets.symmetric(
         horizontal: width * 0.005,
       ).copyWith(

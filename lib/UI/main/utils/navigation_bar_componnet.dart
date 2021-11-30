@@ -4,7 +4,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:saffrun_app/UI/calender/calender_page.dart';
 import 'package:saffrun_app/UI/home/home_page.dart';
-import 'package:saffrun_app/UI/reserve/reserve_page.dart';
+import 'package:saffrun_app/UI/profileUser/profile_user.dart';
 import 'package:saffrun_app/UI/search/search_page.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 
@@ -17,39 +17,43 @@ class NavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     // double width = MediaQuery.of(context).size.width;
     // double height = MediaQuery.of(context).size.height;
-    return PersistentTabView(
-      context,
-      controller: controller,
-      confineInSafeArea: true,
-      screens: _buildScreens(),
-      items: _navBarsItems(),
-      stateManagement: true,
-      resizeToAvoidBottomInset: false,
-      // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
-      decoration: const NavBarDecoration(
-          // borderRadius: BorderRadius.circular(10.0),
-          colorBehindNavBar: Colors.white60
-          // colorBehindNavBar: Colors.white
-          ),
-      // padding: NavBarPadding.only(bottom: height*0.08),
-      bottomScreenMargin: 0,
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: PersistentTabView(
+        context,
+        controller: controller,
 
-      navBarStyle: NavBarStyle.style5,
-      hideNavigationBarWhenKeyboardShows: true,
-      // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
-      popAllScreensOnTapOfSelectedTab: true,
-      backgroundColor: Colors.white30,
-      popActionScreens: PopActionScreensType.all,
-      itemAnimationProperties: const ItemAnimationProperties(
-        // Navigation Bar's items animation properties.
-        duration: Duration(milliseconds: 200),
-        curve: Curves.ease,
-      ),
-      screenTransitionAnimation: const ScreenTransitionAnimation(
-        // Screen transition animation on change of selected tab.
-        animateTabTransition: true,
-        curve: Curves.ease,
-        duration: Duration(milliseconds: 200),
+        confineInSafeArea: true,
+        screens: _buildScreens(),
+        items: _navBarsItems(),
+        stateManagement: true,
+        resizeToAvoidBottomInset: false,
+        // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
+        decoration: const NavBarDecoration(
+            // borderRadius: BorderRadius.circular(10.0),
+            colorBehindNavBar: Colors.white60
+            // colorBehindNavBar: Colors.white
+            ),
+        // padding: NavBarPadding.only(bottom: height*0.08),
+        bottomScreenMargin: 0,
+
+        navBarStyle: NavBarStyle.style5,
+        hideNavigationBarWhenKeyboardShows: true,
+        // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
+        popAllScreensOnTapOfSelectedTab: true,
+        backgroundColor: Colors.white30,
+        popActionScreens: PopActionScreensType.all,
+        itemAnimationProperties: const ItemAnimationProperties(
+          // Navigation Bar's items animation properties.
+          duration: Duration(milliseconds: 200),
+          curve: Curves.ease,
+        ),
+        screenTransitionAnimation: const ScreenTransitionAnimation(
+          // Screen transition animation on change of selected tab.
+          animateTabTransition: true,
+          curve: Curves.ease,
+          duration: Duration(milliseconds: 200),
+        ),
       ),
     );
   }
@@ -58,10 +62,10 @@ class NavigationBar extends StatelessWidget {
     return [
       const HomePage(),
       const SearchPage(),
-      const ReservePage(),
+      Container(),
       const CalenderPage(),
       // const CalenderPage2(),
-      Container()
+      const ProfileUserPage()
     ];
   }
 

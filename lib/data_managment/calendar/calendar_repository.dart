@@ -27,6 +27,7 @@ class CalendarRepository {
         'event': Event.fromJsonCalendar(response['events']),
         'reserve': Reserve.fromJson(response['reserves'], date)
       };
+      print(data);
       return data;
     } catch (e) {
       print(e);

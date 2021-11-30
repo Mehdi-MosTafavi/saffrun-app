@@ -1,4 +1,3 @@
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +7,7 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:saffrun_app/UI/admin/components/event_card.dart';
 import 'package:saffrun_app/UI/admin/components/my_column.dart';
 import 'package:saffrun_app/UI/commentPage/commentpage.dart';
+import 'package:saffrun_app/UI/reserve/reserve_page.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/models/admin/admin_model.dart';
 import 'package:saffrun_app/models/event/event_model.dart';
@@ -131,7 +131,14 @@ class _AdminPageState extends State<AdminPage> {
       floatingActionButton: Align(
         alignment: Alignment.bottomLeft,
         child: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            pushNewScreen(
+              context,
+              screen: ReservePage(),
+              withNavBar: false, // OPTIONAL VALUE. True by default.
+              pageTransitionAnimation: PageTransitionAnimation.cupertino,
+            );
+          },
           child: const Icon(CupertinoIcons.calendar_circle_fill),
           backgroundColor: colorPallet5,
         ),
@@ -410,14 +417,14 @@ class _AdminPageState extends State<AdminPage> {
                               itemBuilder: (context, index) {
                                 return ListTile(
                                   contentPadding:
-                                  const EdgeInsets.symmetric(vertical: 10),
+                                      const EdgeInsets.symmetric(vertical: 10),
                                   leading: const CircleAvatar(
                                     backgroundColor: colorPallet1,
                                     child: Icon(Icons.house_rounded),
                                   ),
                                   title: Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         'بابک بهکام کیا',

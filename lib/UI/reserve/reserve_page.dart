@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
+import 'package:saffrun_app/UI/utils/appbar/appbar_type1.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/models/reserve/reserve.dart';
 import 'package:saffrun_app/state_managment/reserve/reserve_cubit.dart';
@@ -45,8 +46,14 @@ class _ReservePageState extends State<ReservePage> {
     return BlocProvider(
       create: (context) => ReserveCubit(),
       child: Scaffold(
+        appBar: AppBarTitleProfile(
+          context,
+          0,
+          title: 'رزرو نوبت',
+          functionBack: () {},
+        ),
         floatingActionButton: Align(
-          alignment: const Alignment(-1, 0.85),
+          alignment: Alignment.bottomLeft,
           child: FloatingActionButton(
             onPressed: () async {
               if (selectedReserve == null) {
@@ -70,7 +77,20 @@ class _ReservePageState extends State<ReservePage> {
             if (state is ReserveInitial) {
               BlocProvider.of<ReserveCubit>(context).loadTimeReserve(2);
             }
-            if (state is ReserveError) return Container();
+            if (state is ReserveError) {
+              return Column(
+                children: [
+                  SizedBox(
+                    height: context.height() * 0.16,
+                    child: const CardProfileReserveWidget()
+                        .paddingSymmetric(horizontal: 25),
+                  ),
+                  const Center(
+                          child: Text("هیچ نوبتی برای این کارفرما وجود ندارد"))
+                      .paddingTop(30)
+                ],
+              );
+            }
             if (state is ReserveLoadedTime) {
               nearReserve = state.nearest;
               listReserves = state.reserves;
@@ -82,7 +102,7 @@ class _ReservePageState extends State<ReservePage> {
               child: ListView(
                 controller: controller,
                 physics: const ClampingScrollPhysics(),
-                padding: const EdgeInsets.only(top: 65),
+                padding: const EdgeInsets.only(top: 10),
                 children: [
                   SizedBox(
                     height: context.height() * 0.16,
@@ -117,8 +137,8 @@ class _ReservePageState extends State<ReservePage> {
                                 Row(
                                   children: [
                                     Text(getDateString(
-                                            nearReserve!.targetStartReserve,
-                                            true) +
+                                        nearReserve!.targetStartReserve,
+                                        true) +
                                         ":"),
                                     15.width,
                                     InkWell(
@@ -130,8 +150,8 @@ class _ReservePageState extends State<ReservePage> {
                                         },
                                         child: TimeWidget(
                                           selected: (selectedReserve == null
-                                                  ? -1
-                                                  : selectedReserve!.id) ==
+                                              ? -1
+                                              : selectedReserve!.id) ==
                                               nearReserve!.id,
                                           reserve: nearReserve!,
                                         ))
@@ -175,7 +195,7 @@ class _ReservePageState extends State<ReservePage> {
                                       return Container();
                                     return ListView(
                                       padding:
-                                          EdgeInsets.symmetric(vertical: 5),
+                                      EdgeInsets.symmetric(vertical: 5),
                                       physics: NeverScrollableScrollPhysics(),
                                       shrinkWrap: true,
                                       children: [
@@ -206,7 +226,7 @@ class _ReservePageState extends State<ReservePage> {
                                                 onTap: () {
                                                   selectedReserve = reserve;
                                                   BlocProvider.of<ReserveCubit>(
-                                                          context)
+                                                      context)
                                                       .selectedReserve(reserve);
                                                   controller.animateToPosition(
                                                       controller.position

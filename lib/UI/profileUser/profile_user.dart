@@ -33,7 +33,7 @@ class _ProfileUserPageState extends State<ProfileUserPage> {
   }
 
   Widget buildTop() {
-    double coverHeight = context.height() * 0.3;
+    double coverHeight = context.height() * 0.27;
     double profileHeight = context.height() * 0.2;
     final top = coverHeight - profileHeight / 2;
     final bottom = profileHeight / 2;
@@ -112,8 +112,7 @@ class ProfileListItems extends StatelessWidget {
     return Column(
       children: <Widget>[
         SizedBox(
-          height: context.height() * 0.05,
-        ),
+            height: context.height() * 0.032),
         const ProfileListItem(
           icon: LineAwesomeIcons.user_shield,
           // icon: Icons.home,

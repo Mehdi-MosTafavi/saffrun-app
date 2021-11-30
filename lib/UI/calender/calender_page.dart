@@ -150,7 +150,7 @@ class _CalenderPageState extends State<CalenderPage> {
                     ),
                   ),
                   if (state is CalendarLoadedData)
-                    state.events.length == 0
+                    state.reserves.length == 0
                         ? Center(child: Text("هیچ نوبتی یافت نشد"))
                         : ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
