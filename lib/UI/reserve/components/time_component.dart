@@ -40,8 +40,9 @@ class TimeWidget extends StatelessWidget {
   }
 
   String getTimeReserve() {
+    var minute = '0' + reserve.targetStartReserve.minute.toString();
     return reserve.targetStartReserve.hour.toString() +
         ':' +
-        reserve.targetStartReserve.minute.toString();
+        (minute).substring(minute.length - 2, minute.length);
   }
 }

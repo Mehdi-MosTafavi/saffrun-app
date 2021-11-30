@@ -25,11 +25,12 @@ class CalendarRepository {
           await calendarNetworkService.getEventFromServer(date);
       Map<String, List> data = {
         'event': Event.fromJsonCalendar(response['events']),
-        'reserve': Reserve.reserve[0]
+        'reserve': Reserve.fromJson(response['reserves'], date)
       };
       return data;
     } catch (e) {
-      return {'event': [], 'reserve': Reserve.reserve[0]};
+      print(e);
+      return {'event': [], 'reserve': []};
     }
   }
 
@@ -44,10 +45,10 @@ class CalendarRepository {
             int.parse(splitedDate[2]))] = [];
       });
 
-      return days;
+      return dates;
     } catch (e) {
       print(e);
-      return days;
+      // return days;
       return <DateTime, List<dynamic>>{};
     }
   }

@@ -9,6 +9,7 @@ class CalendarNetworkService extends BaseNetworkService {
           '-' +
           date.day.toString()
     });
+    print('---------');
     print(response);
     if (response != null) {
       return response;
@@ -21,6 +22,7 @@ class CalendarNetworkService extends BaseNetworkService {
     if (response != null) {
       return response;
     }
+    print(response);
     throw Exception();
   }
 }

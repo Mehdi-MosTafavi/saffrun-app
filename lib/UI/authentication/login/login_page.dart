@@ -7,6 +7,8 @@ import 'package:saffrun_app/state_managment/authentication/auth_cubit.dart';
 import 'theme_login_page.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
+
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
@@ -46,7 +48,6 @@ class LoginBody extends StatelessWidget {
         bool status = await BlocProvider.of<AuthCubit>(context)
             .signUpHandler(LoginData.name ?? "", LoginData.password ?? "");
         if (status) {
-          Navigator.pushReplacementNamed(context, HOME_PAGE_PATH);
         } else {
           return 'ثبت نام با مشکل مواجه شده است';
         }
@@ -66,7 +67,7 @@ class LoginBody extends StatelessWidget {
         }
       },
       disableCustomPageTransformer: true,
-      loginAfterSignUp: true,
+      loginAfterSignUp: false,
       messages: LoginMessages(
         userHint: 'نام کاریری',
         passwordHint: 'رمز عبور',
@@ -82,6 +83,7 @@ class LoginBody extends StatelessWidget {
         recoverPasswordSuccess: 'رمز عبور با موفقیت بازگردانده شد',
         recoveryCodeHint: 'بازگردانی رمزعبور',
         recoverPasswordIntro: 'بازگردانی رمزعبور',
+        signUpSuccess: 'ثبت نام با موفقیت انجام شد',
       ),
     );
   }

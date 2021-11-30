@@ -457,6 +457,7 @@ class CalendarDayPicker extends StatelessWidget {
               ),
               Flexible(
                 child: GridView.custom(
+                  physics: NeverScrollableScrollPhysics(),
                   gridDelegate: _kDayPickerGridDelegate,
                   childrenDelegate: SliverChildListDelegate(labels,
                       addRepaintBoundaries: false),

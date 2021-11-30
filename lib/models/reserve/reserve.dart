@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class Reserve {
   int id;
   int adminId;
@@ -7,14 +9,13 @@ class Reserve {
   DateTime targetEndReserve;
   String description;
 
-  Reserve(
-      {required this.id,
-      required this.adminId,
-      required this.adminName,
-      required this.createdReserve,
-      this.description = "",
-      required this.targetStartReserve,
-      required this.targetEndReserve});
+  Reserve({required this.id,
+    required this.adminId,
+    required this.adminName,
+    required this.createdReserve,
+    this.description = "",
+    required this.targetStartReserve,
+    required this.targetEndReserve});
 
   static List<List<Reserve>> reserve = [
     [
@@ -214,4 +215,48 @@ class Reserve {
           targetEndReserve: DateTime(2021, 11, 7, 15, 30))
     ],
   ];
+
+  static fromJson(List response, DateTime today) {
+    List<Reserve> reserves = [];
+    response.forEach((element) {
+      List listTimesStart = (element['start_time'] as String).split(':');
+      List listTimesEnd = (element['end_time'] as String).split(':');
+      reserves.add(Reserve(
+          id: element['id'],
+          adminId: element['owner']['id'],
+          adminName: element['owner']['username'],
+          createdReserve: today,
+          targetStartReserve: DateTime(2020, 0, 0, int.parse(listTimesStart[0]),
+              int.parse(listTimesStart[1]), int.parse(listTimesStart[2])),
+          targetEndReserve: DateTime(2020, 0, 0, int.parse(listTimesEnd[0]),
+              int.parse(listTimesEnd[1]), int.parse(listTimesEnd[2]))));
+    });
+    return reserves;
+  }
+
+  static Reserve fromNearest(Map<String, dynamic> nearest, int adminId) {
+    return Reserve(
+        id: nearest['reserve_id'],
+        adminId: adminId,
+        adminName: '',
+        createdReserve: DateTime.now(),
+        targetStartReserve:
+            DateFormat('yyyy-MM-ddThh:mm').parse(nearest['datetime']),
+        targetEndReserve: DateTime.now());
+  }
+
+  static List<List<Reserve>> fromJsonOfNextSeven(
+      List result, int adminId, int nearId) {
+    List<List<Reserve>> reserves = [[], [], [], [], [], [], []];
+    int index = 0;
+    result.forEach((element) {
+      element.forEach((element2) {
+        if (nearId != element2['reserve_id']) {
+          reserves[index].add(fromNearest(element2, adminId));
+        }
+      });
+      index++;
+    });
+    return reserves;
+  }
 }

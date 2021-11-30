@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/models/reserve/reserve.dart';
 import 'package:saffrun_app/state_managment/reserve/reserve_cubit.dart';
@@ -17,11 +18,12 @@ class ReservePage extends StatefulWidget {
 }
 
 class _ReservePageState extends State<ReservePage> {
-  int? selectedReserveId;
+  Reserve? selectedReserve;
   late Reserve? nearReserve;
   late List<List<Reserve>>? listReserves;
   late ScrollController controller;
   late ScrollController controllerInLiner;
+  late BuildContext contextCubit;
 
   @override
   void initState() {
@@ -46,10 +48,15 @@ class _ReservePageState extends State<ReservePage> {
         floatingActionButton: Align(
           alignment: const Alignment(-1, 0.85),
           child: FloatingActionButton(
-            onPressed: () {
-              if (selectedReserveId == null) {
+            onPressed: () async {
+              if (selectedReserve == null) {
                 toast('لطفا یک زمان انتخاب کنید');
                 return;
+              }
+              bool status = await BlocProvider.of<ReserveCubit>(contextCubit)
+                  .sendReserveId(selectedReserve!);
+              if (status) {
+                toast('نوبت با موفقیت گرفته شد');
               }
             },
             child: const Icon(Icons.check_rounded),
@@ -59,16 +66,15 @@ class _ReservePageState extends State<ReservePage> {
         body: BlocBuilder<ReserveCubit, ReserveState>(
           builder: (context, state) {
             print(state);
+            contextCubit = context;
             if (state is ReserveInitial) {
-              BlocProvider.of<ReserveCubit>(context).loadTimeReserve();
+              BlocProvider.of<ReserveCubit>(context).loadTimeReserve(2);
             }
-
+            if (state is ReserveError) return Container();
             if (state is ReserveLoadedTime) {
               nearReserve = state.nearest;
               listReserves = state.reserves;
-              try {
-                listReserves![0].removeAt(0);
-              } catch (e) {}
+              try {} catch (e) {}
             }
 
             return Directionality(
@@ -110,17 +116,22 @@ class _ReservePageState extends State<ReservePage> {
                                 15.height,
                                 Row(
                                   children: [
-                                    const Text('امروز:'),
+                                    Text(getDateString(
+                                            nearReserve!.targetStartReserve,
+                                            true) +
+                                        ":"),
                                     15.width,
                                     InkWell(
                                         onTap: () {
-                                          selectedReserveId = nearReserve!.id;
+                                          selectedReserve = nearReserve!;
                                           BlocProvider.of<ReserveCubit>(context)
                                               .selectedReserve(nearReserve!);
                                           controller.animateToPosition(0);
                                         },
                                         child: TimeWidget(
-                                          selected: (selectedReserveId ?? -1) ==
+                                          selected: (selectedReserve == null
+                                                  ? -1
+                                                  : selectedReserve!.id) ==
                                               nearReserve!.id,
                                           reserve: nearReserve!,
                                         ))
@@ -160,6 +171,8 @@ class _ReservePageState extends State<ReservePage> {
                                   shrinkWrap: true,
                                   // physics: NeverScrollableScrollPhysics(),
                                   itemBuilder: (context, index) {
+                                    if (listReserves![index].length == 0)
+                                      return Container();
                                     return ListView(
                                       padding:
                                           EdgeInsets.symmetric(vertical: 5),
@@ -167,8 +180,11 @@ class _ReservePageState extends State<ReservePage> {
                                       shrinkWrap: true,
                                       children: [
                                         Text(
-                                          'روز  ' +
-                                              (index + 1).toString() +
+                                          '' +
+                                              getDateString(
+                                                  listReserves![index][0]
+                                                      .targetStartReserve,
+                                                  false) +
                                               " : ",
                                           style: primaryTextStyle(),
                                         ),
@@ -180,7 +196,7 @@ class _ReservePageState extends State<ReservePage> {
                                           const SliverGridDelegateWithFixedCrossAxisCount(
                                               crossAxisCount: 3,
                                               childAspectRatio: 1.65
-                                                  // crossAxisSpacing: 5.0,
+                                            // crossAxisSpacing: 5.0,
                                             // mainAxisSpacing: 5.0,
                                           ),
                                           itemBuilder: (context, i) {
@@ -188,8 +204,7 @@ class _ReservePageState extends State<ReservePage> {
                                             listReserves![index][i];
                                             return InkWell(
                                                 onTap: () {
-                                                  selectedReserveId =
-                                                      reserve.id;
+                                                  selectedReserve = reserve;
                                                   BlocProvider.of<ReserveCubit>(
                                                           context)
                                                       .selectedReserve(reserve);
@@ -199,8 +214,7 @@ class _ReservePageState extends State<ReservePage> {
                                                 },
                                                 child: TimeWidget(
                                                   selected:
-                                                  (selectedReserveId ??
-                                                      -1) ==
+                                                  (selectedReserve ?? -1) ==
                                                       reserve.id,
                                                   reserve: reserve,
                                                 ));
@@ -226,5 +240,14 @@ class _ReservePageState extends State<ReservePage> {
         ),
       ),
     );
+  }
+
+  String getDateString(DateTime targetStartReserve, bool near) {
+    if (targetStartReserve.isToday && near) {
+      return 'امروز';
+    }
+    var jalali = Jalali.fromDateTime(targetStartReserve);
+    var f = jalali.formatter;
+    return '${f.wN} ${f.d} ${f.mN}';
   }
 }

@@ -10,7 +10,7 @@ Map<String, String> header = {
 };
 
 class BaseNetworkService {
-  String urlServer = "http://10.0.2.2:8000";
+  String urlServer = "http://10.0.2.2:8000/api";
 
   Future<void> saveToken(String token) async {
     var _prefs = await SharedPreferences.getInstance();
@@ -34,7 +34,7 @@ class BaseNetworkService {
       ;
       print(response.body);
       print(header);
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         String body = convert.utf8.decode(response.bodyBytes);
         var _jsonResponse = convert.jsonDecode(body);
         return _jsonResponse;
@@ -44,7 +44,7 @@ class BaseNetworkService {
     }
   }
 
-  Future<dynamic>? getTemplate(String url, {Map<String, String>? body}) async {
+  Future<dynamic>? getTemplate(String url, {Map<String, dynamic>? body}) async {
     try {
       String urlOfBody = '?';
       if (body != null) {
@@ -55,6 +55,7 @@ class BaseNetworkService {
       print(urlServer + url + urlOfBody);
       http.Response response = await http
           .get(Uri.parse(urlServer + url + urlOfBody), headers: header);
+      print(response.body);
       if (response.statusCode == 200) {
         String body = convert.utf8.decode(response.bodyBytes);
         var _jsonResponse = convert.jsonDecode(body);
