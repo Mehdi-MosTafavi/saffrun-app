@@ -52,6 +52,7 @@ dependencies:
   simple_gesture_detector: ^0.2.0
   shamsi_date: ^1.0.0
   flutter_rating_bar: ^4.0.0
+  line_awesome_flutter: ^2.0.0
 
   animated_icon_button: ^1.0.2
   like_button: ^2.0.3
