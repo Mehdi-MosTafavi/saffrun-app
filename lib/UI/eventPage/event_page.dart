@@ -11,12 +11,6 @@ class EventPage extends StatefulWidget {
   _EventPageState createState() => _EventPageState();
 }
 
-final List<AssetImage> imgList = [
-  const AssetImage('assets/images/mafia1.jpg'),
-  const AssetImage('assets/images/mafia2.jpg'),
-  const AssetImage('assets/images/mafia3.jpg'),
-  const AssetImage('assets/images/mafia4.jpg')
-];
 
 int current = 0;
 final CarouselController controller = CarouselController();
@@ -27,11 +21,36 @@ final String description =
 class _EventPageState extends State<EventPage> {
   late ScrollController scrollController;
 
+  late final List<AssetImage> imgList;
+  late final List<Widget> imageSliders;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     scrollController = ScrollController();
+    imgList = [
+      AssetImage('assets/images/mafia1.jpg'),
+      AssetImage('assets/images/mafia2.jpg'),
+      AssetImage('assets/images/mafia3.jpg'),
+      AssetImage('assets/images/mafia4.jpg')
+    ];
+    imageSliders = imgList
+        .map((item) => Container(
+              child: Container(
+                margin: const EdgeInsets.all(5.0),
+                child: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+                    child: Stack(
+                      children: <Widget>[
+                        Image(
+                          image: item,
+                        ),
+                      ],
+                    )),
+              ),
+            ))
+        .toList();
   }
 
   @override
@@ -344,22 +363,6 @@ class _EventPageState extends State<EventPage> {
   }
 }
 
-final List<Widget> imageSliders = imgList
-    .map((item) => Container(
-          child: Container(
-            margin: const EdgeInsets.all(5.0),
-            child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                child: Stack(
-                  children: <Widget>[
-                    Image(
-                      image: item,
-                    ),
-                  ],
-                )),
-          ),
-        ))
-    .toList();
 
 class DescriptionTextWidget extends StatefulWidget {
   final String text;
