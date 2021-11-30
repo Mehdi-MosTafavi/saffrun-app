@@ -7,7 +7,6 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:saffrun_app/UI/commentPage/components/comments.dart';
 import 'package:saffrun_app/UI/utils/appbar/appbar_type1.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
-
 // import 'package:saffrun_app/UI/utils/calender/shared/utils.dart';
 import 'package:saffrun_app/models/user/user.dart';
 
@@ -28,10 +27,6 @@ class CommentPage extends StatefulWidget {
 
 class CommentPageState extends State<CommentPage>
     with SingleTickerProviderStateMixin {
-
-
-
-
   int repIndex = -1;
 
   bool Refresh = true;
@@ -131,7 +126,7 @@ class CommentPageState extends State<CommentPage>
                 builder: (context) {
                   return Container(
                     width: width,
-                    height: height - MediaQuery.of(context).viewInsets.bottom,
+                    height: height,
                     child: Stack(
                       alignment: Alignment.bottomRight,
                       children: [
@@ -140,7 +135,9 @@ class CommentPageState extends State<CommentPage>
                           child: ListView.builder(
                               itemCount: comments.length,
                               controller: _listScrrollController,
-                              padding: const EdgeInsets.only(bottom: 150),
+                              padding: EdgeInsets.only(
+                                  bottom: 150 +
+                                      MediaQuery.of(context).viewInsets.bottom),
                               itemBuilder: (context, index) {
                                 return Container(
                                     padding: EdgeInsets.symmetric(
@@ -149,135 +146,263 @@ class CommentPageState extends State<CommentPage>
                                         vertical: 0.014 * height),
                                     child: Column(
                                       children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            if (comments[index]
-                                                .subComments
-                                                .isNotEmpty) {
-                                              setState(() {
-                                                if (comments[index].showSub ==
-                                                    false) {
-                                                  comments[index].showSub =
-                                                      true;
-                                                } else {
-                                                  comments[index].showSub =
-                                                      false;
-                                                }
-                                              });
-                                            }
-                                          },
-                                          child: Message(
-                                            comment: comments[index],
-                                            clr: colorPallet5,
-                                          ),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              flex: 5,
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  if (comments[index]
+                                                      .subComments
+                                                      .isNotEmpty) {
+                                                    setState(() {
+                                                      if (comments[index]
+                                                              .showSub ==
+                                                          false) {
+                                                        comments[index]
+                                                            .showSub = true;
+                                                      } else {
+                                                        comments[index]
+                                                            .showSub = false;
+                                                      }
+                                                    });
+                                                  }
+                                                },
+                                                child: Column(
+                                                  children: [
+                                                    Message(
+                                                      comment: comments[index],
+                                                      // height: context.height() *
+                                                      //     0.05,
+                                                      // width:
+                                                      //     context.width() * 0.6,
+                                                      clr: colorPallet5,
+                                                    ),
+                                                    SizedBox(
+                                                      height: 0.004 * height,
+                                                    ),
+                                                    // Align(
+                                                    //   alignment:
+                                                    //   Alignment.centerRight,
+                                                    //   child: Padding(
+                                                    //     padding:
+                                                    //     EdgeInsets.only(
+                                                    //         right: 0.027 *
+                                                    //             width),
+                                                    //     child: AutoSizeText(
+                                                    //       comments[index]
+                                                    //           .date
+                                                    //           .hour
+                                                    //           .toString() +
+                                                    //           ':' +
+                                                    //           comments[index]
+                                                    //               .date
+                                                    //               .minute
+                                                    //               .toString() +
+                                                    //           " " +
+                                                    //           comments[index]
+                                                    //               .date
+                                                    //               .year
+                                                    //               .toString() +
+                                                    //           '/' +
+                                                    //           comments[index]
+                                                    //               .date
+                                                    //               .month
+                                                    //               .toString() +
+                                                    //           '/' +
+                                                    //           comments[index]
+                                                    //               .date
+                                                    //               .day
+                                                    //               .toString(),
+                                                    //       maxFontSize: 14,
+                                                    //       maxLines: 8,
+                                                    //       minFontSize: 11,
+                                                    //       style: TextStyle(
+                                                    //           fontWeight:
+                                                    //           FontWeight
+                                                    //               .w400,
+                                                    //           color:
+                                                    //           Colors.grey),
+                                                    //       textAlign:
+                                                    //       TextAlign.start,
+                                                    //     ),
+                                                    //   ),
+                                                    // )
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              flex: 1,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceAround,
+                                                children: [
+                                                  GestureDetector(
+                                                      onTap: () {
+                                                        setState(() {
+                                                          if (repIndex ==
+                                                              index) {
+                                                            repIndex = -1;
+                                                          } else {
+                                                            repIndex = index;
+                                                          }
+                                                        });
+                                                      },
+                                                      child: Container()),
+                                                  (comments[index]
+                                                              .subComments
+                                                              .length !=
+                                                          0)
+                                                      ? GestureDetector(
+                                                          onTap: () {
+                                                            setState(() {
+                                                              if (comments[
+                                                                          index]
+                                                                      .showSub ==
+                                                                  false) {
+                                                                comments[index]
+                                                                        .showSub =
+                                                                    true;
+                                                              } else {
+                                                                comments[index]
+                                                                        .showSub =
+                                                                    false;
+                                                              }
+                                                            });
+                                                          },
+                                                          child: Container(
+                                                              width:
+                                                                  0.05 * width,
+                                                              height:
+                                                                  0.05 * width,
+                                                              child:
+                                                                  LayoutBuilder(
+                                                                      builder: (context,
+                                                                              constraint) =>
+                                                                          Icon(
+                                                                            (comments[index].showSub)
+                                                                                ? Icons.expand_less
+                                                                                : Icons.expand_more,
+                                                                            size:
+                                                                                constraint.biggest.height,
+                                                                            color:
+                                                                                Colors.red,
+                                                                          ))))
+                                                      : Container()
+                                                ],
+                                              ),
+                                            )
+                                          ],
                                         ),
-                                        // AnimatedCrossFade(
-                                        //   duration: Duration(milliseconds: 300),
-                                        //   crossFadeState:
-                                        //       (comments[index].showSub == true)
-                                        //           ? CrossFadeState.showSecond
-                                        //           : CrossFadeState.showFirst,
-                                        //   firstChild: Container(),
-                                        //   secondChild: Container(
-                                        //     width: width,
-                                        //     child: ListView.builder(
-                                        //       shrinkWrap: true,
-                                        //       physics:
-                                        //           NeverScrollableScrollPhysics(),
-                                        //       itemCount: comments[index]
-                                        //           .subComments
-                                        //           .length,
-                                        //       itemBuilder: (con, i) {
-                                        //         return Container(
-                                        //           padding: EdgeInsets.symmetric(
-                                        //               horizontal: 0.05 * width),
-                                        //           margin: EdgeInsets.symmetric(
-                                        //               vertical: 0.01 * height),
-                                        //           child: Row(
-                                        //             children: [
-                                        //               Expanded(
-                                        //                 flex: 1,
-                                        //                 child: Container(),
-                                        //               ),
-                                        //               Expanded(
-                                        //                 flex: 5,
-                                        //                 child: Column(
-                                        //                   children: [
-                                        //                     Message(
-                                        //                       comment: comments[index],
-                                        //                       // height: context.height() *
-                                        //                       //     0.1,
-                                        //                       // width:
-                                        //                       // context.width() * 0.8,
-                                        //                       clr: colorPallet4,
-                                        //                     ),
-                                        //
-                                        //
-                                        //                     SizedBox(
-                                        //                       height: 0.004 *
-                                        //                           height,
-                                        //                     ),
-                                        //                     Align(
-                                        //                       alignment: Alignment
-                                        //                           .centerRight,
-                                        //                       child: Padding(
-                                        //                         padding: EdgeInsets.only(
-                                        //                             right: 0.027 *
-                                        //                                 width),
-                                        //                         child:
-                                        //                             AutoSizeText(
-                                        //                           comments[
-                                        //                                       index]
-                                        //                                   .date
-                                        //                                   .hour
-                                        //                                   .toString() +
-                                        //                               ':' +
-                                        //                               comments[
-                                        //                                       index]
-                                        //                                   .date
-                                        //                                   .minute
-                                        //                                   .toString() +
-                                        //                               " " +
-                                        //                               comments[
-                                        //                                       index]
-                                        //                                   .date
-                                        //                                   .year
-                                        //                                   .toString() +
-                                        //                               '/' +
-                                        //                               comments[
-                                        //                                       index]
-                                        //                                   .date
-                                        //                                   .month
-                                        //                                   .toString() +
-                                        //                               '/' +
-                                        //                               comments[
-                                        //                                       index]
-                                        //                                   .date
-                                        //                                   .day
-                                        //                                   .toString(),
-                                        //                           style: TextStyle(
-                                        //                               fontWeight:
-                                        //                                   FontWeight
-                                        //                                       .w400,
-                                        //                               color: Colors
-                                        //                                   .grey),
-                                        //                           textAlign:
-                                        //                               TextAlign
-                                        //                                   .start,
-                                        //                         ),
-                                        //                       ),
-                                        //                     )
-                                        //                   ],
-                                        //                 ),
-                                        //               ),
-                                        //             ],
-                                        //           ),
-                                        //         );
-                                        //       },
-                                        //     ),
-                                        //   ),
-                                        //   sizeCurve: Curves.easeInQuad,
-                                        // ),
+                                        AnimatedCrossFade(
+                                          duration: Duration(milliseconds: 300),
+                                          crossFadeState:
+                                              (comments[index].showSub == true)
+                                                  ? CrossFadeState.showSecond
+                                                  : CrossFadeState.showFirst,
+                                          firstChild: Container(),
+                                          secondChild: Container(
+                                            width: width,
+                                            child: ListView.builder(
+                                              shrinkWrap: true,
+                                              physics:
+                                                  NeverScrollableScrollPhysics(),
+                                              itemCount: comments[index]
+                                                  .subComments
+                                                  .length,
+                                              itemBuilder: (con, i) {
+                                                return Container(
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 0.05 * width),
+                                                  margin: EdgeInsets.symmetric(
+                                                      vertical: 0.01 * height),
+                                                  child: Row(
+                                                    children: [
+                                                      Expanded(
+                                                        flex: 1,
+                                                        child: Container(),
+                                                      ),
+                                                      Expanded(
+                                                        flex: 5,
+                                                        child: Column(
+                                                          children: [
+                                                            Message(
+                                                              comment: comments[
+                                                                  index],
+                                                              // height: context.height() *
+                                                              //     0.1,
+                                                              // width:
+                                                              // context.width() * 0.8,
+                                                              clr: colorPallet4,
+                                                            ),
+
+                                                            SizedBox(
+                                                              height: 0.004 *
+                                                                  height,
+                                                            ),
+                                                            // Align(
+                                                            //   alignment: Alignment
+                                                            //       .centerRight,
+                                                            //   child: Padding(
+                                                            //     padding: EdgeInsets.only(
+                                                            //         right: 0.027 *
+                                                            //             width),
+                                                            //     child:
+                                                            //         AutoSizeText(
+                                                            //       comments[
+                                                            //                   index]
+                                                            //               .date
+                                                            //               .hour
+                                                            //               .toString() +
+                                                            //           ':' +
+                                                            //           comments[
+                                                            //                   index]
+                                                            //               .date
+                                                            //               .minute
+                                                            //               .toString() +
+                                                            //           " " +
+                                                            //           comments[
+                                                            //                   index]
+                                                            //               .date
+                                                            //               .year
+                                                            //               .toString() +
+                                                            //           '/' +
+                                                            //           comments[
+                                                            //                   index]
+                                                            //               .date
+                                                            //               .month
+                                                            //               .toString() +
+                                                            //           '/' +
+                                                            //           comments[
+                                                            //                   index]
+                                                            //               .date
+                                                            //               .day
+                                                            //               .toString(),
+                                                            //       style: TextStyle(
+                                                            //           fontWeight:
+                                                            //               FontWeight
+                                                            //                   .w400,
+                                                            //           color: Colors
+                                                            //               .grey),
+                                                            //       textAlign:
+                                                            //           TextAlign
+                                                            //               .start,
+                                                            //     ),
+                                                            //   ),
+                                                            // )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                          sizeCurve: Curves.easeInQuad,
+                                        ),
                                       ],
                                     ));
                               }),
@@ -388,7 +513,7 @@ class CommentPageState extends State<CommentPage>
                               )
                             : Container(),
                         Positioned(
-                          bottom: 0,
+                          bottom: MediaQuery.of(context).viewInsets.bottom,
                           child: Container(
                             width: width,
                             height: context.height() * 0.08,
@@ -403,7 +528,7 @@ class CommentPageState extends State<CommentPage>
                                   flex: 7,
                                   child: TextFormField(
                                     controller: textcontroller,
-                                    onChanged: (String? value){
+                                    onChanged: (String? value) {
                                       message = value!;
                                     },
                                     // onSaved: (String? value) {
@@ -419,9 +544,9 @@ class CommentPageState extends State<CommentPage>
                                 Expanded(
                                   flex: 1,
                                   child: TextButton(
-                                    onPressed: (){
+                                    onPressed: () {
                                       setState(() {
-                                        if(message!='') {
+                                        if (message != '') {
                                           Comment new_comment = Comment(
                                               user: User.test_user,
                                               cmText: message,
@@ -435,10 +560,9 @@ class CommentPageState extends State<CommentPage>
                                         }
                                       });
                                       // CreateNewComment(user: comments[1].user,text: message);
-
                                     },
                                     child: Icon(Icons.send,
-                                        size: 25, color: Colors.green),
+                                        size: 25, color: colorPallet4),
                                   ),
                                 ),
                                 //  Expanded(

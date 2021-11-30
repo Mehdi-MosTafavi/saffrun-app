@@ -2,7 +2,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/src/extensions/context_extensions.dart';
-
 // import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/UI/commentPage/components/comments.dart';
 
@@ -42,7 +41,7 @@ class _MessageState extends State<Message> {
         (0.05 + (widget.comment.cmText.length / 25 + 1) * 0.02);
     double imHeight = context.height() * 0.075;
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.only(right: 10, left: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
@@ -70,7 +69,7 @@ class _MessageState extends State<Message> {
                       ),
                       border: Border.all(
                         color: Colors.white,
-                        width: 4.0,
+                        width: 2.0,
                       ),
                     ),
                   ),
@@ -86,7 +85,7 @@ class _MessageState extends State<Message> {
               topLeft: Radius.circular(20),
             ),
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
               child: Column(
                 children: [
                   Row(
@@ -161,7 +160,7 @@ class _MessageState extends State<Message> {
                       style: TextStyle(
                         color: Colors.white,
                         // fontWeight: FontWeight.bold,
-                        fontSize: 10.0,
+                        fontSize: 12.0,
                       ),
                     ),
                   ),
