@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:nb_utils/src/extensions/context_extensions.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 // import '../constants.dart';
@@ -30,44 +29,54 @@ class ProfileListItem extends StatelessWidget {
       margin: EdgeInsets.symmetric(
         horizontal: width * 0.005,
       ).copyWith(
-        bottom: 2,
+        bottom: 0,
       ),
       padding: EdgeInsets.symmetric(
         horizontal: width * 0.025,
       ),
       decoration: BoxDecoration(
-        // borderRadius: BorderRadius.circular(30),
-        color: colorPallet4,
-      ),
-      child: Row(
-        children: <Widget>[
-          Icon(
-            this.icon,
-            size: 25,
+          // borderRadius: BorderRadius.circular(30),
           ),
-          SizedBox(width: width * 0.02),
-          Text(
-            this.text,
-            style: kTitleTextStyle.copyWith(
-                fontWeight: FontWeight.w500,
-                fontFamily: "Poppins"
-            ),
-          ),
-          Spacer(),
-          if (this.hasNavigation)
-            IconButton(
-              splashRadius: 10,
-              icon: const Icon(
-                LineAwesomeIcons.angle_left,
-                size: 20,
+      child: Column(
+        children: [
+          Row(
+            children: <Widget>[
+              Icon(
+                this.icon,
+                size: 25,
+                color: colorPallet4,
               ),
-              onPressed: () {
-                // setState(() {
-                //   _volume += 10;
-                // });
-
-              },
-            ),
+              SizedBox(width: width * 0.02),
+              Text(
+                this.text,
+                style: kTitleTextStyle.copyWith(
+                    fontWeight: FontWeight.w800, color: colorPallet4
+                    // fontFamily: "Poppins"
+                    ),
+              ),
+              Spacer(),
+              if (this.hasNavigation)
+                IconButton(
+                  splashRadius: 10,
+                  icon: const Icon(
+                    Icons.arrow_forward_rounded,
+                    color: colorPallet4,
+                    size: 20,
+                  ),
+                  onPressed: () {
+                    // setState(() {
+                    //   _volume += 10;
+                    // });
+                  },
+                ),
+            ],
+          ),
+          if (this.hasNavigation)
+            Divider(
+              height: 10,
+              color: Colors.black.withOpacity(0.1),
+              thickness: 1,
+            )
         ],
       ),
     );
