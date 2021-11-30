@@ -1,9 +1,10 @@
 // import 'package:like_button/like_button.dart';
-import 'package:nb_utils/src/extensions/context_extensions.dart';
-// import 'package:saffrun_app/constants/theme_color.dart';
-import 'package:saffrun_app/UI/commentPage/components/comments.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nb_utils/src/extensions/context_extensions.dart';
+
+// import 'package:saffrun_app/constants/theme_color.dart';
+import 'package:saffrun_app/UI/commentPage/components/comments.dart';
 
 class Message extends StatefulWidget {
   // double width = 0, height = 60;
@@ -36,53 +37,56 @@ class _MessageState extends State<Message> {
 
   @override
   Widget build(BuildContext context) {
-    double width=context.width()*0.6;
-    double height=context.height()*(0.05 + (widget.comment.cmText.length/25 +1)*0.02);
-    double im_height=context.height()*0.075;
-        return Column(
-      children: <Widget>[
-        Container(
-          height: im_height,
-          width: width,
-          color: widget.clr,
-          child: Material(
-            borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(im_height / 2),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                Container(
-                  width: im_height,
-                  height: im_height,
-                  decoration: new BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: new DecorationImage(
-                      image: ExactAssetImage('images/mafia1.jpg'),
-                      fit: BoxFit.cover,
-                    ),
-                    border: new Border.all(
-                      color: Colors.white,
-                      width: 4.0,
+    double width = context.width() * 0.6;
+    double height = context.height() *
+        (0.05 + (widget.comment.cmText.length / 25 + 1) * 0.02);
+    double imHeight = context.height() * 0.075;
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          Container(
+            height: imHeight,
+            color: widget.clr,
+            child: Material(
+              shape: RoundedRectangleBorder(
+                side: BorderSide(color: Colors.white),
+                borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(imHeight / 2)),
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    height: imHeight,
+                    width: imHeight,
+                    margin: const EdgeInsets.only(top: 0.0),
+                    alignment: Alignment.centerRight,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: const DecorationImage(
+                        image: ExactAssetImage('assets/images/mafia1.jpg'),
+                        fit: BoxFit.cover,
+                      ),
+                      border: Border.all(
+                        color: Colors.white,
+                        width: 4.0,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-        Container(
-          height: height,
-          width: width,
-          child: Material(
+          Material(
             color: widget.clr,
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(height / 3),
-              bottomRight: Radius.circular(height / 3),
-              topLeft: Radius.circular(height / 3),
+            borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20),
+              topLeft: Radius.circular(20),
             ),
             child: Padding(
-              padding: const EdgeInsets.only(right: 20.0),
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
               child: Column(
                 children: [
                   Row(
@@ -94,7 +98,7 @@ class _MessageState extends State<Message> {
                           widget.comment.user.Name +
                               ' ' +
                               widget.comment.user.LastName,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 15.0,
@@ -165,8 +169,8 @@ class _MessageState extends State<Message> {
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
