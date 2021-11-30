@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:saffrun_app/UI/commentPage/commentpage.dart';
 import 'package:saffrun_app/UI/eventPage/components/add_button.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 
@@ -10,7 +12,6 @@ class EventPage extends StatefulWidget {
   @override
   _EventPageState createState() => _EventPageState();
 }
-
 
 int current = 0;
 final CarouselController controller = CarouselController();
@@ -57,7 +58,7 @@ class _EventPageState extends State<EventPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: Align(
-        alignment: const Alignment(-1, 0.85),
+        alignment: Alignment.bottomLeft,
         child: FloatingActionButton(
           onPressed: () {
             showDialogForParticipantEvent(context);
@@ -211,45 +212,40 @@ class _EventPageState extends State<EventPage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                      border: Border.all(color: colorPallet5),
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: Wrap(
-                                    // alignment: WrapAlignment.start,
-                                    direction: Axis.vertical,
-                                    textDirection: TextDirection.rtl,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'تاریخ شروع: ',
-                                            style: primaryTextStyle(),
-                                          ),
-                                          Text(
-                                            '10 آبان | 8:00',
-                                            style: boldTextStyle(),
-                                          ),
-                                        ],
-                                      ).paddingSymmetric(horizontal: 10),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'تاریخ پایان: ',
-                                            style: primaryTextStyle(),
-                                          ),
-                                          Text(
-                                            '10 آبان | 14:00',
-                                            style: boldTextStyle(),
-                                          ),
-                                        ],
-                                      ).paddingSymmetric(horizontal: 10),
-                                    ],
-                                  ),
+                                Wrap(
+                                  // alignment: WrapAlignment.start,
+                                  direction: Axis.vertical,
+                                  textDirection: TextDirection.rtl,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'تاریخ شروع: ',
+                                          style: primaryTextStyle(),
+                                        ),
+                                        Text(
+                                          '10 آبان | 8:00',
+                                          style: boldTextStyle(),
+                                        ),
+                                      ],
+                                    ).paddingSymmetric(horizontal: 10),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'تاریخ پایان: ',
+                                          style: primaryTextStyle(),
+                                        ),
+                                        Text(
+                                          '10 آبان | 14:00',
+                                          style: boldTextStyle(),
+                                        ),
+                                      ],
+                                    ).paddingSymmetric(horizontal: 10),
+                                  ],
                                 ),
                                 Align(
                                   child: Row(
@@ -314,7 +310,16 @@ class _EventPageState extends State<EventPage> {
                                 style: boldTextStyle(),
                               ),
                               TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  pushNewScreen(
+                                    context,
+                                    screen: CommentPage(),
+                                    withNavBar: false,
+                                    // OPTIONAL VALUE. True by default.
+                                    pageTransitionAnimation:
+                                        PageTransitionAnimation.cupertino,
+                                  );
+                                },
                                 child: const Text('نظر دهید ...'),
                               )
                             ],

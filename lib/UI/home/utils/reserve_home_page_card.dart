@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:saffrun_app/UI/admin/admin_page.dart';
 import 'package:saffrun_app/models/reserve/reserve.dart';
 import 'package:shamsi_date/shamsi_date.dart';
 
@@ -105,7 +107,16 @@ class ReserveHomePageCard extends StatelessWidget {
                     Expanded(
                         flex: 1,
                         child: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              pushNewScreen(
+                                context,
+                                screen: AdminPage(),
+                                withNavBar: false,
+                                // OPTIONAL VALUE. True by default.
+                                pageTransitionAnimation:
+                                    PageTransitionAnimation.cupertino,
+                              );
+                            },
                             icon: const Icon(
                               Icons.arrow_forward,
                               color: Colors.black,

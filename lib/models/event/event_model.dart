@@ -107,14 +107,14 @@ class Event {
     response.forEach((element) {
       events.add(Event(
         id: element['id'] ?? -1,
-        title: element['title'],
-        description: element['description'],
-        imageUrl: element['image'] ?? "",
-        discount: element['discount'],
-        startTime: DateTime(2020),
-        finishTime: DateTime(2021),
-        comments: '',
-        ownerId: element['owner'],
+          title: element['title'],
+          description: element['description'],
+          imageUrl: element['image'] ?? "",
+          discount: element['discount'] ?? 0,
+          startTime: DateTime(2020),
+          finishTime: DateTime(2021),
+          comments: '',
+          ownerId: element['owner'] ?? 0,
           ownerName: 'کافه رخ'));
     });
     return events;

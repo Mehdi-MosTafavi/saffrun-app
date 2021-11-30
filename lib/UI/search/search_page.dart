@@ -44,10 +44,12 @@ class _SearchPageState extends State<SearchPage> {
                       SizedBox(
                         height: 100,
                         child: Align(
-                          alignment: const Alignment(0, 3),
+                          alignment: const Alignment(0, 1.5),
                           child: TextFieldSearchWidget(
                             onChanged: (value) {
                               if (value.length < 3) {
+                                BlocProvider.of<SearchCubit>(context)
+                                    .emit(SearchInitial());
                                 return;
                               }
                               if (state is SearchLoadedState) {
@@ -141,18 +143,21 @@ class ListViewForCardSearch extends StatelessWidget {
         contextBloc = context;
         if (state is SearchLoadedState) {
           print(state.events);
-          return ListView.builder(
-            controller: controller,
-            itemCount: state.events.length + 1,
-            itemBuilder: (context, i) {
-              if (i == 0) {
-                return FilterButtonWidget(
-                  confirmFilter: () async {
-                    if (state is SearchLoadedState) {
-                      BlocProvider.of<SearchCubit>(contextBloc)
-                          .loadEventHandler(state.textSearched,
-                              startDate: startDate == Jalali(1, 1, 1, 0, 0, 0)
-                              ? null
+          return state.events.length == 0
+              ? Center(child: Text("هیچ رویدادی یافت نشد"))
+              : ListView.builder(
+                  controller: controller,
+                  itemCount: state.events.length + 1,
+                  itemBuilder: (context, i) {
+                    if (i == 0) {
+                      return FilterButtonWidget(
+                        confirmFilter: () async {
+                          if (state is SearchLoadedState) {
+                            BlocProvider.of<SearchCubit>(contextBloc)
+                                .loadEventHandler(state.textSearched,
+                                    startDate:
+                                        startDate == Jalali(1, 1, 1, 0, 0, 0)
+                                            ? null
                               : startDate,
                           endDate: endDate == Jalali(1, 1, 1, 0, 0, 0)
                               ? null

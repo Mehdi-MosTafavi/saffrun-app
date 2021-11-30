@@ -71,7 +71,7 @@ class _CalenderPageState extends State<CalenderPage> {
               return ListView(
                 children: [
                   const SizedBox(
-                    height: 100,
+                    height: 30,
                   ),
                   jalaliCalendar(
                       context: context,
@@ -115,16 +115,18 @@ class _CalenderPageState extends State<CalenderPage> {
                     ),
                   ),
                   if (state is CalendarLoadedData)
-                    ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return EventCardWidget(
-                          event: state.events[index],
-                        );
-                      },
-                      itemCount: state.events.length,
-                    ),
+                    state.events.length == 0
+                        ? Center(child: Text("هیچ رویدادی یافت نشد"))
+                        : ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              return EventCardWidget(
+                                event: state.events[index],
+                              );
+                            },
+                            itemCount: state.events.length,
+                          ),
                   if (state is CalendarSelectDate)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -148,17 +150,19 @@ class _CalenderPageState extends State<CalenderPage> {
                     ),
                   ),
                   if (state is CalendarLoadedData)
-                    ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.only(bottom: 60),
-                      itemBuilder: (context, index) {
-                        print(state.reserves.length);
-                        return ReserveCard(
-                          onTapCard: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => const AdminPage()));
-                          },
+                    state.events.length == 0
+                        ? Center(child: Text("هیچ نوبتی یافت نشد"))
+                        : ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            padding: const EdgeInsets.only(bottom: 60),
+                            itemBuilder: (context, index) {
+                              print(state.reserves.length);
+                              return ReserveCard(
+                                onTapCard: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => const AdminPage()));
+                                },
                           reserve: state.reserves[index],
                         );
                       },

@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
             //   SocialSetting().launch(context);
             // }),
             SizedBox(
-              height: context.height() * 0.07,
+              height: context.height() * 0.02,
             ),
             SizedBox(height: spacing_standard_new),
             Container(

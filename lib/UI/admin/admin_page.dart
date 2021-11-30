@@ -4,8 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:saffrun_app/UI/admin/components/event_card.dart';
 import 'package:saffrun_app/UI/admin/components/my_column.dart';
+import 'package:saffrun_app/UI/commentPage/commentpage.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/models/admin/admin_model.dart';
 import 'package:saffrun_app/models/event/event_model.dart';
@@ -127,7 +129,7 @@ class _AdminPageState extends State<AdminPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: Align(
-        alignment: const Alignment(-1, 0.85),
+        alignment: Alignment.bottomLeft,
         child: FloatingActionButton(
           onPressed: () {},
           child: const Icon(CupertinoIcons.calendar_circle_fill),
@@ -383,7 +385,16 @@ class _AdminPageState extends State<AdminPage> {
                                 style: boldTextStyle(),
                               ),
                               TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  pushNewScreen(
+                                    context,
+                                    screen: CommentPage(),
+                                    withNavBar: false,
+                                    // OPTIONAL VALUE. True by default.
+                                    pageTransitionAnimation:
+                                        PageTransitionAnimation.cupertino,
+                                  );
+                                },
                                 child: const Text(
                                   'نظر دهید ...',
                                   style: TextStyle(color: colorPallet3),

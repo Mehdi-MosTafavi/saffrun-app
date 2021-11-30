@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:saffrun_app/UI/eventPage/event_page.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/models/event/event_model.dart';
 
@@ -76,12 +78,22 @@ class EventHomePageCard extends StatelessWidget {
                 ),
               ),
             ),
-            const Expanded(
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Icon(
-                  Icons.arrow_forward,
-                  color: Colors.black,
+            Expanded(
+              child: InkWell(
+                onTap: () {
+                  pushNewScreen(
+                    context,
+                    screen: EventPage(),
+                    withNavBar: false, // OPTIONAL VALUE. True by default.
+                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                  );
+                },
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Icon(
+                    Icons.arrow_forward,
+                    color: Colors.black,
+                  ),
                 ),
               ),
               flex: 2,
