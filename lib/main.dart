@@ -5,6 +5,7 @@ import 'package:najvaflutter/najvaflutter.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:responsive_framework/utils/scroll_behavior.dart';
 import 'package:saffrun_app/logical/router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 late NajvaFlutter najva;
 
@@ -14,6 +15,7 @@ Future<void> main() async {
     SystemUiOverlay.bottom, //This line is used for showing the bottom bar
   ]);
   WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences.setMockInitialValues({});
   najva = NajvaFlutter();
   najva.setFirebaseEnabled(
       false); // set true if your app using firebase beside najva.
