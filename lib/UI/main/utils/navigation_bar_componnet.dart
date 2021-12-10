@@ -8,10 +8,11 @@ import 'package:saffrun_app/UI/profileUser/profile_user.dart';
 import 'package:saffrun_app/UI/search/search_page.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 
-class NavigationBar extends StatelessWidget {
+class NavigationBarWidget extends StatelessWidget {
   final PersistentTabController controller;
 
-  const NavigationBar({Key? key, required this.controller}) : super(key: key);
+  const NavigationBarWidget({Key? key, required this.controller})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
