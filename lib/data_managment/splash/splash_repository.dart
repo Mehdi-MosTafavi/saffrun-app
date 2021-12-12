@@ -10,6 +10,7 @@ class SplashRepository {
   Future<bool> haveTokenAndValid() async {
     try {
       bool status = await splashNetworkService.haveTokenFromServerValid();
+      print(status);
       return status;
     }
     catch (e) {

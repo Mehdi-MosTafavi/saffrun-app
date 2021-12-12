@@ -15,6 +15,7 @@ class SplashCubit extends Cubit<SplashState> {
     emit(SplashLoadingFromServer());
     try {
       bool status = await splashRepository.haveTokenAndValid();
+      print(status);
       emit(status ? SplashGoToHomePage() : SplashGoToLoginPage());
       return;
     } catch (e) {

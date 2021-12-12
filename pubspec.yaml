@@ -63,7 +63,6 @@ dependencies:
   like_button: ^2.0.3
   auto_size_text: ^3.0.0
   comment_tree: ^0.3.0
-  shared_preferences: ^2.0.10
 #  swipe_to: 0.0.1+8
 #
 #  shared_preferences: ^0.5.10
