@@ -10,10 +10,14 @@ class AppBarTitleProfile extends AppBarWidget {
   final BuildContext context;
   final int index;
   final Function functionBack;
+  final bool extend;
 
   AppBarTitleProfile(this.context, this.index,
-      {Key? key, required this.title, required this.functionBack})
-      : super(key: key, parentContext: context);
+      {Key? key,
+      required this.title,
+      required this.functionBack,
+      this.extend = false})
+      : super(key: key, parentContext: context, extend: extend);
 
   @override
   Widget getTitleWidget() {

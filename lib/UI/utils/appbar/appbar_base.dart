@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 
 abstract class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
   final BuildContext parentContext;
+  final bool extend;
 
-  const AppBarWidget({Key? key, required this.parentContext}) : super(key: key);
+  const AppBarWidget(
+      {Key? key, required this.parentContext, this.extend = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +33,7 @@ abstract class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
   @override
   // TODO: implement preferredSize
   Size get preferredSize =>
-      Size.fromHeight(MediaQuery.of(parentContext).size.height * 0.08);
+      Size.fromHeight(MediaQuery.of(parentContext).size.height * 0.066);
 
   List<Widget>? getActions();
 
