@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 
@@ -10,6 +11,7 @@ class T2EditTextField extends StatefulWidget {
   var fontFamily;
   var text;
   var maxLine;
+  bool number;
   TextEditingController? mController;
 
   VoidCallback? onPressed;
@@ -21,6 +23,7 @@ class T2EditTextField extends StatefulWidget {
       var this.isSecure = false,
       var this.text = "",
       var this.mController,
+      this.number = false,
       var this.maxLine = 1});
 
   @override
@@ -42,18 +45,21 @@ class T2EditTextFieldState extends State<T2EditTextField> {
             fontSize: widget.fontSize,
             color: Colors.black,
             fontFamily: widget.fontFamily),
+        keyboardType: widget.number ? TextInputType.number : TextInputType.text,
+        inputFormatters:
+            widget.number ? [FilteringTextInputFormatter.digitsOnly] : null,
         decoration: InputDecoration(
             enabledBorder: widget.maxLine == 1
-                ? UnderlineInputBorder(
+                ? const UnderlineInputBorder(
                     borderSide: BorderSide(color: colorPallet2),
                   )
-                : OutlineInputBorder(
+                : const OutlineInputBorder(
                     borderSide: BorderSide(color: colorPallet2)),
             focusedBorder: widget.maxLine == 1
-                ? UnderlineInputBorder(
+                ? const UnderlineInputBorder(
                     borderSide: BorderSide(color: colorPallet2),
                   )
-                : OutlineInputBorder(
+                : const OutlineInputBorder(
                     borderSide: BorderSide(color: colorPallet2))),
       );
     } else {
@@ -76,10 +82,10 @@ class T2EditTextFieldState extends State<T2EditTextField> {
                   widget.isPassword ? Icons.visibility : Icons.visibility_off,
                   color: colorPallet3),
             ),
-            enabledBorder: UnderlineInputBorder(
+            enabledBorder: const UnderlineInputBorder(
               borderSide: BorderSide(color: colorPallet3),
             ),
-            focusedBorder: UnderlineInputBorder(
+            focusedBorder: const UnderlineInputBorder(
               borderSide: BorderSide(color: colorPallet3),
             ),
           ));

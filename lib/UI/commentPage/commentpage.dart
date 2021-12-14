@@ -116,7 +116,7 @@ class CommentPageState extends State<CommentPage>
           textDirection: TextDirection.rtl,
           child: Scaffold(
               resizeToAvoidBottomInset: false,
-              appBar: AppBarTitleProfile(
+              appBar: AppBarTitleProfileWhite(
                 context,
                 0,
                 title: '',

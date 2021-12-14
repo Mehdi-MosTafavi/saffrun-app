@@ -46,7 +46,7 @@ class _ReservePageState extends State<ReservePage> {
     return BlocProvider(
       create: (context) => ReserveCubit(),
       child: Scaffold(
-        appBar: AppBarTitleProfile(
+        appBar: AppBarTitleProfileWhite(
           context,
           0,
           title: 'رزرو نوبت',

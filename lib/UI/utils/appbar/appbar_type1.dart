@@ -5,14 +5,14 @@ import 'package:saffrun_app/constants/theme_color.dart';
 
 import 'appbar_base.dart';
 
-class AppBarTitleProfile extends AppBarWidget {
+class AppBarTitleProfileWhite extends AppBarWidget {
   final String title;
   final BuildContext context;
   final int index;
   final Function functionBack;
   final bool extend;
 
-  AppBarTitleProfile(this.context, this.index,
+  AppBarTitleProfileWhite(this.context, this.index,
       {Key? key,
       required this.title,
       required this.functionBack,
@@ -21,13 +21,7 @@ class AppBarTitleProfile extends AppBarWidget {
 
   @override
   Widget getTitleWidget() {
-    return Text(
-      title,
-      style: TextStyle(
-          fontWeight: FontWeight.w700,
-          color: colorPallet1,
-          fontSize: Theme.of(context).textTheme.headline6!.fontSize! * 0.8),
-    );
+    return Container();
   }
 
   @override
@@ -40,7 +34,7 @@ class AppBarTitleProfile extends AppBarWidget {
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.w900),
         ),
       ).paddingRight(7),
-      InkWell(
+      GestureDetector(
         onTap: () {
           Navigator.pop(parentContext);
           functionBack();
@@ -49,7 +43,71 @@ class AppBarTitleProfile extends AppBarWidget {
           backgroundColor: Colors.black.withOpacity(0.1),
           child: const Icon(
             Icons.arrow_forward,
-            color: Colors.black,
+            color: Colors.white,
+          ),
+        ).paddingRight(10),
+      ),
+    ];
+  }
+
+  @override
+  getLeading() {
+    return Container(
+      margin: const EdgeInsets.only(left: 13),
+      decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          image: DecorationImage(
+              image: AssetImage(
+                'assets/images/mafia1.jpg',
+              ),
+              fit: BoxFit.contain)),
+    );
+  }
+}
+
+class AppBarTitleProfileSaffronColor extends AppBarWidget {
+  final String title;
+  final BuildContext context;
+  final int index;
+  final Function functionBack;
+  final bool extend;
+
+  AppBarTitleProfileSaffronColor(this.context, this.index,
+      {Key? key,
+      required this.title,
+      required this.functionBack,
+      this.extend = false})
+      : super(
+            key: key,
+            parentContext: context,
+            extend: extend,
+            color: colorPallet2);
+
+  @override
+  Widget getTitleWidget() {
+    return Container();
+  }
+
+  @override
+  getActions() {
+    // TODO: implement getActions
+    return [
+      const Center(
+        child: Text(
+          'بازگشت',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900),
+        ),
+      ).paddingRight(7),
+      GestureDetector(
+        onTap: () {
+          Navigator.pop(parentContext);
+          functionBack();
+        },
+        child: CircleAvatar(
+          backgroundColor: Colors.white.withOpacity(0.2),
+          child: const Icon(
+            Icons.arrow_forward,
+            color: Colors.white,
           ),
         ).paddingRight(10),
       ),

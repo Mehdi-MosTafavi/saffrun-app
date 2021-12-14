@@ -115,8 +115,8 @@ class _CalenderPageState extends State<CalenderPage> {
                     ),
                   ),
                   if (state is CalendarLoadedData)
-                    state.events.length == 0
-                        ? Center(child: Text("هیچ رویدادی یافت نشد"))
+                    state.events.isEmpty
+                        ? const Center(child: Text("هیچ رویدادی یافت نشد"))
                         : ListView.builder(
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,

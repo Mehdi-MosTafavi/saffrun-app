@@ -40,70 +40,69 @@ class _CalenderPage2State extends State<CalenderPage2> {
     return Scaffold(
       body: ListView(
         children: [
-          Container(
-            child: Padding(
-              padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.08,
-                  left: MediaQuery.of(context).size.width * 0.02,
-                  right: MediaQuery.of(context).size.width * 0.02),
-              child: TableCalendar(
-                firstDay: DateTime.utc(2000, 1, 1),
-                lastDay: DateTime.utc(2030, 1, 1),
-                focusedDay: _focusedDay.value,
-                headerVisible: true,
-                selectedDayPredicate: (day) => _selectedDays.contains(day),
-                onDaySelected: _onDaySelected,
-                holidayPredicate: (day) =>
-                    _holidays.contains(DateTime.parse(day.toString())),
-                headerStyle: HeaderStyle(
-                    titleTextStyle: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontFamily: 'Poppins',
-                        fontSize: MediaQuery.of(context).size.width * 0.042),
-                    titleCentered: true,
-                    headerMargin: EdgeInsets.symmetric(
-                        vertical: MediaQuery.of(context).size.height * 0.02,
-                        horizontal: MediaQuery.of(context).size.width * 0.2),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Color(0xffEFF0F6)),
-                    formatButtonVisible: false),
-                daysOfWeekHeight: 50,
-                daysOfWeekStyle: const DaysOfWeekStyle(
-                    weekdayStyle: TextStyle(
-                        color: Color(0xffF4B740), fontWeight: FontWeight.w600),
-                    weekendStyle: TextStyle(
-                        color: Color(0xffF4B740), fontWeight: FontWeight.w600)),
-                calendarStyle: CalendarStyle(
-                  todayDecoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
-                      color: Color(0xff0096B7)),
-                  holidayDecoration: BoxDecoration(
-                      border: Border.all(color: Color(0xffF4B740)),
-                      borderRadius: BorderRadius.circular(10)),
-                  defaultDecoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(6)),
-                  weekendDecoration: BoxDecoration(),
-                  selectedDecoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [Color(0xff6D07CB), Color(0xffEFADFF)]),
-                      borderRadius: BorderRadius.all(Radius.circular(6)),
-                      color: Colors.grey),
-                  cellMargin: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-                ),
+          Padding(
+            padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height * 0.08,
+                left: MediaQuery.of(context).size.width * 0.02,
+                right: MediaQuery.of(context).size.width * 0.02),
+            child: TableCalendar(
+              firstDay: DateTime.utc(2000, 1, 1),
+              lastDay: DateTime.utc(2030, 1, 1),
+              focusedDay: _focusedDay.value,
+              headerVisible: true,
+              selectedDayPredicate: (day) => _selectedDays.contains(day),
+              onDaySelected: _onDaySelected,
+              holidayPredicate: (day) =>
+                  _holidays.contains(DateTime.parse(day.toString())),
+              headerStyle: HeaderStyle(
+                  titleTextStyle: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontFamily: 'Poppins',
+                      fontSize: MediaQuery.of(context).size.width * 0.042),
+                  titleCentered: true,
+                  headerMargin: EdgeInsets.symmetric(
+                      vertical: MediaQuery.of(context).size.height * 0.02,
+                      horizontal: MediaQuery.of(context).size.width * 0.2),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: const Color(0xffEFF0F6)),
+                  formatButtonVisible: false),
+              daysOfWeekHeight: 50,
+              daysOfWeekStyle: const DaysOfWeekStyle(
+                  weekdayStyle: TextStyle(
+                      color: Color(0xffF4B740), fontWeight: FontWeight.w600),
+                  weekendStyle: TextStyle(
+                      color: Color(0xffF4B740), fontWeight: FontWeight.w600)),
+              calendarStyle: CalendarStyle(
+                todayDecoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50),
+                    color: const Color(0xff0096B7)),
+                holidayDecoration: BoxDecoration(
+                    border: Border.all(color: const Color(0xffF4B740)),
+                    borderRadius: BorderRadius.circular(10)),
+                defaultDecoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(6)),
+                weekendDecoration: const BoxDecoration(),
+                selectedDecoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [Color(0xff6D07CB), Color(0xffEFADFF)]),
+                    borderRadius: BorderRadius.all(Radius.circular(6)),
+                    color: Colors.grey),
+                cellMargin:
+                    const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
               ),
             ),
           ),
-          Divider(
+          const Divider(
             color: Color(0xffEFF0F6),
             thickness: 5,
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
             child: Align(
-              child: new Text(
+              child: Text(
                 'Upcoming plans',
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
               ),

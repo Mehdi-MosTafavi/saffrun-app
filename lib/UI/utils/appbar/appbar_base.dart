@@ -4,9 +4,13 @@ import 'package:flutter/material.dart';
 abstract class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
   final BuildContext parentContext;
   final bool extend;
+  final Color color;
 
   const AppBarWidget(
-      {Key? key, required this.parentContext, this.extend = false})
+      {Key? key,
+      required this.parentContext,
+      this.extend = false,
+      this.color = Colors.white})
       : super(key: key);
 
   @override
@@ -22,7 +26,7 @@ abstract class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
         title: getTitleWidget(),
         centerTitle: true,
         // excludeHeaderSemantics: true,
-        backgroundColor: Colors.transparent,
+        backgroundColor: color,
         // backgroundColor: Color(0xffd0dee9),
         leading: getLeading(),
         actions: getActions(),

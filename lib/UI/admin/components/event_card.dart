@@ -147,11 +147,11 @@ class EventCardWidget extends StatelessWidget {
                         ],
                       ).paddingSymmetric(horizontal: 10),
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     InkWell(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => EventPage()));
+                            builder: (context) => const EventPage()));
                       },
                       child: Text('جزئیات',
                           style:
@@ -173,17 +173,15 @@ class EventCardWidget extends StatelessWidget {
 
 final List<Widget> imageSliders = imgList2
     .map((item) => Container(
-  child: Container(
-    margin: const EdgeInsets.all(5.0),
-    child: ClipRRect(
-        borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-        child: Stack(
-          children: <Widget>[
-            Image(
-              image: AssetImage(item),
-            ),
-          ],
-        )),
-  ),
-))
+          margin: const EdgeInsets.all(5.0),
+          child: ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+              child: Stack(
+                children: <Widget>[
+                  Image(
+                    image: AssetImage(item),
+                  ),
+                ],
+              )),
+        ))
     .toList();

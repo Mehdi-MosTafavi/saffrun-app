@@ -18,10 +18,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AuthCubit(),
-      child: Scaffold(
-        body: Container(
-          child: const LoginBody(),
-        ),
+      child: const Scaffold(
+        body: LoginBody(),
       ),
     );
   }
