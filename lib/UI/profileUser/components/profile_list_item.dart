@@ -7,11 +7,13 @@ class ProfileListItem extends StatelessWidget {
   final IconData icon;
   final String text;
   final bool hasNavigation;
+  final Function onTapRow;
 
   const ProfileListItem({
     Key? key,
     required this.icon,
     required this.text,
+    required this.onTapRow,
     this.hasNavigation = true,
   }) : super(key: key);
 
@@ -37,47 +39,52 @@ class ProfileListItem extends StatelessWidget {
       decoration: BoxDecoration(
           // borderRadius: BorderRadius.circular(30),
           ),
-      child: Column(
-        children: [
-          Row(
-            children: <Widget>[
-              Icon(
-                this.icon,
-                size: 25,
-                color: colorPallet4,
-              ),
-              SizedBox(width: width * 0.02),
-              Text(
-                this.text,
-                style: kTitleTextStyle.copyWith(
-                    fontWeight: FontWeight.w800, color: colorPallet4
-                    // fontFamily: "Poppins"
-                    ),
-              ),
-              Spacer(),
-              if (this.hasNavigation)
-                IconButton(
-                  splashRadius: 10,
-                  icon: const Icon(
-                    Icons.arrow_forward_rounded,
-                    color: colorPallet4,
-                    size: 20,
-                  ),
-                  onPressed: () {
-                    // setState(() {
-                    //   _volume += 10;
-                    // });
-                  },
+      child: InkWell(
+        onTap: () {
+          onTapRow();
+        },
+        child: Column(
+          children: [
+            Row(
+              children: <Widget>[
+                Icon(
+                  this.icon,
+                  size: 25,
+                  color: colorPallet4,
                 ),
-            ],
-          ),
-          if (this.hasNavigation)
-            Divider(
-              height: 10,
-              color: Colors.black.withOpacity(0.1),
-              thickness: 1,
-            )
-        ],
+                SizedBox(width: width * 0.02),
+                Text(
+                  this.text,
+                  style: kTitleTextStyle.copyWith(
+                      fontWeight: FontWeight.w800, color: colorPallet4
+                      // fontFamily: "Poppins"
+                      ),
+                ),
+                Spacer(),
+                if (this.hasNavigation)
+                  IconButton(
+                    splashRadius: 10,
+                    icon: const Icon(
+                      Icons.arrow_forward_rounded,
+                      color: colorPallet4,
+                      size: 20,
+                    ),
+                    onPressed: () {
+                      // setState(() {
+                      //   _volume += 10;
+                      // });
+                    },
+                  ),
+              ],
+            ),
+            if (this.hasNavigation)
+              Divider(
+                height: 10,
+                color: Colors.black.withOpacity(0.1),
+                thickness: 1,
+              )
+          ],
+        ),
       ),
     );
   }
