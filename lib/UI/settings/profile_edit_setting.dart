@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:saffrun_app/UI/settings/utils/theme.dart';
 
 import '../../constants/theme_color.dart';
 import '../utils/appbar/appbar_type1.dart';
@@ -58,6 +57,7 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
             //   fit: BoxFit.cover,
             // ),
             SingleChildScrollView(
+              physics: const ClampingScrollPhysics(),
               child: Container(
                 padding: EdgeInsets.only(top: 0),
                 child: Column(
@@ -103,7 +103,7 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                                               );
                                             },
                                             imageUrl:
-                                                'https://res.cloudinary.com/culturemap-com/image/upload/ar_4:3,c_fill,g_faces:center,w_980/v1519064369/photos/269761_original.jpg',
+                                            'https://res.cloudinary.com/culturemap-com/image/upload/ar_4:3,c_fill,g_faces:center,w_980/v1519064369/photos/269761_original.jpg',
                                             width: 80,
                                             height: 80),
                                       ),
@@ -111,9 +111,9 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                                       Container(
                                         child: Column(
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                           mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                           children: <Widget>[
                                             Text('حسین ناصری زاده',
                                                 style: boldTextStyle(
@@ -135,7 +135,7 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                                         finish(context);
                                       },
                                       child:
-                                          Icon(Icons.edit, color: colorPallet3),
+                                      Icon(Icons.edit, color: colorPallet3),
                                       backgroundColor: white,
                                     ),
                                   )
@@ -152,54 +152,71 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                                     topRight: Radius.circular(24))),
                             child: Container(
                               width: context.width(),
-                              height: context.height() * 0.86,
+                              height: context.height() * 0.8,
                               alignment: Alignment.topLeft,
                               padding: EdgeInsets.all(20),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  Text('اطلاعات شخصی',
+                                  Text('نام و نام خانوادگی',
                                       style: primaryTextStyle(size: 18)),
                                   T2EditTextField(
                                     isPassword: false,
                                     mController: nameController,
                                     fontSize: 16.0,
                                   ),
-                                  CustomTheme(
-                                    child: DropdownButton<String>(
-                                      value: _selectedLocation,
-                                      items: <String>['زن', 'مرد']
-                                          .map((String value) {
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(value,
-                                              style:
-                                                  primaryTextStyle(size: 18)),
-                                        );
-                                      }).toList(),
-                                      onChanged: (newValue) {
-                                        setState(() {
-                                          _selectedLocation = newValue;
-                                        });
-                                      },
-                                    ),
+                                  10.height,
+                                  Row(
+                                    children: [
+                                      Text('جنسیت',
+                                          style: primaryTextStyle(size: 18)),
+                                      20.width,
+                                      DropdownButton<String>(
+                                        value: _selectedLocation,
+                                        borderRadius: BorderRadius.circular(10),
+                                        // icon: Icon(LineAwesomeIcons.female),
+                                        items: <String>['زن', 'مرد']
+                                            .map((String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value,
+                                                style: primaryTextStyle(
+                                                    size: 18,
+                                                    fontFamily: 'Dana')),
+                                          );
+                                        }).toList(),
+                                        onChanged: (newValue) {
+                                          setState(() {
+                                            _selectedLocation = newValue;
+                                          });
+                                        },
+                                      ),
+                                    ],
                                   ),
+                                  Text('کد ملی',
+                                      style: primaryTextStyle(size: 18)),
                                   T2EditTextField(
                                       isPassword: false,
-                                      mController: addressController,
-                                      maxLine: 2,
+                                      mController: emailController,
+                                      maxLine: 1,
                                       fontSize: 16.0),
                                   SizedBox(height: 30),
-                                  Text('مخاطب',
+                                  Text('شماره موبایل',
                                       style: primaryTextStyle(
                                           color: colorPallet3, size: 18)),
                                   T2EditTextField(
                                       isPassword: false,
                                       mController: contactController,
                                       fontSize: 16.0),
+                                  15.height,
+                                  Text('آدرس',
+                                      style: primaryTextStyle(
+                                          color: colorPallet3, size: 18)),
+                                  6.height,
                                   T2EditTextField(
                                       isPassword: false,
-                                      mController: emailController,
+                                      maxLine: 4,
+                                      mController: addressController,
                                       fontSize: 16.0),
                                 ],
                               ),

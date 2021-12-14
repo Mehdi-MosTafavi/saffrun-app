@@ -43,13 +43,18 @@ class T2EditTextFieldState extends State<T2EditTextField> {
             color: Colors.black,
             fontFamily: widget.fontFamily),
         decoration: InputDecoration(
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: colorPallet2),
-          ),
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: colorPallet2),
-          ),
-        ),
+            enabledBorder: widget.maxLine == 1
+                ? UnderlineInputBorder(
+                    borderSide: BorderSide(color: colorPallet2),
+                  )
+                : OutlineInputBorder(
+                    borderSide: BorderSide(color: colorPallet2)),
+            focusedBorder: widget.maxLine == 1
+                ? UnderlineInputBorder(
+                    borderSide: BorderSide(color: colorPallet2),
+                  )
+                : OutlineInputBorder(
+                    borderSide: BorderSide(color: colorPallet2))),
       );
     } else {
       return TextField(

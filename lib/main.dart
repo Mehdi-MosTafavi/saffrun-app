@@ -29,9 +29,13 @@ Future<void> main() async {
   );
 }
 
-void onNotificationClicked(String? uuid) {}
+void onNotificationClicked(String? uuid) {
+  print(uuid);
+}
 
-void onNotificationReceived(String? id) {}
+void onNotificationReceived(String? id) {
+  print(id);
+}
 
 void onUserSubscribed(String? token) {
   print("Najva user subscribed token : $token");
