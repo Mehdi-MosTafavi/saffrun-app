@@ -63,6 +63,8 @@ dependencies:
   like_button: ^2.0.3
   auto_size_text: ^3.0.0
   comment_tree: ^0.3.0
+  charts_flutter: ^0.10.0
+  syncfusion_flutter_charts: ^19.3.59
 #  swipe_to: 0.0.1+8
 #
 #  shared_preferences: ^0.5.10
