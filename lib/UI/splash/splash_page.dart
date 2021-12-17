@@ -15,11 +15,11 @@ class SplashPage extends StatefulWidget {
 
 class SplashPageState extends State<SplashPage> {
   void navigationToHomePage() {
-    Navigator.pushReplacementNamed(context, TURNOVER_PAGE_PATH);
+    Navigator.pushReplacementNamed(context, HOME_PAGE_PATH);
   }
 
   void navigationToAuthPage() {
-    Navigator.pushReplacementNamed(context, TURNOVER_PAGE_PATH);
+    Navigator.pushReplacementNamed(context, AUTH_MENU_PATH);
   }
 
   late bool startApp;

@@ -5,6 +5,7 @@ import 'package:nb_utils/src/extensions/context_extensions.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:saffrun_app/UI/history/history_page.dart';
 import 'package:saffrun_app/UI/settings/profile_edit_setting.dart';
+import 'package:saffrun_app/UI/turnover/turn_over.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 
 import 'components/profile_list_item.dart';
@@ -141,9 +142,16 @@ class ProfileListItems extends StatelessWidget {
           },
         ),
         ProfileListItem(
-          icon: LineAwesomeIcons.question_circle,
-          text: 'راهنما و پشتیبانی',
-          onTapRow: () {},
+          icon: LineAwesomeIcons.money_bill,
+          text: 'گردش مالی',
+          onTapRow: () {
+            pushNewScreen(
+              context,
+              screen: const TurnOver(),
+              withNavBar: false, // OPTIONAL VALUE. True by default.
+              pageTransitionAnimation: PageTransitionAnimation.cupertino,
+            );
+          },
         ),
         ProfileListItem(
           icon: LineAwesomeIcons.cog,

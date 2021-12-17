@@ -5,7 +5,6 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:nb_utils/src/extensions/context_extensions.dart';
 import 'package:saffrun_app/UI/utils/appbar/appbar_type1.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
-
 // import 'package:nb_utils/nb_utils.dart';
 // import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 // import 'package:saffrun_app/UI/history/components/event_card.dart';
@@ -13,7 +12,6 @@ import 'package:saffrun_app/constants/theme_color.dart';
 // import 'package:saffrun_app/UI/eventPage/components/add_button.dart';
 // import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/models/turnover/turnover_card_model.dart';
-
 // import 'package:saffrun_app/models/history/reserve_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -138,7 +136,7 @@ class _TurnOverState extends State<TurnOver> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarTitleProfile(
+      appBar: AppBarTitleProfileWhite(
         context,
         0,
         title: '',

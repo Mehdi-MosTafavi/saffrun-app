@@ -190,13 +190,12 @@ class TurnoverCardWidget extends StatelessWidget {
                                           child: Row(
                                         children: [
                                           Icon(
-                                            LineAwesomeIcons
-                                                .alternate_money_bill,
+                                            LineAwesomeIcons.wavy_money_bill,
                                             color: colorPallet2,
                                           ),
                                           2.width,
                                           const Text(
-                                            'مبلغ پرداخت',
+                                            'مبلغ پرداختی',
                                             style:
                                                 TextStyle(color: colorPallet3),
                                           ),
@@ -211,20 +210,34 @@ class TurnoverCardWidget extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => EventPage()));
-                              },
-                              child: Container(
-                                child: Center(
-                                  child: Text(
-                                    'جزئیات',
-                                    style: boldTextStyle(color: colorPallet2),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'تاریخ:',
+                                  style: TextStyle(fontWeight: FontWeight.w600),
+                                ),
+                                Text('10 مرداد 1400'),
+                                5.height,
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) => EventPage()));
+                                  },
+                                  child: Container(
+                                    child: Center(
+                                      child: Text(
+                                        'جزئیات',
+                                        style:
+                                            boldTextStyle(color: colorPallet2),
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ).paddingOnly(top: 35, left: 15),
+                              ],
+                            ).paddingOnly(left: 5, top: 5),
                           ],
                         ),
                       ),
