@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:nb_utils/src/extensions/context_extensions.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:saffrun_app/UI/history/history_page.dart';
+import 'package:saffrun_app/UI/settings/profile_edit_setting.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 
 import 'components/profile_list_item.dart';
@@ -111,33 +114,52 @@ class ProfileListItems extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        SizedBox(
-            height: context.height() * 0.032),
-        const ProfileListItem(
-          icon: LineAwesomeIcons.user_shield,
+        SizedBox(height: context.height() * 0.032),
+        ProfileListItem(
+          icon: LineAwesomeIcons.user_edit,
           // icon: Icons.home,
-          text: 'امنیت',
+          text: 'اطلاعات پروفایل',
+          onTapRow: () {
+            pushNewScreen(
+              context,
+              screen: ProfileSettingEditPage(),
+              withNavBar: false, // OPTIONAL VALUE. True by default.
+              pageTransitionAnimation: PageTransitionAnimation.cupertino,
+            );
+          },
         ),
-        const ProfileListItem(
+        ProfileListItem(
           icon: LineAwesomeIcons.history,
-          text: 'سابقه خرید',
+          text: 'تاریخچه',
+          onTapRow: () {
+            pushNewScreen(
+              context,
+              screen: const HistoryPage(),
+              withNavBar: false, // OPTIONAL VALUE. True by default.
+              pageTransitionAnimation: PageTransitionAnimation.cupertino,
+            );
+          },
         ),
-        const ProfileListItem(
+        ProfileListItem(
           icon: LineAwesomeIcons.question_circle,
           text: 'راهنما و پشتیبانی',
+          onTapRow: () {},
         ),
-        const ProfileListItem(
+        ProfileListItem(
           icon: LineAwesomeIcons.cog,
           text: 'تنظیمات',
+          onTapRow: () {},
         ),
-        const ProfileListItem(
+        ProfileListItem(
           icon: LineAwesomeIcons.user_plus,
           text: 'دعوت دوستان',
+          onTapRow: () {},
         ),
-        const ProfileListItem(
+        ProfileListItem(
           icon: LineAwesomeIcons.alternate_sign_out,
           text: 'خروج',
           hasNavigation: false,
+          onTapRow: () {},
         ),
       ],
     );

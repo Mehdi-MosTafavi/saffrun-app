@@ -5,4 +5,5 @@ const ADMIN_PAGE_PATH= '/adminPage';
 const PROFILE_USER_PAGE_PATH= '/profileUser';
 const COMMENT_PAGE_PATH= '/commentPage';
 const TURNOVER_PAGE_PATH= '/turnover';
+const HISTORY_PAGE_PATH= '/history';
 const pageSize = 20;

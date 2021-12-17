@@ -134,7 +134,7 @@ class _AdminPageState extends State<AdminPage> {
           onPressed: () {
             pushNewScreen(
               context,
-              screen: ReservePage(),
+              screen: const ReservePage(),
               withNavBar: false, // OPTIONAL VALUE. True by default.
               pageTransitionAnimation: PageTransitionAnimation.cupertino,
             );
@@ -364,7 +364,7 @@ class _AdminPageState extends State<AdminPage> {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.symmetric(vertical: 20.0),
+                            margin: const EdgeInsets.symmetric(vertical: 20.0),
                             height: 280,
                             child: ListView(
                               scrollDirection: Axis.horizontal,
@@ -409,7 +409,7 @@ class _AdminPageState extends State<AdminPage> {
                               )
                             ],
                           ),
-                          Container(
+                          SizedBox(
                             height: 300,
                             child: ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
@@ -455,25 +455,23 @@ class _AdminPageState extends State<AdminPage> {
 
 final List<Widget> imageSliders = imgList
     .map((item) => Container(
-          child: Container(
-            margin: const EdgeInsets.all(5.0),
-            child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                child: Stack(
-                  children: <Widget>[
-                    Image(
-                      image: AssetImage(item),
-                    ),
-                  ],
-                )),
-          ),
+          margin: const EdgeInsets.all(5.0),
+          child: ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+              child: Stack(
+                children: <Widget>[
+                  Image(
+                    image: AssetImage(item),
+                  ),
+                ],
+              )),
         ))
     .toList();
 
 class DescriptionTextWidget extends StatefulWidget {
   final String text;
 
-  DescriptionTextWidget({required this.text});
+  const DescriptionTextWidget({Key? key, required this.text}) : super(key: key);
 
   @override
   _DescriptionTextWidgetState createState() => _DescriptionTextWidgetState();
