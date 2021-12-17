@@ -10,7 +10,6 @@ Future<void> main() async {
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
     SystemUiOverlay.bottom, //This line is used for showing the bottom bar
   ]);
-
   runApp(
     MyApp(
       router: AppRouter(),

@@ -7,7 +7,6 @@ import 'package:saffrun_app/UI/eventPage/event_page.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/models/history/event_model.dart';
 
-
 final List<String> imgList2 = [
   'assets/images/mafia1.jpg',
   'assets/images/mafia1.jpg',
@@ -33,78 +32,99 @@ class EventCardWidget extends StatelessWidget {
       case 1:
         {
           final date = DateTime.now();
-          final difference_day = date.difference(event.startTime).inDays.round();
-          final difference_hour = date.difference(event.startTime).inHours.round();
-          final difference_minute = date.difference(event.startTime).inMinutes.round();
-          final difference_second = date.difference(event.startTime).inSeconds.round();
+          final difference_day =
+              date.difference(event.startTime).inDays.round();
+          final difference_hour =
+              date.difference(event.startTime).inHours.round();
+          final difference_minute =
+              date.difference(event.startTime).inMinutes.round();
+          final difference_second =
+              date.difference(event.startTime).inSeconds.round();
 
-          if (difference_day>0){
+          if (difference_day > 0) {
             return difference_day.toString() + " روز";
-          }
-          else{
-            return (difference_hour - difference_day * 24).toString() + ":" +
-                (difference_minute - difference_hour * 60).toString() + ":" +
+          } else {
+            return (difference_hour - difference_day * 24).toString() +
+                ":" +
+                (difference_minute - difference_hour * 60).toString() +
+                ":" +
                 (difference_second - difference_minute * 60).toString();
           }
         }
-        // break;
+    // break;
 
       case 2:
         {
           final date = DateTime.now();
-          final difference_day = date.difference(event.finishTime).inDays.round();
-          final difference_hour = date.difference(event.finishTime).inHours.round();
-          final difference_minute = date.difference(event.finishTime).inMinutes.round();
-          final difference_second = date.difference(event.finishTime).inSeconds.round();
+          final difference_day =
+              date.difference(event.finishTime).inDays.round();
+          final difference_hour =
+              date.difference(event.finishTime).inHours.round();
+          final difference_minute =
+              date.difference(event.finishTime).inMinutes.round();
+          final difference_second =
+              date.difference(event.finishTime).inSeconds.round();
 
-          if (difference_day>0){
+          if (difference_day > 0) {
             return difference_day.toString() + " روز";
-          }
-          else{
-            return (difference_hour - difference_day * 24).toString() + ":" +
-                (difference_minute - difference_hour * 60).toString() + ":" +
+          } else {
+            return (difference_hour - difference_day * 24).toString() +
+                ":" +
+                (difference_minute - difference_hour * 60).toString() +
+                ":" +
                 (difference_second - difference_minute * 60).toString();
           }
         }
-        // break;
+    // break;
 
       case 3:
         {
-          return "-";
+          return "اتمام یافته";
         }
-        // break;
+      // break;
 
       default:
         {
           return "";
         }
-        // break;
+      // break;
     }
   }
-    Color getColor(Event event) {
-      switch(event.status) {
-        case 1: {  return Colors.green; }
-        // break;
 
-        case 2: {  return Colors.yellow; }
-        // break;
+  Color getColor(Event event) {
+    switch (event.status) {
+      case 1:
+        {
+          return colorPallet5;
+        }
+      // break;
 
-        case 3: {  return Colors.red; }
-        // break;
+      case 2:
+        {
+          return colorPallet2;
+        }
+      // break;
 
-        default: { return Colors.white; }
-        // break;
-      }
+      case 3:
+        {
+          return colorPallet1;
+        }
+      // break;
+
+      default:
+        {
+          return colorPallet6;
+        }
+      // break;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-
     // Timer timer = Timer.periodic(Duration(seconds: 1), (Timer t) => buildCountWidget());
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Container(
-        height: context.height() * 0.3,
         // width: context.width() * 0.3,
         margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
         decoration: BoxDecoration(
@@ -128,55 +148,66 @@ class EventCardWidget extends StatelessWidget {
                       Align(
                         alignment: Alignment.topRight,
                         child: Padding(
-                          padding: EdgeInsets.only(left: context.width() * 0.05),
+                          padding:
+                              EdgeInsets.only(left: context.width() * 0.05),
                           child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    boxShadow: defaultBoxShadow(),
-                                    borderRadius: BorderRadius.circular(12)),
-                                child: Image(
-                                  height: context.height() * 0.15,
-                                  width: context.width() * 0.25,
-                                  image: AssetImage(item),
-                                  fit: BoxFit.fill,
-                                ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    height: context.height() * 0.15,
+                                    width: context.width() * 0.3,
+                                    decoration: BoxDecoration(
+                                        borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(11),
+                                            bottomLeft: Radius.circular(11)),
+                                        image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: AssetImage(item))),
+                                  ),
+                                  Text(
+                                    event.title,
+                                    style: boldTextStyle(),
+                                  ).paddingOnly(top: 15, right: 10),
+                                ],
                               ),
-                              // SizedBox(
-                              //   width: context.width() * 0.05,
-                              // ),
-                              Text(event.title),
                               Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   // Text(getStatus(event),
                                   // style: TextStyle(color: getColor(event)),
                                   // ),
                                   Container(
-                                    height: context.height() * 0.035,
-                                    width: context.width() * 0.15,
+                                    height: 30,
+                                    width: 100,
                                     decoration: boxDecorationWithRoundedCorners(
                                         backgroundColor: getColor(event)),
                                     child: Center(
                                       child: Text(
-                                        getStatus(event,now),
-                                        style: boldTextStyle(color: Colors.white),
+                                        getStatus(event, now),
+                                        style:
+                                            boldTextStyle(color: Colors.white),
                                       ),
                                     ),
-                                  ),
+                                  ).paddingTop(15),
                                   SizedBox(
                                     height: context.height() * 0.01,
                                   ),
                                   Align(
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       children: [
                                         Container(
                                           padding: const EdgeInsets.all(5),
                                           child: Center(
                                             child: Text(
-                                              "تعداد شرکت کننده :",
+                                              "تعداد عضو :",
                                               style: primaryTextStyle(
                                                 color: colorPallet3,
                                               ),
@@ -184,11 +215,10 @@ class EventCardWidget extends StatelessWidget {
                                           ),
                                         ),
                                         Container(
-                                          padding: const EdgeInsets.all(5),
                                           child: Center(
                                             child: Text(
                                               event.participant.toString(),
-                                              style: primaryTextStyle(
+                                              style: boldTextStyle(
                                                 color: colorPallet3,
                                               ),
                                             ),
@@ -218,69 +248,73 @@ class EventCardWidget extends StatelessWidget {
                       Expanded(
                         flex: 1,
                         child: SizedBox(
-                          height: context.height() * 0.1,
                           child: Align(
                             alignment: Alignment.topRight,
                             child: Row(
-                              // crossAxisAlignment: CrossAxisAlignment.stretch,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                              Column(
-                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Wrap(
-                                    // alignment: WrapAlignment.start,
-                                    direction: Axis.vertical,
-                                    textDirection: TextDirection.rtl,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'تاریخ شروع: ',
-                                            style: primaryTextStyle(),
-                                          ),
-                                          Text(
-                                            '10 آبان | 8:00',
-                                            style: boldTextStyle(),
-                                          ),
-                                        ],
-                                      ).paddingSymmetric(horizontal: 10),
-                                      Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'تاریخ پایان: ',
-                                            style: primaryTextStyle(),
-                                          ),
-                                          Text(
-                                            '10 آبان | 14:00',
-                                            style: boldTextStyle(),
-                                          ),
-                                        ],
-                                      ).paddingSymmetric(horizontal: 10),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                Column(
+                                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Wrap(
+                                      // alignment: WrapAlignment.start,
+                                      direction: Axis.vertical,
+                                      textDirection: TextDirection.rtl,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'تاریخ شروع: ',
+                                              style: primaryTextStyle(),
+                                            ),
+                                            Text(
+                                              '10 آبان | 8:00',
+                                              style: boldTextStyle(),
+                                            ),
+                                          ],
+                                        ).paddingSymmetric(horizontal: 10),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'تاریخ پایان: ',
+                                              style: primaryTextStyle(),
+                                            ),
+                                            Text(
+                                              '10 آبان | 14:00',
+                                              style: boldTextStyle(),
+                                            ),
+                                          ],
+                                        ).paddingSymmetric(horizontal: 10),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                                 Padding(
-                                  padding: EdgeInsets.only(left: context.width() * 0.01),
+                                  padding: EdgeInsets.only(
+                                      left: context.width() * 0.01),
                                   child: MaterialButton(
                                     onPressed: () {
-                                      Navigator.of(context).push(MaterialPageRoute(
-                                          builder: (context) => EventPage()));
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const EventPage()));
                                     },
                                     child: Container(
                                       height: context.height() * 0.07,
                                       width: context.width() * 0.2,
-                                      decoration: boxDecorationWithRoundedCorners(
-                                          backgroundColor: colorPallet3),
+                                      decoration:
+                                          boxDecorationWithRoundedCorners(
+                                              backgroundColor: colorPallet3),
                                       child: Center(
                                         child: Text(
                                           'جزئیات',
-                                          style: boldTextStyle(color: Colors.white),
+                                          style: boldTextStyle(
+                                              color: Colors.white),
                                         ),
                                       ),
                                     ),
@@ -299,15 +333,16 @@ class EventCardWidget extends StatelessWidget {
                                 //         maxLines: 2),
                                 //   ),
                                 // ),
-                            ],
+                              ],
                             ),
                           ),
                         ),
                       ),
 
-
                       // SizedBox(height: 8),
-
+                      SizedBox(
+                        height: context.height() * 0.01,
+                      ),
                       // 10.height,
                     ],
                   ),
@@ -320,8 +355,6 @@ class EventCardWidget extends StatelessWidget {
     );
   }
 }
-
-
 
 final List<Widget> imageSliders = imgList2
     .map((item) => Container(
@@ -339,4 +372,3 @@ final List<Widget> imageSliders = imgList2
           ),
         ))
     .toList();
-
