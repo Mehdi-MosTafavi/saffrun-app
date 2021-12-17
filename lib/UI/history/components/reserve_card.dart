@@ -46,6 +46,12 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
     });
   }
 
+  @override
+  void dispose() {
+    everySecond.cancel();
+    super.dispose();
+  }
+
   int current = 0;
   final CarouselController controller = CarouselController();
 
@@ -68,17 +74,17 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
             // return (difference_hour - difference_day * 24 - hours).toString() + ":" +
             //     (difference_minute - difference_hour * 60 - minutes).toString() + ":" +
             //     (difference_second - difference_minute * 60 - seconds).toString();
-            return (difference_hour - difference_day * 24).toString() +
+            return (difference_hour - difference_day * 24).abs().toString() +
                 ":" +
-                (difference_minute - difference_hour * 60).toString() +
+                (difference_minute - difference_hour * 60).abs().toString() +
                 ":" +
-                (difference_second - difference_minute * 60).toString();
+                (difference_second - difference_minute * 60).abs().toString();
           } else {
-            return (difference_hour - difference_day * 24).toString() +
+            return (difference_hour - difference_day * 24).abs().toString() +
                 ":" +
-                (difference_minute - difference_hour * 60).toString() +
+                (difference_minute - difference_hour * 60).abs().toString() +
                 ":" +
-                (difference_second - difference_minute * 60).toString();
+                (difference_second - difference_minute * 60).abs().toString();
           }
         }
     // break;
@@ -98,11 +104,12 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
           if (difference_day > 0) {
             return difference_day.toString() + " روز";
           } else {
-            return (difference_hour - difference_day * 24).toString() +
+            return (difference_hour - difference_day * 24).abs().toString() +
                 ":" +
-                (difference_minute - difference_hour * 60).toString() +
+                (difference_minute - difference_hour * 60).abs().toString() +
                 ":" +
-                (difference_second - difference_minute * 60).toString();
+                (difference_second - difference_minute * 60).abs().toString() +
+                " مانده";
           }
         }
     // break;
@@ -339,11 +346,11 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
                                             style: boldTextStyle(),
                                           ),
                                           Text(
-                                              getStringFormatJalali(
-                                                      endDateJalali) +
+                                              getTimeReserve(
+                                                      reserve.finishTime) +
                                                   ' - ' +
-                                                  getStringFormatJalali(
-                                                      startDateJalali),
+                                                  getTimeReserve(
+                                                      reserve.startTime),
                                               style: primaryTextStyle(
                                                   color: Colors.blueGrey),
                                               maxLines: 2),
@@ -422,9 +429,11 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
     );
   }
 
-  String getStringFormatJalali(Jalali date) {
-    var d = date.formatter;
-    return date.minute.toString() + ' : ' + date.hour.toString();
+  String getTimeReserve(DateTime time) {
+    var minute = '0' + time.minute.toString();
+    return time.hour.toString() +
+        ':' +
+        (minute).substring(minute.length - 2, minute.length);
   }
 }
 

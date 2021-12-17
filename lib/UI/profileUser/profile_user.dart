@@ -7,6 +7,7 @@ import 'package:saffrun_app/UI/history/history_page.dart';
 import 'package:saffrun_app/UI/settings/profile_edit_setting.dart';
 import 'package:saffrun_app/UI/turnover/turn_over.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
+import 'package:saffrun_app/models/user/user_2.dart';
 
 import 'components/profile_list_item.dart';
 
@@ -62,7 +63,7 @@ class _ProfileUserPageState extends State<ProfileUserPage> {
               Row(
                 children: [
                   Text(
-                    "حسین ناصری زاده",
+                    UserProfile.userLogin.getFullName(),
                     style: boldTextStyle(color: colorPallet3, size: 19),
                   )
                 ],
@@ -74,7 +75,7 @@ class _ProfileUserPageState extends State<ProfileUserPage> {
                     style: primaryTextStyle(color: colorPallet3, size: 15),
                   ),
                   Text(
-                    "hossein",
+                    UserProfile.userLogin.username,
                     style: primaryTextStyle(color: colorPallet3, size: 15),
                   ),
                 ],

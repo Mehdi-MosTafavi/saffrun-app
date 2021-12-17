@@ -1,5 +1,7 @@
 // import 'dart:async';
 
+import 'dart:async';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -14,17 +16,40 @@ final List<String> imgList2 = [
   'assets/images/mafia1.jpg'
 ];
 
-class EventCardWidget extends StatelessWidget {
+class EventCardWidget extends StatefulWidget {
   EventCardWidget({
     Key? key,
     required this.event,
   }) : super(key: key);
+  final Event event;
+
+  @override
+  State<EventCardWidget> createState() => _EventCardWidgetState();
+}
+
+class _EventCardWidgetState extends State<EventCardWidget> {
+  late Timer everySecond;
+
+  @override
+  void initState() {
+    super.initState();
+    everySecond = Timer.periodic(const Duration(seconds: 1), (Timer t) {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    everySecond.cancel();
+    super.dispose();
+  }
 
   DateTime now = DateTime.now();
-  final Event event;
+
   final String item = 'assets/images/mafia1.jpg';
 
   int current = 0;
+
   final CarouselController controller = CarouselController();
 
   String getStatus(Event event, DateTime now) {
@@ -44,14 +69,14 @@ class EventCardWidget extends StatelessWidget {
           if (difference_day > 0) {
             return difference_day.toString() + " روز";
           } else {
-            return (difference_hour - difference_day * 24).toString() +
+            return (difference_hour - difference_day * 24).abs().toString() +
                 ":" +
-                (difference_minute - difference_hour * 60).toString() +
+                (difference_minute - difference_hour * 60).abs().toString() +
                 ":" +
-                (difference_second - difference_minute * 60).toString();
+                (difference_second - difference_minute * 60).abs().toString();
           }
         }
-    // break;
+      // break;
 
       case 2:
         {
@@ -68,14 +93,15 @@ class EventCardWidget extends StatelessWidget {
           if (difference_day > 0) {
             return difference_day.toString() + " روز";
           } else {
-            return (difference_hour - difference_day * 24).toString() +
+            return (difference_hour - difference_day * 24).abs().toString() +
                 ":" +
-                (difference_minute - difference_hour * 60).toString() +
+                (difference_minute - difference_hour * 60).abs().toString() +
                 ":" +
-                (difference_second - difference_minute * 60).toString();
+                (difference_second - difference_minute * 60).abs().toString() +
+                " مانده";
           }
         }
-    // break;
+      // break;
 
       case 3:
         {
@@ -197,7 +223,7 @@ class EventCardWidget extends StatelessWidget {
                                             image: AssetImage(item))),
                                   ),
                                   Text(
-                                    event.title,
+                                    widget.event.title,
                                     style: boldTextStyle(),
                                   ).paddingOnly(top: 15, right: 10),
                                 ],
@@ -214,12 +240,13 @@ class EventCardWidget extends StatelessWidget {
                                     height: 30,
                                     width: 100,
                                     decoration: boxDecorationWithRoundedCorners(
-                                        backgroundColor: getColor(event)),
+                                        backgroundColor:
+                                            getColor(widget.event)),
                                     child: Center(
                                       child: Text(
-                                        getStatus(event, now),
+                                        getStatus(widget.event, now),
                                         style: boldTextStyle(
-                                            color: getColorText(event)),
+                                            color: getColorText(widget.event)),
                                       ),
                                     ),
                                   ).paddingTop(15),
@@ -245,7 +272,8 @@ class EventCardWidget extends StatelessWidget {
                                         Container(
                                           child: Center(
                                             child: Text(
-                                              event.participant.toString(),
+                                              widget.event.participant
+                                                  .toString(),
                                               style: boldTextStyle(
                                                 color: colorPallet3,
                                               ),

@@ -14,11 +14,26 @@ class SplashNetworkService extends BaseNetworkService {
         return false;
       }
       return true;
-    }
-    catch (e) {
+    } catch (e) {
       print(e);
       return false;
     }
   }
 
+  fetchProfile() async {
+    try {
+      String? token = await setTokenToHeader();
+      if (token == null) {
+        return false;
+      }
+      dynamic? jsonResponse = await getTemplate('/profile/user/');
+      if (jsonResponse == null) {
+        return null;
+      }
+      return jsonResponse;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
 }

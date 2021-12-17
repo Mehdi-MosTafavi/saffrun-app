@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:saffrun_app/models/user/user_2.dart';
 import 'package:saffrun_app/state_managment/settings/setting_cubit.dart';
 
 import '../../constants/theme_color.dart';
@@ -32,10 +33,10 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
     // TODO: implement initState
     super.initState();
     gender = "male";
-    nameController.text = "";
-    addressController.text = "";
-    contactController.text = "";
-    emailController.text = "";
+    nameController.text = UserProfile.userLogin.getFullName();
+    addressController.text = UserProfile.userLogin.address;
+    contactController.text = UserProfile.userLogin.phone;
+    emailController.text = "1250000000";
   }
 
   @override
@@ -161,12 +162,16 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
                                                 children: <Widget>[
-                                                  Text('حسین ناصری زاده',
+                                                  Text(
+                                                      UserProfile.userLogin
+                                                          .getFullName(),
                                                       style: boldTextStyle(
                                                           color: white,
                                                           size: 19)),
                                                   SizedBox(height: 8),
-                                                  Text('hoseeein',
+                                                  Text(
+                                                      UserProfile
+                                                          .userLogin.username,
                                                       style: primaryTextStyle(
                                                           color: white,
                                                           size: 17)),
