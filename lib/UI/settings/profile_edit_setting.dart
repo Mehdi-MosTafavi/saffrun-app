@@ -20,18 +20,18 @@ class ProfileSettingEditPage extends StatefulWidget {
 }
 
 class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
-  String? _selectedLocation = 'مرد';
   TextEditingController nameController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   TextEditingController contactController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-
+  late String gender;
   late File image;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    gender = "male";
     nameController.text = "";
     addressController.text = "";
     contactController.text = "";
@@ -225,7 +225,8 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Text('نام و نام خانوادگی',
-                                            style: boldTextStyle()),
+                                            style: boldTextStyle(
+                                                color: colorPallet3)),
                                         Row(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
@@ -249,34 +250,71 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                                             ),
                                           ],
                                         ),
-                                        10.height,
+                                        15.height,
                                         Row(
                                           children: [
-                                            Text('جنسیت:',
-                                                style: boldTextStyle()),
-                                            20.width,
-                                            DropdownButton<String>(
-                                              value: _selectedLocation,
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              // icon: Icon(LineAwesomeIcons.female),
-                                              items: <String>['زن', 'مرد']
-                                                  .map((String value) {
-                                                return DropdownMenuItem<String>(
-                                                  value: value,
-                                                  child: Text(value,
-                                                      style: primaryTextStyle(
-                                                          fontFamily: 'Dana')),
-                                                );
-                                              }).toList(),
-                                              onChanged: (newValue) {
-                                                setState(() {
-                                                  _selectedLocation = newValue;
-                                                });
-                                              },
+                                            Text('جنسیت : ',
+                                                style: boldTextStyle(
+                                                    color: colorPallet3)),
+                                            Theme(
+                                              data: Theme.of(context).copyWith(
+                                                  unselectedWidgetColor:
+                                                      colorPallet5),
+                                              child: Radio(
+                                                value: 'male',
+                                                groupValue: gender,
+                                                fillColor:
+                                                    MaterialStateProperty.all(
+                                                        colorPallet2),
+                                                onChanged: (dynamic value) {
+                                                  setState(() {
+                                                    gender = value;
+                                                    // toast("$sortField Selected");
+                                                  });
+                                                },
+                                              ),
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text('مرد',
+                                                    style: primaryTextStyle()),
+                                                Icon(
+                                                  Icons.male_rounded,
+                                                  color: colorPallet3,
+                                                )
+                                              ],
+                                            ),
+                                            Theme(
+                                              data: Theme.of(context).copyWith(
+                                                unselectedWidgetColor:
+                                                    colorPallet5,
+                                              ),
+                                              child: Radio(
+                                                value: 'female',
+                                                fillColor:
+                                                    MaterialStateProperty.all(
+                                                        colorPallet2),
+                                                groupValue: gender,
+                                                onChanged: (dynamic value) {
+                                                  setState(() {
+                                                    gender = value;
+                                                  });
+                                                },
+                                              ),
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text('زن',
+                                                    style: primaryTextStyle()),
+                                                Icon(
+                                                  Icons.female_rounded,
+                                                  color: colorPallet3,
+                                                )
+                                              ],
                                             ),
                                           ],
                                         ),
+                                        12.height,
                                         Text('کد ملی',
                                             style: boldTextStyle(
                                                 color: colorPallet3)),
@@ -297,7 +335,7 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                                             Expanded(
                                               child: T2EditTextField(
                                                 isPassword: false,
-                                                mController: nameController,
+                                                mController: emailController,
                                                 fontSize: 16.0,
                                               ).paddingLeft(50),
                                             ),
@@ -314,7 +352,7 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                                             CircleAvatar(
                                                 backgroundColor: colorPallet2
                                                     .withOpacity(0.2),
-                                                child: const Icon(
+                                                child: Icon(
                                                   LineAwesomeIcons
                                                       .alternate_phone,
                                                   color: colorPallet2,
@@ -324,7 +362,7 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                                             Expanded(
                                               child: T2EditTextField(
                                                 isPassword: false,
-                                                mController: nameController,
+                                                mController: contactController,
                                                 fontSize: 16.0,
                                               ).paddingLeft(50),
                                             ),

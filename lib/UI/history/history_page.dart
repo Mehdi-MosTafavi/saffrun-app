@@ -2,12 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:nb_utils/src/extensions/context_extensions.dart';
-
 // import 'package:nb_utils/nb_utils.dart';
 // import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:saffrun_app/UI/history/components/event_card.dart';
 import 'package:saffrun_app/UI/utils/appbar/appbar_type1.dart';
-
 // import 'package:saffrun_app/UI/commentPage/commentpage.dart';
 // import 'package:saffrun_app/UI/eventPage/components/add_button.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
@@ -235,7 +233,7 @@ class _HistoryPageState extends State<HistoryPage> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: AppBarTitleProfile(
+        appBar: AppBarTitleProfileSaffronColor(
           context,
           0,
           title: '',
@@ -246,26 +244,29 @@ class _HistoryPageState extends State<HistoryPage> {
           height: context.height(),
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 80,
-                child: const TabBar(
-                  labelColor: colorPallet2,
-                  indicatorColor: colorPallet2,
-                  tabs: [
-                    Tab(
-                        text: 'رویداد ها',
-                        icon: Icon(
-                          LineAwesomeIcons.gamepad,
-                          color: colorPallet2,
-                        )),
-                    Tab(
-                        text: 'نوبت ها',
-                        icon: Icon(
-                          LineAwesomeIcons.book,
-                          color: colorPallet2,
-                        )),
-                    // Tab(text: 'BIRDS', icon: Icon(Icons.search)),
-                  ],
+                child: ColoredBox(
+                  color: colorPallet2,
+                  child: TabBar(
+                    labelColor: Colors.white,
+                    indicatorColor: Colors.white,
+                    tabs: [
+                      Tab(
+                          text: 'رویداد ها',
+                          icon: Icon(
+                            LineAwesomeIcons.gamepad,
+                            color: Colors.white,
+                          )),
+                      Tab(
+                          text: 'نوبت ها',
+                          icon: Icon(
+                            LineAwesomeIcons.book,
+                            color: Colors.white,
+                          )),
+                      // Tab(text: 'BIRDS', icon: Icon(Icons.search)),
+                    ],
+                  ),
                 ),
               ),
               Expanded(

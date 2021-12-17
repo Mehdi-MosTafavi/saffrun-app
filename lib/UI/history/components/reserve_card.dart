@@ -109,7 +109,7 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
 
       case 3:
         {
-          return "-";
+          return "اتمام یافته";
         }
       // break;
 
@@ -125,6 +125,34 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
     switch (event.status) {
       case 1:
         {
+          return colorPallet5.withOpacity(0.2);
+        }
+      // break;
+
+      case 2:
+        {
+          return colorPallet2.withOpacity(0.2);
+        }
+      // break;
+
+      case 3:
+        {
+          return colorPallet1.withOpacity(0.2);
+        }
+      // break;
+
+      default:
+        {
+          return colorPallet6;
+        }
+      // break;
+    }
+  }
+
+  Color getColorText(Reserve event) {
+    switch (event.status) {
+      case 1:
+        {
           return colorPallet5;
         }
       // break;
@@ -133,7 +161,7 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
         {
           return colorPallet2;
         }
-      // break;
+    // break;
 
       case 3:
         {
@@ -145,7 +173,7 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
         {
           return colorPallet6;
         }
-      // break;
+    // break;
     }
   }
 
@@ -231,8 +259,8 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
                                     child: Center(
                                       child: Text(
                                         getStatus(reserve, now),
-                                        style:
-                                            boldTextStyle(color: Colors.white),
+                                        style: boldTextStyle(
+                                            color: getColorText(reserve)),
                                       ),
                                     ),
                                   ),

@@ -95,6 +95,34 @@ class EventCardWidget extends StatelessWidget {
     switch (event.status) {
       case 1:
         {
+          return colorPallet5.withOpacity(0.2);
+        }
+      // break;
+
+      case 2:
+        {
+          return colorPallet2.withOpacity(0.2);
+        }
+      // break;
+
+      case 3:
+        {
+          return colorPallet1.withOpacity(0.2);
+        }
+      // break;
+
+      default:
+        {
+          return colorPallet6;
+        }
+      // break;
+    }
+  }
+
+  Color getColorText(Event event) {
+    switch (event.status) {
+      case 1:
+        {
           return colorPallet5;
         }
       // break;
@@ -190,8 +218,8 @@ class EventCardWidget extends StatelessWidget {
                                     child: Center(
                                       child: Text(
                                         getStatus(event, now),
-                                        style:
-                                            boldTextStyle(color: Colors.white),
+                                        style: boldTextStyle(
+                                            color: getColorText(event)),
                                       ),
                                     ),
                                   ).paddingTop(15),

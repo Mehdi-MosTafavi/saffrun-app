@@ -3,6 +3,7 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:nb_utils/src/extensions/context_extensions.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:saffrun_app/UI/history/history_page.dart';
 import 'package:saffrun_app/UI/settings/profile_edit_setting.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 
@@ -129,8 +130,15 @@ class ProfileListItems extends StatelessWidget {
         ),
         ProfileListItem(
           icon: LineAwesomeIcons.history,
-          text: 'سابقه خرید',
-          onTapRow: () {},
+          text: 'تاریخچه',
+          onTapRow: () {
+            pushNewScreen(
+              context,
+              screen: const HistoryPage(),
+              withNavBar: false, // OPTIONAL VALUE. True by default.
+              pageTransitionAnimation: PageTransitionAnimation.cupertino,
+            );
+          },
         ),
         ProfileListItem(
           icon: LineAwesomeIcons.question_circle,
