@@ -2,11 +2,11 @@
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:saffrun_app/UI/eventPage/event_page.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/models/turnover/turnover_card_model.dart';
-
 
 final List<String> imgList2 = [
   'assets/images/mafia1.jpg',
@@ -14,6 +14,7 @@ final List<String> imgList2 = [
   'assets/images/mafia1.jpg',
   'assets/images/mafia1.jpg'
 ];
+
 class TurnoverCardWidget extends StatelessWidget {
   TurnoverCardWidget({
     Key? key,
@@ -32,17 +33,22 @@ class TurnoverCardWidget extends StatelessWidget {
       case 1:
         {
           final date = DateTime.now();
-          final difference_day = date.difference(event.startTime).inDays.round();
-          final difference_hour = date.difference(event.startTime).inHours.round();
-          final difference_minute = date.difference(event.startTime).inMinutes.round();
-          final difference_second = date.difference(event.startTime).inSeconds.round();
+          final difference_day =
+              date.difference(event.startTime).inDays.round();
+          final difference_hour =
+              date.difference(event.startTime).inHours.round();
+          final difference_minute =
+              date.difference(event.startTime).inMinutes.round();
+          final difference_second =
+              date.difference(event.startTime).inSeconds.round();
 
-          if (difference_day>0){
+          if (difference_day > 0) {
             return difference_day.toString() + " روز";
-          }
-          else{
-            return (difference_hour - difference_day * 24).toString() + ":" +
-                (difference_minute - difference_hour * 60).toString() + ":" +
+          } else {
+            return (difference_hour - difference_day * 24).toString() +
+                ":" +
+                (difference_minute - difference_hour * 60).toString() +
+                ":" +
                 (difference_second - difference_minute * 60).toString();
           }
         }
@@ -51,17 +57,22 @@ class TurnoverCardWidget extends StatelessWidget {
       case 2:
         {
           final date = DateTime.now();
-          final difference_day = date.difference(event.finishTime).inDays.round();
-          final difference_hour = date.difference(event.finishTime).inHours.round();
-          final difference_minute = date.difference(event.finishTime).inMinutes.round();
-          final difference_second = date.difference(event.finishTime).inSeconds.round();
+          final difference_day =
+              date.difference(event.finishTime).inDays.round();
+          final difference_hour =
+              date.difference(event.finishTime).inHours.round();
+          final difference_minute =
+              date.difference(event.finishTime).inMinutes.round();
+          final difference_second =
+              date.difference(event.finishTime).inSeconds.round();
 
-          if (difference_day>0){
+          if (difference_day > 0) {
             return difference_day.toString() + " روز";
-          }
-          else{
-            return (difference_hour - difference_day * 24).toString() + ":" +
-                (difference_minute - difference_hour * 60).toString() + ":" +
+          } else {
+            return (difference_hour - difference_day * 24).toString() +
+                ":" +
+                (difference_minute - difference_hour * 60).toString() +
+                ":" +
                 (difference_second - difference_minute * 60).toString();
           }
         }
@@ -80,19 +91,32 @@ class TurnoverCardWidget extends StatelessWidget {
     // break;
     }
   }
+
   Color getColor(Turnover_card event) {
-    switch(event.status) {
-      case 1: {  return Colors.green; }
-    // break;
+    switch (event.status) {
+      case 1:
+        {
+          return Colors.green;
+        }
+      // break;
 
-      case 2: {  return Colors.yellow; }
-    // break;
+      case 2:
+        {
+          return Colors.yellow;
+        }
+      // break;
 
-      case 3: {  return Colors.red; }
-    // break;
+      case 3:
+        {
+          return Colors.red;
+        }
+      // break;
 
-      default: { return Colors.white; }
-    // break;
+      default:
+        {
+          return Colors.white;
+        }
+      // break;
     }
   }
 
@@ -101,7 +125,6 @@ class TurnoverCardWidget extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Container(
-        height: context.height() * 0.17,
         // width: context.width() * 0.3,
         margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
         decoration: BoxDecoration(
@@ -125,66 +148,86 @@ class TurnoverCardWidget extends StatelessWidget {
                       Align(
                         alignment: Alignment.topRight,
                         child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
+                              height: context.height() * 0.15,
+                              width: context.width() * 0.35,
                               decoration: BoxDecoration(
                                   boxShadow: defaultBoxShadow(),
-                                  borderRadius: BorderRadius.circular(12)),
-                              child: Image(
-                                height: context.height() * 0.15,
-                                width: context.width() * 0.35,
-                                image: AssetImage(item),
-                                fit: BoxFit.fill,
-
-                              ),
+                                  image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: AssetImage(item)),
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(12),
+                                      bottomLeft: Radius.circular(12))),
                             ),
                             // SizedBox(
                             //   width: context.width() * 0.05,
                             // ),
 
                             Padding(
-                              padding: EdgeInsets.only(right: context.width() * 0.03,
-                                top: context.height() * 0.015,),
-                              child: Column(children:[
-                                Text(turnover_card.title),
-                                Container(
-                                    child: Row(children: [
-                                      Icon(Icons.money),
-                                      Text('هزینه :'),
-                                      Text('1000'),
+                              padding: EdgeInsets.only(
+                                right: 8,
+                                top: 8,
+                              ),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    turnover_card.title,
+                                    style: boldTextStyle(color: colorPallet3),
+                                  ),
+                                  10.height,
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                          child: Row(
+                                        children: [
+                                          Icon(
+                                            LineAwesomeIcons
+                                                .alternate_money_bill,
+                                            color: colorPallet2,
+                                          ),
+                                          2.width,
+                                          const Text(
+                                            'مبلغ پرداخت',
+                                            style:
+                                                TextStyle(color: colorPallet3),
+                                          ),
+                                        ],
+                                      )),
+                                      Text(
+                                        '10000 تومان',
+                                        style: boldTextStyle(),
+                                      ),
                                     ],
-                                    )),
-                              ],
+                                  )
+                                ],
                               ),
                             ),
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: MaterialButton(
-                                onPressed: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => EventPage()));
-                                },
-                                child: Container(
-                                  height: context.height() * 0.07,
-                                  width: context.width() * 0.2,
-                                  decoration: boxDecorationWithRoundedCorners(
-                                      backgroundColor: colorPallet3),
-                                  child: Center(
-                                    child: Text(
-                                      'جزئیات',
-                                      style: boldTextStyle(color: Colors.white),
-                                    ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => EventPage()));
+                              },
+                              child: Container(
+                                child: Center(
+                                  child: Text(
+                                    'جزئیات',
+                                    style: boldTextStyle(color: colorPallet2),
                                   ),
                                 ),
                               ),
-                            ),
+                            ).paddingOnly(top: 35, left: 15),
                           ],
                         ),
                       ),
-
-
-
 
                       // SizedBox(height: 8),
 
@@ -201,21 +244,19 @@ class TurnoverCardWidget extends StatelessWidget {
   }
 }
 
-
-
 final List<Widget> imageSliders = imgList2
     .map((item) => Container(
-  child: Container(
-    margin: const EdgeInsets.all(5.0),
-    child: ClipRRect(
-        borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-        child: Stack(
-          children: <Widget>[
-            Image(
-              image: AssetImage(item),
-            ),
-          ],
-        )),
-  ),
-))
+          child: Container(
+            margin: const EdgeInsets.all(5.0),
+            child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+                child: Stack(
+                  children: <Widget>[
+                    Image(
+                      image: AssetImage(item),
+                    ),
+                  ],
+                )),
+          ),
+        ))
     .toList();
