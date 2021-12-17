@@ -16,6 +16,7 @@ class SplashNetworkService extends BaseNetworkService {
       return true;
     }
     catch (e) {
+      print(e);
       return false;
     }
   }

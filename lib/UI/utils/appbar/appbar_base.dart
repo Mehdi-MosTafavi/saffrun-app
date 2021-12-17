@@ -3,8 +3,15 @@ import 'package:flutter/material.dart';
 
 abstract class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
   final BuildContext parentContext;
+  final bool extend;
+  final Color color;
 
-  const AppBarWidget({Key? key, required this.parentContext}) : super(key: key);
+  const AppBarWidget(
+      {Key? key,
+      required this.parentContext,
+      this.extend = false,
+      this.color = Colors.white})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +26,7 @@ abstract class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
         title: getTitleWidget(),
         centerTitle: true,
         // excludeHeaderSemantics: true,
-        backgroundColor: Colors.transparent,
+        backgroundColor: color,
         // backgroundColor: Color(0xffd0dee9),
         leading: getLeading(),
         actions: getActions(),
@@ -30,7 +37,7 @@ abstract class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
   @override
   // TODO: implement preferredSize
   Size get preferredSize =>
-      Size.fromHeight(MediaQuery.of(parentContext).size.height * 0.08);
+      Size.fromHeight(MediaQuery.of(parentContext).size.height * 0.066);
 
   List<Widget>? getActions();
 

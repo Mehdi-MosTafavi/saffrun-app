@@ -1,20 +1,43 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:najvaflutter/najvaflutter.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:responsive_framework/utils/scroll_behavior.dart';
 import 'package:saffrun_app/logical/router.dart';
+
+late NajvaFlutter najva;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
     SystemUiOverlay.bottom, //This line is used for showing the bottom bar
   ]);
+  WidgetsFlutterBinding.ensureInitialized();
+  najva = NajvaFlutter();
+  najva.setFirebaseEnabled(
+      false); // set true if your app using firebase beside najva.
+  najva.init('63336392-f07c-48ed-9111-7d5f3b128b8d', 33714);
+  najva.setOnUserSubscribedListener(onUserSubscribed);
+  najva.setOnNotificationReceivedListener(onNotificationReceived);
+  najva.setOnNotificationClickListener(onNotificationClicked);
   runApp(
     MyApp(
       router: AppRouter(),
     ), // Wrap your app
   );
+}
+
+void onNotificationClicked(String? uuid) {
+  print(uuid);
+}
+
+void onNotificationReceived(String? id) {
+  print(id);
+}
+
+void onUserSubscribed(String? token) {
+  print("Najva user subscribed token : $token");
 }
 
 class MyApp extends StatelessWidget {

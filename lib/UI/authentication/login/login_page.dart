@@ -18,10 +18,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AuthCubit(),
-      child: Scaffold(
-        body: Container(
-          child: const LoginBody(),
-        ),
+      child: const Scaffold(
+        body: LoginBody(),
       ),
     );
   }
@@ -58,7 +56,7 @@ class LoginBody extends StatelessWidget {
       theme: loginTheme,
       userValidator: (value) {
         if (value == "") {
-          return "نام کاریری را وارد نمایید";
+          return "نام کاربری را وارد نمایید";
         }
       },
       passwordValidator: (value) {
@@ -69,7 +67,7 @@ class LoginBody extends StatelessWidget {
       disableCustomPageTransformer: true,
       loginAfterSignUp: false,
       messages: LoginMessages(
-        userHint: 'نام کاریری',
+        userHint: 'نام کاربری',
         passwordHint: 'رمز عبور',
         confirmPasswordHint: 'تایید رمزعبور',
         loginButton: 'ورود',
