@@ -25,7 +25,7 @@ class MainPageState extends State<MainPage> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: false,
-      bottomNavigationBar: NavigationBar(
+      bottomNavigationBar: NavigationBarWidget(
         controller: _controller,
       ),
       body: Container(),

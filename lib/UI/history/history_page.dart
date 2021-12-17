@@ -227,29 +227,35 @@ class _HistoryPageState extends State<HistoryPage> {
   // }
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: DefaultTabController(
-            length: 2,
-            child: Scaffold(
-              appBar: AppBar(
-
-                automaticallyImplyLeading: false,
-                backgroundColor: Colors.white,
-                bottom: const TabBar(
-                  labelColor: colorPallet5,
-                  indicatorColor: colorPallet5,
-                  tabs: [
-                    Tab(text: 'Events',
-                        icon: Icon(Icons.favorite, color: colorPallet5,)),
-                    Tab(text: 'Reserves',
-                        icon: Icon(Icons.music_note, color: colorPallet5,)),
-                    // Tab(text: 'BIRDS', icon: Icon(Icons.search)),
-                  ],
-                ),
-              ),
-              body: TabBarView(
-                  children: [
-              Container(
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.white,
+          bottom: const TabBar(
+            labelColor: colorPallet5,
+            indicatorColor: colorPallet5,
+            tabs: [
+              Tab(
+                  text: 'Events',
+                  icon: Icon(
+                    Icons.favorite,
+                    color: colorPallet5,
+                  )),
+              Tab(
+                  text: 'Reserves',
+                  icon: Icon(
+                    Icons.music_note,
+                    color: colorPallet5,
+                  )),
+              // Tab(text: 'BIRDS', icon: Icon(Icons.search)),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          children: [
+            Container(
               margin: EdgeInsets.symmetric(vertical: 20.0),
               height: 280,
               child: ListView(
@@ -263,25 +269,24 @@ class _HistoryPageState extends State<HistoryPage> {
                 ],
               ),
             ),
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: 20.0),
-                      height: 280,
-                      child: ListView(
-                        scrollDirection: Axis.vertical,
-                        children: <Widget>[
-                          ReserveCardWidget(reserve: reserves[0]),
-                          ReserveCardWidget(reserve: reserves[1]),
-                          ReserveCardWidget(reserve: reserves[2]),
-                          ReserveCardWidget(reserve: reserves[3]),
-                          ReserveCardWidget(reserve: reserves[4]),
-                        ],
-                      ),
-                    ),
-    // Center(child: Text('BIRDS')),
-    ],
-    ),
-    ),
-    ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 20.0),
+              height: 280,
+              child: ListView(
+                scrollDirection: Axis.vertical,
+                children: <Widget>[
+                  ReserveCardWidget(reserve: reserves[0]),
+                  ReserveCardWidget(reserve: reserves[1]),
+                  ReserveCardWidget(reserve: reserves[2]),
+                  ReserveCardWidget(reserve: reserves[3]),
+                  ReserveCardWidget(reserve: reserves[4]),
+                ],
+              ),
+            ),
+            // Center(child: Text('BIRDS')),
+          ],
+        ),
+      ),
     );
   }
 }

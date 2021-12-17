@@ -138,10 +138,9 @@ class EventCardWidget extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(12)),
                                 child: Image(
                                   height: context.height() * 0.15,
-                                  width: context.width() * 0.35,
+                                  width: context.width() * 0.25,
                                   image: AssetImage(item),
-                                    fit: BoxFit.fill,
-
+                                  fit: BoxFit.fill,
                                 ),
                               ),
                               // SizedBox(
