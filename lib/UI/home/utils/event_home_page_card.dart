@@ -88,7 +88,7 @@ class EventHomePageCard extends StatelessWidget {
                     pageTransitionAnimation: PageTransitionAnimation.cupertino,
                   );
                 },
-                child: Align(
+                child: const Align(
                   alignment: Alignment.centerRight,
                   child: Icon(
                     Icons.arrow_forward,

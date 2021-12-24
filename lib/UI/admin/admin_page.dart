@@ -29,7 +29,7 @@ List<Event> events = [
     ownerId: 2,
     startTime: DateTime(2020),
     finishTime: DateTime(2021),
-    comments: '',
+    comments: [],
   ),
   Event(
     id: 1,
@@ -40,7 +40,7 @@ List<Event> events = [
     ownerId: 2,
     startTime: DateTime(2020),
     finishTime: DateTime(2021),
-    comments: '',
+    comments: [],
   ),
   Event(
     id: 1,
@@ -51,7 +51,7 @@ List<Event> events = [
     ownerId: 2,
     startTime: DateTime(2020),
     finishTime: DateTime(2021),
-    comments: '',
+    comments: [],
   ),
   Event(
     id: 1,
@@ -62,7 +62,7 @@ List<Event> events = [
     ownerId: 2,
     startTime: DateTime(2020),
     finishTime: DateTime(2021),
-    comments: '',
+    comments: [],
   ),
   Event(
     id: 1,
@@ -73,7 +73,7 @@ List<Event> events = [
     ownerId: 2,
     startTime: DateTime(2020),
     finishTime: DateTime(2021),
-    comments: '',
+    comments: [],
   ),
   Event(
     id: 1,
@@ -84,7 +84,7 @@ List<Event> events = [
     ownerId: 2,
     startTime: DateTime(2020),
     finishTime: DateTime(2021),
-    comments: '',
+    comments: [],
   ),
   Event(
     id: 1,
@@ -95,7 +95,7 @@ List<Event> events = [
     ownerId: 2,
     startTime: DateTime(2020),
     finishTime: DateTime(2021),
-    comments: '',
+    comments: [],
   ),
 ];
 
@@ -395,7 +395,9 @@ class _AdminPageState extends State<AdminPage> {
                                 onPressed: () {
                                   pushNewScreen(
                                     context,
-                                    screen: CommentPage(),
+                                    screen: CommentPage(
+                                      eventId: 1,
+                                    ),
                                     withNavBar: false,
                                     // OPTIONAL VALUE. True by default.
                                     pageTransitionAnimation:

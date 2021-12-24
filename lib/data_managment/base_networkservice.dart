@@ -30,6 +30,23 @@ class BaseNetworkService {
       var _body = convert.json.encode(body);
       http.Response response = await http.post(Uri.parse(urlServer + url),
           headers: header, body: _body);
+      ;
+      print(response.body);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        String body = convert.utf8.decode(response.bodyBytes);
+        var _jsonResponse = convert.jsonDecode(body);
+        return _jsonResponse;
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic>? putTemplate(String url, var body) async {
+    try {
+      var _body = convert.json.encode(body);
+      http.Response response = await http.put(Uri.parse(urlServer + url),
+          headers: header, body: _body);
       print(response.statusCode);
       ;
       print(response.body);
@@ -55,6 +72,23 @@ class BaseNetworkService {
       print(urlServer + url + urlOfBody);
       http.Response response = await http
           .get(Uri.parse(urlServer + url + urlOfBody), headers: header);
+      print(response.body);
+      if (response.statusCode == 200) {
+        String body = convert.utf8.decode(response.bodyBytes);
+        var _jsonResponse = convert.jsonDecode(body);
+        print(_jsonResponse);
+        return _jsonResponse;
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic>? getTemplateInLink(String url, int id) async {
+    try {
+      print(urlServer + url + id.toString());
+      http.Response response = await http
+          .get(Uri.parse(urlServer + url + id.toString()), headers: header);
       print(response.body);
       if (response.statusCode == 200) {
         String body = convert.utf8.decode(response.bodyBytes);

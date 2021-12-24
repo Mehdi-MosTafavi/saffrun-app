@@ -17,7 +17,7 @@ class SearchRepository {
       if (response == null) {
         return [];
       }
-      return Event.fromJson(response['events']);
+      return Event.fromJsonList(response['events']);
     } catch (e) {
       print(e);
       rethrow;

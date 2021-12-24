@@ -7,5 +7,11 @@ class SettingRepository {
     settingNetworkService = SettingNetworkService();
   }
 
-
+  Future<bool> sendInfo(Map<String, dynamic> userInfo) async {
+    bool status = await settingNetworkService.sendInfoToServer(userInfo);
+    if (status) {
+      return true;
+    }
+    throw ('error');
+  }
 }

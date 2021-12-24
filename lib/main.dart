@@ -21,6 +21,7 @@ Future<void> main() async {
   najva.setOnUserSubscribedListener(onUserSubscribed);
   najva.setOnNotificationReceivedListener(onNotificationReceived);
   najva.setOnNotificationClickListener(onNotificationClicked);
+  print(await najva.getSubscribedToken());
   runApp(
     MyApp(
       router: AppRouter(),
