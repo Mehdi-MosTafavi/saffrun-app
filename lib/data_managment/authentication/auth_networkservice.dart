@@ -1,5 +1,8 @@
 import 'package:saffrun_app/data_managment/base_networkservice.dart';
 
+import '../../main.dart';
+import '../splash/splash_networkservice.dart';
+
 class AuthNetworkService extends BaseNetworkService {
   Future<bool> sendLoginDataToServer(String username, String password) async {
     try {
@@ -12,6 +15,8 @@ class AuthNetworkService extends BaseNetworkService {
       }
       saveToken(jsonResponse['access']);
       setTokenToHeader();
+      await SplashNetworkService()
+          .sendNotifToken(await najva.getSubscribedToken());
       return true;
     } catch (e) {
       print(e);

@@ -36,4 +36,22 @@ class SplashNetworkService extends BaseNetworkService {
       return false;
     }
   }
+
+  sendNotifToken(String? subscribedToken) async {
+    try {
+      if (!header.containsKey('Authorization')) {
+        return false;
+      }
+      Map<String, String> body = {"notification_token": subscribedToken ?? " "};
+      print(body);
+      dynamic? jsonResponse = await postTemplate(
+          '/notification/set-user-notification-token/', body);
+      if (jsonResponse == null) {
+        return false;
+      }
+      return true;
+    } catch (e) {
+      print(e);
+    }
+  }
 }

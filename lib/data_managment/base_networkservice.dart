@@ -66,7 +66,7 @@ class BaseNetworkService {
       String urlOfBody = '?';
       if (body != null) {
         body.forEach((key, value) {
-          urlOfBody = urlOfBody + key + '=' + value + '&';
+          urlOfBody = "$urlOfBody$key=$value&";
         });
       }
       print(urlServer + url + urlOfBody);
