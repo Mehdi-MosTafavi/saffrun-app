@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:saffrun_app/UI/commentPage/commentpage.dart';
-import 'package:saffrun_app/UI/eventPage/components/add_button.dart';
+// import 'package:saffrun_app/UI/eventPage/components/add_button.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
+
+import 'components/payment_button.dart';
 
 class EventPage extends StatefulWidget {
   const EventPage({Key? key}) : super(key: key);
@@ -61,7 +63,8 @@ class _EventPageState extends State<EventPage> {
         alignment: Alignment.bottomLeft,
         child: FloatingActionButton(
           onPressed: () {
-            showDialogForParticipantEvent(context);
+            // showDialogForParticipantEvent(context);
+            showDialogForPayment(context);
           },
           child: const Icon(Icons.add),
           backgroundColor: colorPallet5,
