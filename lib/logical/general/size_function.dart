@@ -11,7 +11,9 @@ String getImageUrlUsers(String url) {
 }
 
 DateTime getTime(String time) {
-  return DateTime.parse(time);
+  print(time);
+  DateTime date = DateTime.parse(time);
+  return date.toLocal();
 }
 
 String formatTimeString(DateTime dateTime) {

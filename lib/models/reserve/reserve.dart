@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:saffrun_app/logical/general/size_function.dart';
 
 class Reserve {
   int id;
@@ -8,14 +9,19 @@ class Reserve {
   DateTime targetStartReserve;
   DateTime targetEndReserve;
   String description;
+  String status;
+  int price;
 
-  Reserve({required this.id,
-    required this.adminId,
-    required this.adminName,
-    required this.createdReserve,
-    this.description = "",
-    required this.targetStartReserve,
-    required this.targetEndReserve});
+  Reserve(
+      {required this.id,
+      required this.adminId,
+      required this.adminName,
+      required this.createdReserve,
+      this.description = "",
+      required this.targetStartReserve,
+      this.status = "",
+      this.price = 0,
+      required this.targetEndReserve});
 
   static List<List<Reserve>> reserve = [
     [
@@ -257,6 +263,22 @@ class Reserve {
       });
       index++;
     });
+    return reserves;
+  }
+
+  static List<Reserve> fromJsonForHistory(List result) {
+    List<Reserve> reserves = [];
+    for (var element in result) {
+      reserves.add(Reserve(
+          id: element['id'],
+          adminId: element['owner']['id'],
+          adminName: element['owner']['full_name'] ?? " ",
+          createdReserve: DateTime(2020, 0, 0),
+          price: element['price'],
+          status: element['status'],
+          targetStartReserve: getTime(element['start_datetime']),
+          targetEndReserve: getTime(element['end_datetime'])));
+    }
     return reserves;
   }
 }

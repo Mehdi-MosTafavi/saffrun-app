@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:saffrun_app/UI/eventPage/event_page.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
-import 'package:saffrun_app/models/history/event_model.dart';
+
+import '../../../logical/general/size_function.dart';
+import '../../../models/event/event_model.dart';
 
 final List<String> imgList2 = [
   'assets/images/mafia1.jpg',
@@ -54,7 +56,7 @@ class _EventCardWidgetState extends State<EventCardWidget> {
 
   String getStatus(Event event, DateTime now) {
     switch (event.status) {
-      case 1:
+      case "NOT STARTED":
         {
           final date = DateTime.now();
           final difference_day =
@@ -78,7 +80,7 @@ class _EventCardWidgetState extends State<EventCardWidget> {
         }
       // break;
 
-      case 2:
+      case "RUNNING":
         {
           final date = DateTime.now();
           final difference_day =
@@ -103,7 +105,7 @@ class _EventCardWidgetState extends State<EventCardWidget> {
         }
       // break;
 
-      case 3:
+      case "FINISHED":
         {
           return "اتمام یافته";
         }
@@ -119,19 +121,19 @@ class _EventCardWidgetState extends State<EventCardWidget> {
 
   Color getColor(Event event) {
     switch (event.status) {
-      case 1:
+      case "NOT STARTED":
         {
           return colorPallet5.withOpacity(0.2);
         }
       // break;
 
-      case 2:
+      case "RUNNING":
         {
           return colorPallet2.withOpacity(0.2);
         }
       // break;
 
-      case 3:
+      case "FINISHED":
         {
           return colorPallet1.withOpacity(0.2);
         }
@@ -147,19 +149,19 @@ class _EventCardWidgetState extends State<EventCardWidget> {
 
   Color getColorText(Event event) {
     switch (event.status) {
-      case 1:
+      case "NOT STARTED":
         {
           return colorPallet5;
         }
       // break;
 
-      case 2:
+      case "RUNNING":
         {
           return colorPallet2;
         }
       // break;
 
-      case 3:
+      case "FINISHED":
         {
           return colorPallet1;
         }
@@ -238,7 +240,7 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                                   // ),
                                   Container(
                                     height: 30,
-                                    width: 100,
+                                    width: 110,
                                     decoration: boxDecorationWithRoundedCorners(
                                         backgroundColor:
                                             getColor(widget.event)),
@@ -272,7 +274,7 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                                         Container(
                                           child: Center(
                                             child: Text(
-                                              widget.event.participant
+                                              widget.event.participantCount
                                                   .toString(),
                                               style: boldTextStyle(
                                                 color: colorPallet3,
@@ -327,7 +329,8 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                                               style: primaryTextStyle(),
                                             ),
                                             Text(
-                                              '10 آبان | 8:00',
+                                              formatTimeString(
+                                                  widget.event.startTime),
                                               style: boldTextStyle(),
                                             ),
                                           ],
@@ -341,7 +344,8 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                                               style: primaryTextStyle(),
                                             ),
                                             Text(
-                                              '10 آبان | 14:00',
+                                              formatTimeString(
+                                                  widget.event.finishTime),
                                               style: boldTextStyle(),
                                             ),
                                           ],

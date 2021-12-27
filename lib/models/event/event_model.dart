@@ -17,21 +17,25 @@ class Event {
   String ownerName;
   int participantCount;
   bool isParticipate;
+  int price;
+  String status;
 
   Event(
       {required this.id,
       required this.title,
-      required this.description,
-      required this.imageUrl,
-      required this.discount,
+      this.description = "",
+      this.imageUrl = "",
+      this.discount = 0,
       required this.ownerId,
       required this.startTime,
       required this.finishTime,
-      required this.comments,
+      this.comments = const [],
       this.ownerName = "",
       this.category = "",
       this.imageUrls = const [],
       this.isParticipate = false,
+      this.price = 0,
+      this.status = "",
       this.participantCount = 0});
 
   static List<Event> events = [
@@ -179,6 +183,23 @@ class Event {
           date: getTime(element['date'])));
     }
     return listComments;
+  }
+
+  static List<Event> fromJsonForHistory(List result) {
+    List<Event> events = [];
+    for (Map event in result) {
+      events.add(Event(
+          id: event['id'],
+          title: event['title'],
+          startTime: getTime(event['start_datetime']),
+          ownerId: event['owner']['id'],
+          finishTime: getTime(event['end_datetime']),
+          ownerName: event['owner']['full_name'] ?? " ",
+          price: event['price'],
+          status: event['status'],
+          participantCount: event['participant_count']));
+    }
+    return events;
   }
 /*I/flutter ( 4258): {id: 1, title: قهوه با رفقا, description: قهوه بزنیم با هم داوشیا, discount: 0, participants: 3, start_datetime: 2021-11-25T15:54:26+03:30, end_datetime: 2021-11-25T18:54:29+03:30, category: {id: 1, title: سرگرمی}, images: []}
 

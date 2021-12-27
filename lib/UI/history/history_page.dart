@@ -1,19 +1,23 @@
 // import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:nb_utils/src/extensions/context_extensions.dart';
 // import 'package:nb_utils/nb_utils.dart';
 // import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:saffrun_app/UI/history/components/event_card.dart';
 import 'package:saffrun_app/UI/utils/appbar/appbar_type1.dart';
+
 // import 'package:saffrun_app/UI/commentPage/commentpage.dart';
 // import 'package:saffrun_app/UI/eventPage/components/add_button.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/models/history/event_model.dart';
 import 'package:saffrun_app/models/history/reserve_model.dart';
+import 'package:saffrun_app/state_managment/history/history_cubit.dart';
 
+import '../../state_managment/history/history_event_cubit.dart';
+import '../utils/circular_progressbar_component.dart';
 import 'components/reserve_card.dart';
-
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({Key? key}) : super(key: key);
@@ -21,8 +25,6 @@ class HistoryPage extends StatefulWidget {
   @override
   _HistoryPageState createState() => _HistoryPageState();
 }
-
-
 
 List<Event> events = [
   Event(
@@ -212,10 +214,10 @@ List<Reserve> reserves = [
   ),
 ];
 
-
 class _HistoryPageState extends State<HistoryPage> {
-  @override
+  late BuildContext contextCubit;
 
+  @override
   // void _iteration(){
   //   setState(() {
   //     var a=0;
@@ -242,14 +244,14 @@ class _HistoryPageState extends State<HistoryPage> {
           height: context.height(),
           child: Column(
             children: [
-              const SizedBox(
+              SizedBox(
                 height: 80,
                 child: ColoredBox(
                   color: colorPallet2,
                   child: TabBar(
                     labelColor: Colors.white,
                     indicatorColor: Colors.white,
-                    tabs: [
+                    tabs: const [
                       Tab(
                           text: 'رویداد ها',
                           icon: Icon(
@@ -270,30 +272,62 @@ class _HistoryPageState extends State<HistoryPage> {
               Expanded(
                 child: TabBarView(
                   children: [
-                    Container(
-                      child: ListView(
-                        padding: EdgeInsets.only(top: 20),
-                        scrollDirection: Axis.vertical,
-                        children: <Widget>[
-                          EventCardWidget(event: events[0]),
-                          EventCardWidget(event: events[1]),
-                          EventCardWidget(event: events[2]),
-                          EventCardWidget(event: events[3]),
-                          EventCardWidget(event: events[4]),
-                        ],
+                    BlocProvider(
+                      create: (context) => HistoryCubit(),
+                      child: BlocBuilder<HistoryCubit, HistoryState>(
+                        builder: (context, state) {
+                          contextCubit = context;
+                          if (state is HistoryInitial) {
+                            BlocProvider.of<HistoryCubit>(context).fetchEvent();
+                            return Container();
+                          }
+                          print(state);
+                          if (state is HistoryLoaded) {
+                            return Container(
+                              child: ListView.builder(
+                                padding: EdgeInsets.only(top: 20),
+                                scrollDirection: Axis.vertical,
+                                itemCount: state.events.length,
+                                itemBuilder: (context, index) {
+                                  return EventCardWidget(
+                                    event: state.events[index],
+                                  );
+                                },
+                              ),
+                            );
+                          }
+                          return const Center(child: CircularProgressBar());
+                        },
                       ),
                     ),
-                    Container(
-                      padding: EdgeInsets.only(top: 20),
-                      child: ListView(
-                        scrollDirection: Axis.vertical,
-                        children: <Widget>[
-                          ReserveCardWidget(reserve: reserves[0]),
-                          ReserveCardWidget(reserve: reserves[1]),
-                          ReserveCardWidget(reserve: reserves[2]),
-                          ReserveCardWidget(reserve: reserves[3]),
-                          ReserveCardWidget(reserve: reserves[4]),
-                        ],
+                    BlocProvider(
+                      create: (context) => HistoryReserveCubit(),
+                      child:
+                          BlocBuilder<HistoryReserveCubit, HistoryEventState>(
+                        builder: (context, state) {
+                          contextCubit = context;
+
+                          if (state is HistoryEventInitial) {
+                            BlocProvider.of<HistoryReserveCubit>(context)
+                                .fetchReserve();
+                            return Container();
+                          }
+                          if (state is HistoryEventLoaded) {
+                            return Container(
+                              padding: EdgeInsets.only(top: 20),
+                              child: ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return ReserveCardWidget(
+                                    reserve: state.reserves[index],
+                                  );
+                                },
+                                itemCount: state.reserves.length,
+                              ),
+                            );
+                          }
+                          return const Center(child: CircularProgressBar());
+                        },
                       ),
                     ),
                     // Center(child: Text('BIRDS')),
