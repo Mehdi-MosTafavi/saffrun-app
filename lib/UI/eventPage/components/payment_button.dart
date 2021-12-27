@@ -13,7 +13,8 @@ import 'package:saffrun_app/constants/theme_color.dart';
 void showDialogForPayment(BuildContext context) {
 
   int bank = -1;
-  String wallet_status_text = 'شارژ کیف پول';
+  int wallet = -1;
+  // String wallet_status_text = 'شارژ کیف پول';
   // ColorFiltered maskan_logo = ColorFiltered(
   //     colorFilter: bank != 0
   //         ? ColorFilter.mode(Color(0xffF5F5F5), BlendMode.color)
@@ -144,10 +145,11 @@ void showDialogForPayment(BuildContext context) {
                                       width: 100,
                                       decoration:
                                           boxDecorationWithRoundedCorners(
-                                              backgroundColor: colorPallet3),
+                                              backgroundColor: getWalletColor(wallet)),
                                       child: Center(
                                         child: Text(
-                                          wallet_status_text,
+                                          getWalletStatus(wallet),
+                                          // wallet_status_text,
                                           style: boldTextStyle(
                                               color: Colors.white),
                                         ),
@@ -187,7 +189,7 @@ void showDialogForPayment(BuildContext context) {
                                                         .size
                                                         .width,
                                                     image: const AssetImage(
-                                                        'assets/images/Maskan-logo.jpg'),
+                                                        'assets/images/Maskan.png'),
                                                     height:
                                                     context.height() * 0.4,
                                                     fit: BoxFit.cover,
@@ -209,7 +211,7 @@ void showDialogForPayment(BuildContext context) {
                                                           .size
                                                           .width,
                                                       image: AssetImage(
-                                                          'assets/images/Mellat-logo.jpg'),
+                                                          'assets/images/Mellat.svg'),
                                                       height:
                                                           context.height() * 0.4,
                                                       fit: BoxFit.cover),
@@ -326,6 +328,28 @@ void showDialogForPayment(BuildContext context) {
           );
         });
       });
+}
+
+Color getWalletColor(int wallet) {
+  if (wallet==-1)
+    {
+      return colorPallet3;
+    }
+  else
+    {
+      return Colors.red;
+    }
+}
+
+String getWalletStatus(int wallet) {
+  if (wallet==-1)
+    {
+      return 'شارژ کیف پول';
+    }
+  else
+    {
+      return 'خرید';
+    }
 }
 
 
