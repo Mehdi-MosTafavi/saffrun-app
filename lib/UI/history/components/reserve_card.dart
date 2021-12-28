@@ -2,12 +2,14 @@
 
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
-import 'package:saffrun_app/UI/eventPage/event_page.dart';
+import 'package:saffrun_app/constants/const.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
+import 'package:saffrun_app/logical/general/size_function.dart';
 
 import '../../../models/reserve/reserve.dart';
 
@@ -229,16 +231,38 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Container(
+                                  CachedNetworkImage(
+                                    imageBuilder: (context, imageProvider) {
+                                      return Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                                bottomLeft: Radius.circular(8)),
+                                            image: DecorationImage(
+                                                fit: BoxFit.cover,
+                                                image: imageProvider)),
+                                      );
+                                    },
+                                    placeholder: (context, strImage) {
+                                      return Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.only(
+                                              bottomLeft: Radius.circular(5)),
+                                          color: Colors.grey,
+                                          border: Border.all(
+                                            color: Colors.white,
+                                            width: 2.0,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    imageUrl: widget.reserve.adminImage ==
+                                            DefaultImage
+                                        ? DefaultImage
+                                        : getImageUrlUsers(
+                                            widget.reserve.adminImage),
+                                    fit: BoxFit.fill,
                                     height: context.height() * 0.15,
                                     width: context.width() * 0.3,
-                                    decoration: BoxDecoration(
-                                        borderRadius: const BorderRadius.only(
-                                            topLeft: Radius.circular(11),
-                                            bottomLeft: Radius.circular(11)),
-                                        image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            image: AssetImage(item))),
                                   ),
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -386,10 +410,10 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
                                         padding: EdgeInsets.only(
                                             left: context.width() * 0.05),
                                         onPressed: () {
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      EventPage()));
+                                          // Navigator.of(context).push(
+                                          //     MaterialPageRoute(
+                                          //         builder: (context) =>
+                                          //             EventPage(event: ,)));
                                         },
                                         child: Container(
                                           height: context.height() * 0.07,

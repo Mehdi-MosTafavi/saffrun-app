@@ -1,10 +1,13 @@
 import 'package:intl/intl.dart';
 import 'package:saffrun_app/logical/general/size_function.dart';
 
+import '../../constants/const.dart';
+
 class Reserve {
   int id;
   int adminId;
   String adminName;
+  String adminImage;
   DateTime createdReserve;
   DateTime targetStartReserve;
   DateTime targetEndReserve;
@@ -15,6 +18,7 @@ class Reserve {
   Reserve(
       {required this.id,
       required this.adminId,
+      this.adminImage = "",
       required this.adminName,
       required this.createdReserve,
       this.description = "",
@@ -276,6 +280,23 @@ class Reserve {
           createdReserve: DateTime(2020, 0, 0),
           price: element['price'],
           status: element['status'],
+          adminImage: element['image']['image'] == null
+              ? DefaultImage
+              : element['image']['image']['full_size'],
+          targetStartReserve: getTime(element['start_datetime']),
+          targetEndReserve: getTime(element['end_datetime'])));
+    }
+    return reserves;
+  }
+
+  static List<Reserve> fromJsonListHomePage(result) {
+    List<Reserve> reserves = [];
+    for (var element in result) {
+      reserves.add(Reserve(
+          id: element['id'],
+          adminId: element['ownerId'],
+          adminName: element['owner_name'] ?? " ",
+          createdReserve: DateTime(2020, 0, 0),
           targetStartReserve: getTime(element['start_datetime']),
           targetEndReserve: getTime(element['end_datetime'])));
     }

@@ -12,7 +12,9 @@ import '../../logical/general/size_function.dart';
 import '../../models/event/event_model.dart';
 
 class EventPage extends StatefulWidget {
-  const EventPage({Key? key}) : super(key: key);
+  final Event event;
+
+  const EventPage({Key? key, required this.event}) : super(key: key);
 
   @override
   _EventPageState createState() => _EventPageState();
@@ -93,7 +95,7 @@ class _EventPageState extends State<EventPage> {
             print(state);
             contextState = context;
             if (state is EventInitial) {
-              BlocProvider.of<EventCubit>(context).fetchEvent(1);
+              BlocProvider.of<EventCubit>(context).fetchEvent(widget.event.id);
             }
             if (state is EventLoadedState) {
               event = state.event;

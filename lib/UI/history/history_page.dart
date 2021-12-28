@@ -7,7 +7,6 @@ import 'package:nb_utils/src/extensions/context_extensions.dart';
 // import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:saffrun_app/UI/history/components/event_card.dart';
 import 'package:saffrun_app/UI/utils/appbar/appbar_type1.dart';
-
 // import 'package:saffrun_app/UI/commentPage/commentpage.dart';
 // import 'package:saffrun_app/UI/eventPage/components/add_button.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
@@ -279,7 +278,6 @@ class _HistoryPageState extends State<HistoryPage> {
                           contextCubit = context;
                           if (state is HistoryInitial) {
                             BlocProvider.of<HistoryCubit>(context).fetchEvent();
-                            return Container();
                           }
                           print(state);
                           if (state is HistoryLoaded) {
@@ -310,7 +308,6 @@ class _HistoryPageState extends State<HistoryPage> {
                           if (state is HistoryEventInitial) {
                             BlocProvider.of<HistoryReserveCubit>(context)
                                 .fetchReserve();
-                            return Container();
                           }
                           if (state is HistoryEventLoaded) {
                             return Container(

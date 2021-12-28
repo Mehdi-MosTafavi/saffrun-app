@@ -19,6 +19,7 @@ class HistoryRepository {
       }
       return Event.fromJsonForHistory(result['reserves']);
     } catch (e) {
+      print(e);
       return [];
     }
   }
@@ -32,6 +33,7 @@ class HistoryRepository {
       }
       return Reserve.fromJsonForHistory(result['reserves']);
     } catch (e) {
+      print(e);
       return [];
     }
   }

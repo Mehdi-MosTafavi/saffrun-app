@@ -19,12 +19,14 @@ class Event {
   bool isParticipate;
   int price;
   String status;
+  List<String> images;
 
   Event(
       {required this.id,
       required this.title,
       this.description = "",
       this.imageUrl = "",
+      this.images = const [],
       this.discount = 0,
       required this.ownerId,
       required this.startTime,
@@ -197,7 +199,25 @@ class Event {
           ownerName: event['owner']['full_name'] ?? " ",
           price: event['price'],
           status: event['status'],
+          imageUrls: (event['images'] as List).isEmpty
+              ? []
+              : [event['images'][0]['image']['full_size']],
           participantCount: event['participant_count']));
+    }
+    return events;
+  }
+
+  static List<Event> fromJsonListEvents(List result) {
+    List<Event> events = [];
+    for (Map event in result) {
+      events.add(Event(
+          id: event['id'],
+          title: event['title'],
+          startTime: getTime(event['start_datetime']),
+          description: event['description'],
+          finishTime: getTime(event['end_datetime']),
+          ownerName: event['owner_name'] ?? " ",
+          ownerId: 0));
     }
     return events;
   }

@@ -56,7 +56,7 @@ class EventHomePageCard extends StatelessWidget {
                                         style:
                                             boldTextStyle(color: Colors.black),
                                         maxLines: 2),
-                                    Text("کافه رخ",
+                                    Text(event.ownerName,
                                         style: primaryTextStyle(
                                             weight: FontWeight.w500,
                                             color: colorPallet5),
@@ -83,7 +83,9 @@ class EventHomePageCard extends StatelessWidget {
                 onTap: () {
                   pushNewScreen(
                     context,
-                    screen: EventPage(),
+                    screen: EventPage(
+                      event: event,
+                    ),
                     withNavBar: false, // OPTIONAL VALUE. True by default.
                     pageTransitionAnimation: PageTransitionAnimation.cupertino,
                   );
