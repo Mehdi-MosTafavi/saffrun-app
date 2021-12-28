@@ -7,6 +7,7 @@ class UserProfile {
   String country;
   String province;
   String address;
+  int wallet;
 
   UserProfile(
       {required this.username,
@@ -16,6 +17,7 @@ class UserProfile {
       required this.phone,
       required this.country,
       required this.province,
+      this.wallet = 0,
       required this.address});
 
   static late UserProfile userLogin;
