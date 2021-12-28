@@ -6,6 +6,7 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:saffrun_app/UI/eventPage/event_page.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
+import 'package:saffrun_app/models/event/event_model.dart';
 import 'package:saffrun_app/models/turnover/turnover_card_model.dart';
 
 final List<String> imgList2 = [
@@ -222,9 +223,11 @@ class TurnoverCardWidget extends StatelessWidget {
                                 5.height,
                                 TextButton(
                                   onPressed: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) => EventPage()));
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                            builder: (context) => EventPage(
+                                                  event: Event.events[0],
+                                                )));
                                   },
                                   child: Container(
                                     child: Center(

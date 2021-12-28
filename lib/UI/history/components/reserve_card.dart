@@ -2,13 +2,16 @@
 
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
-import 'package:saffrun_app/UI/eventPage/event_page.dart';
+import 'package:saffrun_app/constants/const.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
-import 'package:saffrun_app/models/history/reserve_model.dart';
+import 'package:saffrun_app/logical/general/size_function.dart';
+
+import '../../../models/reserve/reserve.dart';
 
 final List<String> imgList2 = [
   'assets/images/mafia1.jpg',
@@ -57,17 +60,17 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
 
   String getStatus(Reserve reserve, DateTime now) {
     switch (reserve.status) {
-      case 1:
+      case "NOT STARTED":
         {
           final date = DateTime.now();
           final difference_day =
-              date.difference(reserve.startTime).inDays.round();
+              date.difference(reserve.targetStartReserve).inDays.round();
           final difference_hour =
-              date.difference(reserve.startTime).inHours.round();
+              date.difference(reserve.targetStartReserve).inHours.round();
           final difference_minute =
-              date.difference(reserve.startTime).inMinutes.round();
+              date.difference(reserve.targetStartReserve).inMinutes.round();
           final difference_second =
-              date.difference(reserve.startTime).inSeconds.round();
+              date.difference(reserve.targetStartReserve).inSeconds.round();
 
           if (difference_day > 0) {
             // return difference_day.toString() + " روز";
@@ -89,17 +92,17 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
         }
     // break;
 
-      case 2:
+      case "RUNNING":
         {
           final date = DateTime.now();
           final difference_day =
-              date.difference(reserve.finishTime).inDays.round();
+              date.difference(reserve.targetEndReserve).inDays.round();
           final difference_hour =
-              date.difference(reserve.finishTime).inHours.round();
+              date.difference(reserve.targetEndReserve).inHours.round();
           final difference_minute =
-              date.difference(reserve.finishTime).inMinutes.round();
+              date.difference(reserve.targetEndReserve).inMinutes.round();
           final difference_second =
-              date.difference(reserve.finishTime).inSeconds.round();
+              date.difference(reserve.targetEndReserve).inSeconds.round();
 
           if (difference_day > 0) {
             return difference_day.toString() + " روز";
@@ -114,7 +117,7 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
         }
     // break;
 
-      case 3:
+      case "FINISHED":
         {
           return "اتمام یافته";
         }
@@ -130,19 +133,19 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
 
   Color getColor(Reserve event) {
     switch (event.status) {
-      case 1:
+      case "NOT STARTED":
         {
           return colorPallet5.withOpacity(0.2);
         }
       // break;
 
-      case 2:
+      case "RUNNING":
         {
           return colorPallet2.withOpacity(0.2);
         }
       // break;
 
-      case 3:
+      case "FINISHED":
         {
           return colorPallet1.withOpacity(0.2);
         }
@@ -158,19 +161,19 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
 
   Color getColorText(Reserve event) {
     switch (event.status) {
-      case 1:
+      case "NOT STARTED":
         {
           return colorPallet5;
         }
       // break;
 
-      case 2:
+      case "RUNNING":
         {
           return colorPallet2;
         }
-    // break;
+      // break;
 
-      case 3:
+      case "FINISHED":
         {
           return colorPallet1;
         }
@@ -192,8 +195,8 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
 
   @override
   Widget build(BuildContext context) {
-    Jalali startDateJalali = Jalali.fromDateTime(reserve.startTime);
-    Jalali endDateJalali = Jalali.fromDateTime(reserve.finishTime);
+    Jalali startDateJalali = Jalali.fromDateTime(reserve.targetStartReserve);
+    Jalali endDateJalali = Jalali.fromDateTime(reserve.targetEndReserve);
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Container(
@@ -228,22 +231,44 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Container(
+                                  CachedNetworkImage(
+                                    imageBuilder: (context, imageProvider) {
+                                      return Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                                bottomLeft: Radius.circular(8)),
+                                            image: DecorationImage(
+                                                fit: BoxFit.cover,
+                                                image: imageProvider)),
+                                      );
+                                    },
+                                    placeholder: (context, strImage) {
+                                      return Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.only(
+                                              bottomLeft: Radius.circular(5)),
+                                          color: Colors.grey,
+                                          border: Border.all(
+                                            color: Colors.white,
+                                            width: 2.0,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    imageUrl: widget.reserve.adminImage ==
+                                            DefaultImage
+                                        ? DefaultImage
+                                        : getImageUrlUsers(
+                                            widget.reserve.adminImage),
+                                    fit: BoxFit.fill,
                                     height: context.height() * 0.15,
                                     width: context.width() * 0.3,
-                                    decoration: BoxDecoration(
-                                        borderRadius: const BorderRadius.only(
-                                            topLeft: Radius.circular(11),
-                                            bottomLeft: Radius.circular(11)),
-                                        image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            image: AssetImage(item))),
                                   ),
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
-                                        reserve.title,
+                                        reserve.adminName,
                                         style: boldTextStyle(),
                                       ),
                                       SizedBox(
@@ -346,11 +371,11 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
                                             style: boldTextStyle(),
                                           ),
                                           Text(
-                                              getTimeReserve(
-                                                      reserve.finishTime) +
+                                              getTimeReserve(reserve
+                                                      .targetEndReserve) +
                                                   ' - ' +
-                                                  getTimeReserve(
-                                                      reserve.startTime),
+                                                  getTimeReserve(reserve
+                                                      .targetStartReserve),
                                               style: primaryTextStyle(
                                                   color: Colors.blueGrey),
                                               maxLines: 2),
@@ -362,7 +387,7 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
                                             'هزینه پرداختی: ',
                                             style: boldTextStyle(),
                                           ),
-                                          Text('20000 تومان',
+                                          Text("${widget.reserve.price} تومان ",
                                               style: boldTextStyle(
                                                   color: Colors.blueGrey),
                                               maxLines: 2),
@@ -385,10 +410,10 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
                                         padding: EdgeInsets.only(
                                             left: context.width() * 0.05),
                                         onPressed: () {
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      EventPage()));
+                                          // Navigator.of(context).push(
+                                          //     MaterialPageRoute(
+                                          //         builder: (context) =>
+                                          //             EventPage(event: ,)));
                                         },
                                         child: Container(
                                           height: context.height() * 0.07,

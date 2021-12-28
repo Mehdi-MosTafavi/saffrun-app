@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:saffrun_app/UI/utils/circular_progressbar_component.dart';
 import 'package:saffrun_app/models/user/user_2.dart';
 import 'package:saffrun_app/state_managment/settings/setting_cubit.dart';
 
 import '../../constants/theme_color.dart';
+import '../../logical/general/size_function.dart';
 import '../utils/appbar/appbar_type1.dart';
 import '../utils/picker/image_picker.dart';
 import 'components/textfield_edit.dart';
@@ -32,11 +34,11 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    gender = "male";
+    gender = UserProfile.userLogin.gender;
     nameController.text = UserProfile.userLogin.getFullName();
     addressController.text = UserProfile.userLogin.address;
     contactController.text = UserProfile.userLogin.phone;
-    emailController.text = "1250000000";
+    emailController.text = UserProfile.userLogin.email;
   }
 
   @override
@@ -73,9 +75,9 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                             return Column(
                               children: <Widget>[
                                 Container(
-                                  padding: EdgeInsets.all(16),
+                                  padding: EdgeInsets.all(10),
                                   child: Padding(
-                                    padding: EdgeInsets.fromLTRB(0, 16, 16, 16),
+                                    padding: EdgeInsets.fromLTRB(0, 16, 16, 0),
                                     child: Stack(
                                       alignment: Alignment.topRight,
                                       children: <Widget>[
@@ -132,7 +134,7 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                                                             );
                                                           },
                                                           imageUrl:
-                                                              'https://res.cloudinary.com/culturemap-com/image/upload/ar_4:3,c_fill,g_faces:center,w_980/v1519064369/photos/269761_original.jpg',
+                                                              getImageUrl(),
                                                           width: 80,
                                                           imageBuilder: (context,
                                                               imageProvider) {
@@ -255,7 +257,7 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                                             ),
                                           ],
                                         ),
-                                        15.height,
+                                        5.height,
                                         Row(
                                           children: [
                                             Text('جنسیت : ',
@@ -398,16 +400,51 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
               ),
               Align(
                 alignment: Alignment.bottomCenter,
-                child: Container(
-                  alignment: Alignment.center,
-                  width: context.width(),
-                  height: 50,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: <Color>[colorPallet2, colorPallet1]),
-                  ),
-                  child: Text('ذخیره اطلاعات',
-                      style: primaryTextStyle(size: 18, color: white)),
+                child: BlocBuilder<SettingCubit, SettingState>(
+                  builder: (context, state) {
+                    return GestureDetector(
+                      onTap: () async {
+                        Map<String, dynamic> userInfo = {
+                          "username": UserProfile.userLogin.username,
+                          "first_name": "",
+                          "last_name": nameController.text,
+                          "email": emailController.text,
+                          "phone": contactController.text,
+                          "country": "",
+                          "province": "",
+                          "gender": gender == "male" ? "M" : "F",
+                          "address": addressController.text
+                        };
+                        bool status =
+                            await BlocProvider.of<SettingCubit>(context)
+                                .sendInformationUser(userInfo);
+                        if (status) {
+                          toast("تغییرات با موفقیت انجام شد.");
+                        }
+                        UserProfile.userLogin.email = emailController.text;
+                        UserProfile.userLogin.lastName = nameController.text;
+                        UserProfile.userLogin.address = addressController.text;
+                        UserProfile.userLogin.phone = contactController.text;
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: context.width(),
+                        height: 50,
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                              colors: <Color>[colorPallet2, colorPallet1]),
+                        ),
+                        child: state is SettingSendingProfileData
+                            ? Padding(
+                                padding: const EdgeInsets.only(top: 6),
+                                child: CircularProgressBar(),
+                              )
+                            : Text('ذخیره اطلاعات',
+                                style:
+                                    primaryTextStyle(size: 18, color: white)),
+                      ),
+                    );
+                  },
                 ),
               )
             ],
