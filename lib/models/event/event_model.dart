@@ -132,8 +132,8 @@ class Event {
           startTime: DateTime(2020),
           finishTime: DateTime(2021),
           comments: [],
-          ownerId: element['owner'] ?? 0,
-          ownerName: 'کافه رخ'));
+          ownerId: element['owner']['id'] ?? 0,
+          ownerName: element['owner']['title']));
     });
     return events;
   }

@@ -9,7 +9,7 @@ class SearchRepository {
   }
 
   Future<List<Event>> loadEventFromRepository(
-      Map<String, String> searchAndFilterProperty, int page) async {
+      Map<String, dynamic> searchAndFilterProperty, int page) async {
     try {
       Map<String, dynamic> response = await searchNetworkService
           .searchEventFromServer(searchAndFilterProperty, page);

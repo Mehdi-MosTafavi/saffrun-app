@@ -9,6 +9,7 @@ class Admin {
   late List<String> _comments;
   late List<String> _events;
   late String _rate;
+  late bool follow;
 
   Admin(
       int id,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:saffrun_app/UI/admin/admin_page.dart';
 import 'package:saffrun_app/UI/search/components/event_card.dart';
 import 'package:saffrun_app/UI/utils/calender/shared/utils.dart';
@@ -69,6 +70,8 @@ class _CalenderPageState extends State<CalenderPage> {
                     .selectDate(DateTime(now.year, now.month, now.day));
               }
               return ListView(
+                physics: ClampingScrollPhysics(),
+                padding: const EdgeInsets.only(bottom: 70),
                 children: [
                   const SizedBox(
                     height: 30,
@@ -118,15 +121,15 @@ class _CalenderPageState extends State<CalenderPage> {
                     state.events.isEmpty
                         ? const Center(child: Text("هیچ رویدادی یافت نشد"))
                         : ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              return EventCardWidget(
-                                event: state.events[index],
-                              );
-                            },
-                            itemCount: state.events.length,
-                          ),
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return EventCardWidget(
+                          event: state.events[index],
+                        );
+                      },
+                      itemCount: state.events.length,
+                    ),
                   if (state is CalendarSelectDate)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -153,15 +156,20 @@ class _CalenderPageState extends State<CalenderPage> {
                     state.reserves.length == 0
                         ? Center(child: Text("هیچ نوبتی یافت نشد"))
                         : ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            padding: const EdgeInsets.only(bottom: 60),
-                            itemBuilder: (context, index) {
-                              print(state.reserves.length);
-                              return ReserveCard(
-                                onTapCard: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => const AdminPage()));
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        print(state.reserves.length);
+                        return ReserveCard(
+                          onTapCard: () {
+                                  pushNewScreen(
+                                    context,
+                                    screen: AdminPage(),
+                                    withNavBar: false,
+                                    // OPTIONAL VALUE. True by default.
+                                    pageTransitionAnimation:
+                                        PageTransitionAnimation.cupertino,
+                                  );
                                 },
                           reserve: state.reserves[index],
                         );
