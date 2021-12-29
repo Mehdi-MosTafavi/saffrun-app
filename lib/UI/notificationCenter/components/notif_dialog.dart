@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:saffrun_app/constants/theme_color.dart';
+
 // import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/models/notification/notif_model.dart';
 
-void showDialogForNotification(BuildContext context, Notification_card notif)
-{
+void showDialogForNotification(BuildContext context, Notification_card notif) {
   String text = "texttexttexttext";
   showDialog(
       context: context,
@@ -33,15 +34,39 @@ void showDialogForNotification(BuildContext context, Notification_card notif)
                             topRight: Radius.circular(8)),
                         child: Image(
                             width: MediaQuery.of(context).size.width,
-                            image: AssetImage(
-                                'assets/images/mafia1.jpg'),
+                            image: const AssetImage('assets/images/mafia1.jpg'),
                             height: context.height() * 0.25,
                             fit: BoxFit.cover),
                       ),
                     ),
+                    5.height,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'بازی مافیا',
+                          style: TextStyle(fontSize: 15),
+                        ),
+                        Row(
+                          children: const [
+                            Icon(
+                              Icons.alarm,
+                            ),
+                            Text(
+                              '10 مرداد 1400',
+                              style: TextStyle(fontSize: 15),
+                            ),
+                          ],
+                        ),
+                        // Text(
+                        //   notification_card.title,
+                        //   style: boldTextStyle(color: colorPallet3),
+                        // ),
+                      ],
+                    ),
                     20.height,
                     Text(
-                      text + '\n' + text + '\n' + text + '\n' + text + '\n' + text,
+                      text + '\n' + text + '\n' + text + '\n' + text,
                       style: boldTextStyle(),
                       textDirection: TextDirection.rtl,
                     ),
