@@ -7,49 +7,14 @@ import 'package:nb_utils/nb_utils.dart';
 // import 'package:saffrun_app/UI/history/components/reserve_card.dart';
 import 'package:saffrun_app/UI/utils/appbar/appbar_type1.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
+import 'package:saffrun_app/models/user/user_2.dart';
 // import 'package:saffrun_app/models/history/event_model.dart';
 // import 'package:saffrun_app/models/history/reserve_model.dart';
 
 void showDialogForPayment(BuildContext context) {
 
   int bank = -1;
-  int wallet = -1;
-  // String wallet_status_text = 'شارژ کیف پول';
-  // ColorFiltered maskan_logo = ColorFiltered(
-  //     colorFilter: bank != 0
-  //         ? ColorFilter.mode(Color(0xffF5F5F5), BlendMode.color)
-  //         : ColorFilter.mode(Colors.transparent, BlendMode.color),
-  //     child: Image(
-  //     width: MediaQuery.of(context)
-  //         .size
-  //         .width,
-  //     image: const AssetImage(
-  //         'assets/images/Maskan-logo.jpg'),
-  //     height:
-  //     context.height() * 0.4,
-  //     fit: BoxFit.cover),);
-  //
-  // void change_status(int bank, ColorFiltered maskan_logo) {
-  //   bank=0;
-  //   setState(){
-  //
-  //     maskan_logo = ColorFiltered(
-  //       colorFilter: bank != 0
-  //           ? ColorFilter.mode(Color(0xffF5F5F5), BlendMode.color)
-  //           : ColorFilter.mode(Colors.transparent, BlendMode.color),
-  //       child: Image(
-  //           width: MediaQuery.of(context)
-  //               .size
-  //               .width,
-  //           image: const AssetImage(
-  //               'assets/images/Maskan-logo.jpg'),
-  //           height:
-  //           context.height() * 0.4,
-  //           fit: BoxFit.cover,
-  //       color: Colors.grey,),
-  //     );
-  //   }
-  // }
+
 
   showDialog(
       context: context,
@@ -145,10 +110,10 @@ void showDialogForPayment(BuildContext context) {
                                       width: 100,
                                       decoration:
                                           boxDecorationWithRoundedCorners(
-                                              backgroundColor: getWalletColor(wallet)),
+                                              backgroundColor: getWalletColor()),
                                       child: Center(
                                         child: Text(
-                                          getWalletStatus(wallet),
+                                          getWalletStatus(),
                                           // wallet_status_text,
                                           style: boldTextStyle(
                                               color: Colors.white),
@@ -299,20 +264,6 @@ void showDialogForPayment(BuildContext context) {
                                       ),
                                     ),
                                   ),
-
-                                  // Image(
-                                  //   // width: 20,
-                                  //   image: AssetImage(
-                                  //       'assets/images/Maskan-logo.jpg'
-                                  //   ),
-                                  // ),
-                                  // ColorFiltered(
-                                  //   colorFilter: ColorFilter.mode(
-                                  //     Colors.grey,
-                                  //     BlendMode.saturation,
-                                  //   ),
-                                  //   child:
-                                  // ),
                                 ],
                               ),
                             ),
@@ -330,19 +281,19 @@ void showDialogForPayment(BuildContext context) {
       });
 }
 
-Color getWalletColor(int wallet) {
-  if (wallet==-1)
+Color getWalletColor() {
+  if (10000>UserProfile.userLogin.wallet)
     {
       return colorPallet3;
     }
   else
     {
-      return Colors.red;
+      return colorPallet5;
     }
 }
 
-String getWalletStatus(int wallet) {
-  if (wallet==-1)
+String getWalletStatus() {
+  if (10000>UserProfile.userLogin.wallet)
     {
       return 'شارژ کیف پول';
     }
