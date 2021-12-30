@@ -1,3 +1,4 @@
+import 'package:saffrun_app/constants/const.dart';
 import 'package:saffrun_app/logical/general/size_function.dart';
 
 class CommentData {
@@ -8,13 +9,12 @@ class CommentData {
   String image;
   CommentData? reply;
 
-  CommentData(
-      {required this.id,
-      required this.content,
-      required this.userName,
-      required this.date,
-      required this.image,
-      this.reply});
+  CommentData({required this.id,
+    required this.content,
+    required this.userName,
+    required this.date,
+    required this.image,
+    this.reply});
 
   static List<CommentData> fromJsonList(List<dynamic> comments) {
     List<CommentData> listComments = [];
@@ -34,7 +34,9 @@ class CommentData {
             date: getTime(element['created_at'])));
       } else {
         listComments.add(CommentData(
-            image: element['user']['image']['image']['thumbnail'],
+            image: element['user']['image']['image'] == null
+                ? DefaultImage
+                : element['user']['image']['image']['thumbnail'],
             id: element['id'],
             content: element['content'],
             userName: element['user']['name'],

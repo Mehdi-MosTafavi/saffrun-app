@@ -164,7 +164,9 @@ class _CalenderPageState extends State<CalenderPage> {
                           onTapCard: () {
                                   pushNewScreen(
                                     context,
-                                    screen: AdminPage(),
+                                    screen: AdminPage(
+                                      adminId: state.reserves[index].adminId,
+                                    ),
                                     withNavBar: false,
                                     // OPTIONAL VALUE. True by default.
                                     pageTransitionAnimation:

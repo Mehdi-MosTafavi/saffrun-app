@@ -24,16 +24,37 @@ class CommentCubit extends Cubit<CommentState> {
     }
   }
 
-  Future<bool> sendCommentEvent(int eventId, String text) async {
+  Future<bool> sendCommentEvent(
+      {int? eventId, required String text, int? adminId}) async {
     try {
-      bool status = await commentRepository.commentNetworkService
-          .sendCommentEventToServer(eventId, text);
-      List<CommentData> comments =
-          await commentRepository.fetchCommentPageEvent(eventId);
+      bool status = false;
+      List<CommentData> comments = [];
+      if (eventId != null) {
+        status = await commentRepository.commentNetworkService
+            .sendCommentEventToServer(eventId, text);
+        comments = await commentRepository.fetchCommentPageEvent(eventId);
+      } else {
+        status = await commentRepository.commentNetworkService
+            .sendCommentAdminToServer(adminId!, text);
+        comments = await commentRepository.fetchCommentPageAdmin(adminId);
+      }
+
       emit(CommentLoaded(comments: comments));
       return status;
     } catch (e) {
       return false;
+    }
+  }
+
+  Future<void> fetchCommentAdmin(int i) async {
+    emit(CommentLoading());
+    try {
+      List<CommentData> comments =
+          await commentRepository.fetchCommentPageAdmin(i);
+      emit(CommentLoaded(comments: comments));
+    } catch (e) {
+      print(e);
+      emit(CommentError());
     }
   }
 }

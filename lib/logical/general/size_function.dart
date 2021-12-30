@@ -26,11 +26,23 @@ String formatTimeString(DateTime dateTime) {
       ' ' +
       f.mN +
       ' ' +
-      f.yy +
+      f.yyyy +
       ' | ' +
       dateTime.hour.toString() +
       ':' +
       dateTime.minute.toString();
+}
+
+String formatTimeReserveString(DateTime dateTime) {
+  Jalali date = Jalali.fromDateTime(dateTime);
+  var f = date.formatter;
+  return dateTime.hour.toString() + ':' + dateTime.minute.toString();
+}
+
+String formatDateReserveString(DateTime dateTime) {
+  Jalali date = Jalali.fromDateTime(dateTime);
+  var f = date.formatter;
+  return f.dd + ' ' + f.mN + ' ' + f.yyyy;
 }
 
 String getDateForCircle(DateTime dateTime) {

@@ -5,4 +5,8 @@ class AdminNetworkService extends BaseNetworkService {
     await postTemplate('/profile/follow/', {'employee_id': adminId});
     return true;
   }
+
+  dynamic fetchAdminNetworkService(i) async {
+    return await getTemplateInLink('/core/client/business/', i);
+  }
 }

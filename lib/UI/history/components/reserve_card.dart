@@ -120,13 +120,13 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
         {
           return "اتمام یافته";
         }
-      // break;
+    // break;
 
       default:
         {
           return "";
         }
-      // break;
+    // break;
     }
   }
 
@@ -134,27 +134,27 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
     switch (event.status) {
       case "NOT STARTED":
         {
-          return colorPallet5.withOpacity(0.2);
+          return colorPallet5;
         }
-      // break;
+    // break;
 
       case "RUNNING":
         {
-          return colorPallet2.withOpacity(0.2);
+          return colorPallet2;
         }
-      // break;
+    // break;
 
       case "FINISHED":
         {
-          return colorPallet1.withOpacity(0.2);
+          return colorPallet1;
         }
-      // break;
+    // break;
 
       default:
         {
           return colorPallet6;
         }
-      // break;
+    // break;
     }
   }
 
@@ -164,19 +164,19 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
         {
           return colorPallet5;
         }
-      // break;
+    // break;
 
       case "RUNNING":
         {
           return colorPallet2;
         }
-      // break;
+    // break;
 
       case "FINISHED":
         {
           return colorPallet1;
         }
-      // break;
+    // break;
 
       default:
         {
@@ -199,6 +199,7 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Container(
+        // width: context.width() * 0.3,
         margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
         decoration: BoxDecoration(
             boxShadow: defaultBoxShadow(),
@@ -225,219 +226,148 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
                               EdgeInsets.only(left: context.width() * 0.05),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CachedNetworkImage(
-                                    imageBuilder: (context, imageProvider) {
-                                      return Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.only(
-                                                bottomLeft: Radius.circular(8)),
-                                            image: DecorationImage(
-                                                fit: BoxFit.cover,
-                                                image: imageProvider)),
-                                      );
-                                    },
-                                    placeholder: (context, strImage) {
-                                      return Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.only(
-                                              bottomLeft: Radius.circular(5)),
-                                          color: Colors.grey,
-                                          border: Border.all(
-                                            color: Colors.white,
-                                            width: 2.0,
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    imageUrl: getImageUrlUsers(
-                                        widget.reserve.adminImage),
-                                    fit: BoxFit.fill,
-                                    height: context.height() * 0.15,
-                                    width: context.width() * 0.3,
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        reserve.adminName,
-                                        style: boldTextStyle(),
-                                      ),
-                                      SizedBox(
-                                        height: context.height() * 0.01,
-                                      ),
-                                    ],
-                                  ).paddingOnly(top: 20, right: 15),
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    height: 30,
-                                    width: 100,
-                                    decoration: boxDecorationWithRoundedCorners(
-                                        backgroundColor: getColor(reserve)),
-                                    child: Center(
-                                      child: Text(
-                                        getStatus(reserve, now),
-                                        style: boldTextStyle(
-                                            color: getColorText(reserve)),
+                              CachedNetworkImage(
+                                imageBuilder: (context, imageProvider) {
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                            bottomLeft: Radius.circular(8)),
+                                        image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: imageProvider)),
+                                  );
+                                },
+                                placeholder: (context, strImage) {
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(5)),
+                                      color: Colors.grey,
+                                      border: Border.all(
+                                        color: Colors.white,
+                                        width: 2.0,
                                       ),
                                     ),
-                                  ),
-                                  10.height,
-                                  if (reserve.status == 1)
-                                    TextButton(
-                                            onPressed: () {},
-                                            child: Text('لغو نوبت'))
-                                        .paddingLeft(10),
-                                ],
-                              ).paddingTop(20),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: context.height() * 0.01,
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: SizedBox(
-                          child: Align(
-                            alignment: Alignment.topRight,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                // Column(
-                                //   children: [
-                                //     Wrap(
-                                //       direction: Axis.vertical,
-                                //       textDirection: TextDirection.rtl,
-                                //       children: [
-                                //         Row(
-                                //           mainAxisAlignment:
-                                //           MainAxisAlignment.start,
-                                //           children: [
-                                //             Text(
-                                //               'تاریخ شروع: ',
-                                //               style: primaryTextStyle(),
-                                //             ),
-                                //             Text(
-                                //               '10 آبان | 8:00',
-                                //               style: boldTextStyle(),
-                                //             ),
-                                //           ],
-                                //         ).paddingSymmetric(horizontal: 10),
-                                //         Row(
-                                //           mainAxisAlignment:
-                                //           MainAxisAlignment.start,
-                                //           children: [
-                                //             Text(
-                                //               'تاریخ پایان: ',
-                                //               style: primaryTextStyle(),
-                                //             ),
-                                //             Text(
-                                //               '10 آبان | 14:00',
-                                //               style: boldTextStyle(),
-                                //             ),
-                                //           ],
-                                //         ).paddingSymmetric(horizontal: 10),
-                                //       ],
-                                //     ),
-                                //   ],
-                                // ),
-                                Padding(
-                                  padding: EdgeInsets.only(bottom: 15),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text(
-                                            'زمان نوبت:  ',
-                                            style: boldTextStyle(),
+                                  );
+                                },
+                                imageUrl:
+                                    getImageUrlUsers(widget.reserve.adminImage),
+                                fit: BoxFit.fill,
+                                height: context.height() * 0.15,
+                                width: context.width() * 0.3,
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              widget.reserve.adminName,
+                                              style: boldTextStyle(),
+                                            ).paddingOnly(top: 15, right: 10),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Container(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          right: 16, left: 6),
+                                                  child: Center(
+                                                      child: Icon(
+                                                    LineIcons.money_bill,
+                                                    color: colorPallet3,
+                                                  )),
+                                                ),
+                                                Text(
+                                                  widget.reserve.price
+                                                      .toString(),
+                                                  style: boldTextStyle(),
+                                                ).paddingOnly(
+                                                    top: 0, right: 10),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                        Tooltip(
+                                          message:
+                                              getStatus(widget.reserve, now),
+                                          child: Container(
+                                            height: 35,
+                                            width: 35,
+                                            decoration:
+                                                boxDecorationWithRoundedCorners(
+                                                    boxShape: BoxShape.circle,
+                                                    backgroundColor: getColor(
+                                                        widget.reserve)),
+                                          ).paddingTop(15),
+                                        ),
+                                      ],
+                                    ),
+                                    10.height,
+                                    Row(
+                                      children: [
+                                        Container(
+                                          padding: const EdgeInsets.only(
+                                              right: 16, left: 6),
+                                          child: Center(
+                                              child: Icon(
+                                            LineIcons.calendar_1,
+                                            color: colorPallet3,
+                                          )),
+                                        ),
+                                        Text(
+                                          formatDateReserveString(
+                                            widget.reserve.targetStartReserve,
                                           ),
+                                          style: boldTextStyle(
+                                              color: colorPallet3),
+                                        )
+                                      ],
+                                    ),
+                                    FittedBox(
+                                      alignment: Alignment.centerRight,
+                                      fit: BoxFit.scaleDown,
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text('زمان نوبت:  ',
+                                              style: boldTextStyle(
+                                                  color: colorPallet2)),
                                           Text(
                                               getTimeReserve(reserve
                                                       .targetEndReserve) +
                                                   ' - ' +
                                                   getTimeReserve(reserve
                                                       .targetStartReserve),
-                                              style: primaryTextStyle(
-                                                  color: Colors.blueGrey),
+                                              style: boldTextStyle(
+                                                  color: colorPallet2),
                                               maxLines: 2),
                                         ],
                                       ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            'هزینه پرداختی: ',
-                                            style: boldTextStyle(),
-                                          ),
-                                          Text("${widget.reserve.price} تومان ",
-                                              style: boldTextStyle(
-                                                  color: Colors.blueGrey),
-                                              maxLines: 2),
-                                        ],
-                                      ),
-                                    ],
-                                  ).paddingRight(6),
+                                    ),
+                                    10.height,
+                                  ],
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      left: context.width() * 0.01),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      SizedBox(
-                                        width: context.width() * 0.01,
-                                      ),
-                                      MaterialButton(
-                                        padding: EdgeInsets.only(
-                                            left: context.width() * 0.05),
-                                        onPressed: () {
-                                          // Navigator.of(context).push(
-                                          //     MaterialPageRoute(
-                                          //         builder: (context) =>
-                                          //             EventPage(event: ,)));
-                                        },
-                                        child: Container(
-                                          height: context.height() * 0.07,
-                                          width: context.width() * 0.2,
-                                          decoration:
-                                              boxDecorationWithRoundedCorners(
-                                                  backgroundColor:
-                                                      colorPallet3),
-                                          child: Center(
-                                            child: Text(
-                                              'جزئیات',
-                                              style: boldTextStyle(
-                                                  color: Colors.white),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-
-                      // SizedBox(height: 8),
-
                       // 10.height,
                     ],
                   ),

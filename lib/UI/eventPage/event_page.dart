@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,36 +30,12 @@ final String description =
 class _EventPageState extends State<EventPage> {
   late ScrollController scrollController;
 
-  late final List<AssetImage> imgList;
-  late final List<Widget> imageSliders;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     scrollController = ScrollController();
-    imgList = [
-      AssetImage('assets/images/mafia1.jpg'),
-      AssetImage('assets/images/mafia2.jpg'),
-      AssetImage('assets/images/mafia3.jpg'),
-      AssetImage('assets/images/mafia4.jpg')
-    ];
-    imageSliders = imgList
-        .map((item) => Container(
-              child: Container(
-                margin: const EdgeInsets.all(5.0),
-                child: ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                    child: Stack(
-                      children: <Widget>[
-                        Image(
-                          image: item,
-                        ),
-                      ],
-                    )),
-              ),
-            ))
-        .toList();
   }
 
   late Event event;
@@ -108,12 +85,40 @@ class _EventPageState extends State<EventPage> {
                     children: [
                       Column(children: [
                         CarouselSlider(
-                          items: imageSliders,
+                          items: state.event.imageUrls
+                              .map((item) => CachedNetworkImage(
+                                    imageBuilder: (context, imageProvider) {
+                                      return Container(
+                                        margin: EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                                fit: BoxFit.cover,
+                                                image: imageProvider)),
+                                      );
+                                    },
+                                    placeholder: (context, strImage) {
+                                      return Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey,
+                                          border: Border.all(
+                                            color: Colors.white,
+                                            width: 2.0,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    imageUrl: item,
+                                    fit: BoxFit.fill,
+                                    height: context.width() * 0.32,
+                                    width: context.height() * 0.6,
+                                  ))
+                              .toList(),
                           carouselController: controller,
                           options: CarouselOptions(
                               autoPlay: true,
                               enlargeCenterPage: true,
                               aspectRatio: 2.0,
+                              enableInfiniteScroll: false,
                               onPageChanged: (index, reason) {
                                 setState(() {
                                   current = index;
@@ -122,7 +127,10 @@ class _EventPageState extends State<EventPage> {
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: imgList.asMap().entries.map((entry) {
+                          children: state.event.imageUrls
+                              .asMap()
+                              .entries
+                              .map((entry) {
                             return GestureDetector(
                               onTap: () => controller.animateToPage(entry.key),
                               child: Container(
@@ -134,10 +142,10 @@ class _EventPageState extends State<EventPage> {
                                     shape: BoxShape.circle,
                                     color: (Theme.of(context).brightness ==
                                                 Brightness.dark
-                                            ? Colors.white
-                                            : Colors.white)
+                                        ? Colors.white
+                                        : Colors.white)
                                         .withOpacity(
-                                            current == entry.key ? 0.9 : 0.4)),
+                                        current == entry.key ? 0.9 : 0.4)),
                               ),
                             );
                           }).toList(),
@@ -172,7 +180,7 @@ class _EventPageState extends State<EventPage> {
                                       alignment: Alignment.centerRight,
                                       child: Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                         children: [
                                           Row(
                                             children: [
@@ -190,16 +198,16 @@ class _EventPageState extends State<EventPage> {
                                                   heightFactor: 0.7,
                                                   child: Container(
                                                     padding: const EdgeInsets
-                                                            .symmetric(
+                                                        .symmetric(
                                                         horizontal: 5),
                                                     decoration:
-                                                        boxDecorationWithRoundedCorners(
-                                                            backgroundColor:
-                                                                colorPallet5,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        12)),
+                                                    boxDecorationWithRoundedCorners(
+                                                        backgroundColor:
+                                                        colorPallet5,
+                                                        borderRadius:
+                                                        BorderRadius
+                                                            .circular(
+                                                            12)),
                                                     child: Center(
                                                       child: Text(
                                                         "10%",
@@ -249,7 +257,7 @@ class _EventPageState extends State<EventPage> {
                                     height: context.height() * 0.07,
                                     child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                       children: [
                                         Wrap(
                                           // alignment: WrapAlignment.start,
@@ -258,7 +266,7 @@ class _EventPageState extends State<EventPage> {
                                           children: [
                                             Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.start,
+                                              MainAxisAlignment.start,
                                               children: [
                                                 Text(
                                                   'تاریخ شروع: ',
@@ -273,7 +281,7 @@ class _EventPageState extends State<EventPage> {
                                             ).paddingSymmetric(horizontal: 10),
                                             Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.start,
+                                              MainAxisAlignment.start,
                                               children: [
                                                 Text(
                                                   'تاریخ پایان: ',
@@ -291,7 +299,7 @@ class _EventPageState extends State<EventPage> {
                                         Align(
                                           child: Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.start,
+                                            MainAxisAlignment.start,
                                             children: [
                                               const Icon(
                                                 Icons
@@ -300,7 +308,7 @@ class _EventPageState extends State<EventPage> {
                                               ),
                                               Container(
                                                 padding:
-                                                    const EdgeInsets.all(5),
+                                                const EdgeInsets.all(5),
                                                 child: Center(
                                                   child: Text(
                                                     state.event.participantCount
@@ -329,7 +337,7 @@ class _EventPageState extends State<EventPage> {
                                   Container(
                                     child: Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      CrossAxisAlignment.start,
                                       children: [
                                         Align(
                                           alignment: Alignment.centerRight,
@@ -352,7 +360,7 @@ class _EventPageState extends State<EventPage> {
                                   ),
                                   Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                         'نظرات:',
@@ -368,8 +376,8 @@ class _EventPageState extends State<EventPage> {
                                             withNavBar: false,
                                             // OPTIONAL VALUE. True by default.
                                             pageTransitionAnimation:
-                                                PageTransitionAnimation
-                                                    .cupertino,
+                                            PageTransitionAnimation
+                                                .cupertino,
                                           );
                                         },
                                         child: const Text('نظر دهید ...'),
@@ -380,13 +388,13 @@ class _EventPageState extends State<EventPage> {
                                     height: 300,
                                     child: ListView.builder(
                                       physics:
-                                          const NeverScrollableScrollPhysics(),
+                                      const NeverScrollableScrollPhysics(),
                                       // itemExtent: ,
                                       itemBuilder: (context, index) {
                                         return ListTile(
                                           contentPadding:
-                                              const EdgeInsets.symmetric(
-                                                  vertical: 10),
+                                          const EdgeInsets.symmetric(
+                                              vertical: 10),
                                           leading: CircleAvatar(
                                             backgroundColor: colorPallet1,
                                             child: Padding(
@@ -404,7 +412,7 @@ class _EventPageState extends State<EventPage> {
                                           ),
                                           title: Column(
                                             crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                             children: [
                                               Text(
                                                 state.event.comments[index]
@@ -434,13 +442,13 @@ class _EventPageState extends State<EventPage> {
             }
             return SafeArea(
                 child: Container(
-              height: context.height(),
-              width: context.width(),
-              decoration: const BoxDecoration(color: Colors.white),
-              child: const Center(
-                child: Text('لطفا چند لحظه صبر کنید'),
-              ),
-            ));
+                  height: context.height(),
+                  width: context.width(),
+                  decoration: const BoxDecoration(color: Colors.white),
+                  child: const Center(
+                    child: Text('لطفا چند لحظه صبر کنید'),
+                  ),
+                ));
           },
         ),
       ),
@@ -482,34 +490,34 @@ class _DescriptionTextWidgetState extends State<DescriptionTextWidget> {
       padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
       child: secondHalf.isEmpty
           ? Text(
-              firstHalf,
-              textAlign: TextAlign.start,
-            )
+        firstHalf,
+        textAlign: TextAlign.start,
+      )
           : Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            flag ? (firstHalf + "...") : (firstHalf + secondHalf),
+            textAlign: TextAlign.start,
+          ),
+          InkWell(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  flag ? (firstHalf + "...") : (firstHalf + secondHalf),
-                  textAlign: TextAlign.start,
-                ),
-                InkWell(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        flag ? "بیشتر" : "کمتر",
-                        style: const TextStyle(color: colorPallet4),
-                      ),
-                    ],
-                  ),
-                  onTap: () {
-                    setState(() {
-                      flag = !flag;
-                    });
-                  },
+                  flag ? "بیشتر" : "کمتر",
+                  style: const TextStyle(color: colorPallet4),
                 ),
               ],
             ),
+            onTap: () {
+              setState(() {
+                flag = !flag;
+              });
+            },
+          ),
+        ],
+      ),
     );
   }
 }

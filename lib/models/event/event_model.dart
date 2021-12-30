@@ -19,14 +19,12 @@ class Event {
   bool isParticipate;
   int price;
   String status;
-  List<String> images;
 
   Event(
       {required this.id,
       required this.title,
       this.description = "",
       this.imageUrl = "",
-      this.images = const [],
       this.discount = 0,
       required this.ownerId,
       required this.startTime,
@@ -162,7 +160,7 @@ class Event {
         title: json['title'],
         description: json['description'],
         imageUrl: "",
-        imageUrls: [],
+        imageUrls: getImages(json['images']),
         category: json['category']['title'],
         discount: json['discount'] ?? 0,
         ownerId: json['owner']['id'] ?? 0,
@@ -220,6 +218,14 @@ class Event {
           ownerId: 0));
     }
     return events;
+  }
+
+  static getImages(result) {
+    List<String> listString = [];
+    for (var element in result) {
+      listString.add(element['image']['full_size']);
+    }
+    return listString;
   }
 /*I/flutter ( 4258): {id: 1, title: قهوه با رفقا, description: قهوه بزنیم با هم داوشیا, discount: 0, participants: 3, start_datetime: 2021-11-25T15:54:26+03:30, end_datetime: 2021-11-25T18:54:29+03:30, category: {id: 1, title: سرگرمی}, images: []}
 

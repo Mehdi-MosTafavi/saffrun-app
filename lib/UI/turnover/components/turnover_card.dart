@@ -4,9 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:saffrun_app/UI/eventPage/event_page.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
-import 'package:saffrun_app/models/event/event_model.dart';
 import 'package:saffrun_app/models/turnover/turnover_card_model.dart';
 
 final List<String> imgList2 = [
@@ -182,29 +180,26 @@ class TurnoverCardWidget extends StatelessWidget {
                                     turnover_card.title,
                                     style: boldTextStyle(color: colorPallet3),
                                   ),
-                                  10.height,
-                                  Column(
+                                  4.height,
+                                  Text(
+                                    'رویداد',
+                                    style: boldTextStyle(
+                                        color: Colors.blueGrey, size: 13),
+                                  ),
+                                  6.height,
+                                  Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      Container(
-                                          child: Row(
-                                        children: [
-                                          Icon(
-                                            LineAwesomeIcons.wavy_money_bill,
-                                            color: colorPallet2,
-                                          ),
-                                          2.width,
-                                          const Text(
-                                            'مبلغ پرداختی',
-                                            style:
-                                                TextStyle(color: colorPallet3),
-                                          ),
-                                        ],
-                                      )),
+                                      Icon(
+                                        LineAwesomeIcons.wavy_money_bill,
+                                        color: colorPallet2,
+                                      ),
+                                      3.width,
                                       Text(
                                         '10000 تومان',
-                                        style: boldTextStyle(),
+                                        style:
+                                            boldTextStyle(color: colorPallet2),
                                       ),
                                     ],
                                   )
@@ -215,30 +210,11 @@ class TurnoverCardWidget extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
+                                3.height,
                                 Text(
-                                  'تاریخ:',
-                                  style: TextStyle(fontWeight: FontWeight.w600),
-                                ),
-                                Text('10 مرداد 1400'),
+                                  '10 مرداد 1400',
+                                ).paddingOnly(left: 5, top: 5),
                                 5.height,
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                            builder: (context) => EventPage(
-                                                  event: Event.events[0],
-                                                )));
-                                  },
-                                  child: Container(
-                                    child: Center(
-                                      child: Text(
-                                        'جزئیات',
-                                        style:
-                                            boldTextStyle(color: colorPallet2),
-                                      ),
-                                    ),
-                                  ),
-                                ),
                               ],
                             ).paddingOnly(left: 5, top: 5),
                           ],

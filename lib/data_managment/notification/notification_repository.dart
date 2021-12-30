@@ -1,5 +1,7 @@
 import 'package:saffrun_app/data_managment/notification/notification_networkservice.dart';
 
+import '../../models/notification/notif_model.dart';
+
 class NotificationRepository {
   late NotificationNetworkService _notificationNetworkService;
 
@@ -7,12 +9,14 @@ class NotificationRepository {
     _notificationNetworkService = NotificationNetworkService();
   }
 
-  Future<List> getNotificationUser() async {
+  Future<List<NotificationData>> getNotificationUser() async {
     try {
-      await _notificationNetworkService.getNotificationFromServer();
-      return [];
+      dynamic result =
+          await _notificationNetworkService.getNotificationFromServer();
+      return NotificationData.fromJsonList(result['notifications']);
     } catch (e) {
-      rethrow;
+      print(e);
+      return [];
     }
   }
 }

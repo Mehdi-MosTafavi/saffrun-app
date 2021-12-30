@@ -77,12 +77,6 @@ class ProfileListItem extends StatelessWidget {
                   ),
               ],
             ),
-            if (this.hasNavigation)
-              Divider(
-                height: 10,
-                color: Colors.black.withOpacity(0.1),
-                thickness: 1,
-              )
           ],
         ),
       ),

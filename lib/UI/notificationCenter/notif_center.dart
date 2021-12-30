@@ -1,17 +1,12 @@
 // import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:nb_utils/nb_utils.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:saffrun_app/UI/utils/appbar/appbar_type1.dart';
-// import 'package:nb_utils/nb_utils.dart';
-// import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-// import 'package:saffrun_app/UI/history/components/event_card.dart';
-// import 'package:saffrun_app/UI/commentPage/commentpage.dart';
-// import 'package:saffrun_app/UI/eventPage/components/add_button.dart';
-// import 'package:saffrun_app/constants/theme_color.dart';
-import 'package:saffrun_app/models/notification/notif_model.dart';
 
 // import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
+import '../../state_managment/notification/notification_cubit.dart';
+import '../utils/circular_progressbar_component.dart';
 import 'components/notif_card.dart';
 
 class NotificationCenter extends StatefulWidget {
@@ -20,100 +15,6 @@ class NotificationCenter extends StatefulWidget {
   @override
   _NotificationCenterState createState() => _NotificationCenterState();
 }
-List<Notification_card> notifications = [
-  Notification_card(
-    id: 1,
-    title: 'بازی مافیا',
-    description: 'برگزاری بازی مافیا به صورت گروهی به همراه جایزه',
-    imageUrl: '',
-    discount: 10,
-    ownerId: 2,
-    startTime: DateTime(2020),
-    finishTime: DateTime(2021),
-    comments: '',
-    status: 1,
-    participant: 10,
-  ),
-  Notification_card(
-    id: 1,
-    title: 'بازی مافیا',
-    description: 'برگزاری بازی مافیا به صورت گروهی به همراه جایزه',
-    imageUrl: '',
-    discount: 10,
-    ownerId: 2,
-    startTime: DateTime(2020),
-    finishTime: DateTime(2021),
-    comments: '',
-    status: 2,
-    participant: 10,
-  ),
-  Notification_card(
-    id: 1,
-    title: 'بازی مافیا',
-    description: 'برگزاری بازی مافیا به صورت گروهی به همراه جایزه',
-    imageUrl: '',
-    discount: 10,
-    ownerId: 2,
-    startTime: DateTime(2020),
-    finishTime: DateTime(2021),
-    comments: '',
-    status: 3,
-    participant: 10,
-  ),
-  Notification_card(
-    id: 1,
-    title: 'بازی مافیا',
-    description: 'برگزاری بازی مافیا به صورت گروهی به همراه جایزه',
-    imageUrl: '',
-    discount: 10,
-    ownerId: 2,
-    startTime: DateTime(2020),
-    finishTime: DateTime(2021),
-    comments: '',
-    status: 1,
-    participant: 10,
-  ),
-  Notification_card(
-    id: 1,
-    title: 'بازی مافیا',
-    description: 'برگزاری بازی مافیا به صورت گروهی به همراه جایزه',
-    imageUrl: '',
-    discount: 10,
-    ownerId: 2,
-    startTime: DateTime(2020),
-    finishTime: DateTime(2021),
-    comments: '',
-    status: 2,
-    participant: 10,
-  ),
-  Notification_card(
-    id: 1,
-    title: 'بازی مافیا',
-    description: 'برگزاری بازی مافیا به صورت گروهی به همراه جایزه',
-    imageUrl: '',
-    discount: 10,
-    ownerId: 2,
-    startTime: DateTime(2020),
-    finishTime: DateTime(2021),
-    comments: '',
-    status: 3,
-    participant: 10,
-  ),
-  Notification_card(
-    id: 1,
-    title: 'بازی مافیا',
-    description: 'برگزاری بازی مافیا به صورت گروهی به همراه جایزه',
-    imageUrl: '',
-    discount: 10,
-    ownerId: 2,
-    startTime: DateTime(2020),
-    finishTime: DateTime(2021),
-    comments: '',
-    status: 1,
-    participant: 10,
-  ),
-];
-
 
 class _NotificationCenterState extends State<NotificationCenter> {
   // late List<SalesData> _chartData;
@@ -130,25 +31,36 @@ class _NotificationCenterState extends State<NotificationCenter> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBarTitleProfileWhite(
-        context,
-        0,
-        title: '',
-        functionBack: () {},
-      ),
-      backgroundColor: Colors.white,
-      body: Container(
-        child: ListView(
-          scrollDirection: Axis.vertical,
-          children: <Widget>[
-            20.height,
-            NotificationCardWidget(notification_card: notifications[0]),
-            NotificationCardWidget(notification_card: notifications[1]),
-            NotificationCardWidget(notification_card: notifications[2]),
-            NotificationCardWidget(notification_card: notifications[3]),
-            NotificationCardWidget(notification_card: notifications[4]),
-          ],
+    return BlocProvider(
+      create: (context) => NotificationCubit(),
+      child: Scaffold(
+        appBar: AppBarTitleProfileWhite(
+          context,
+          0,
+          title: '',
+          functionBack: () {},
+          notifCenter: true,
+        ),
+        backgroundColor: Colors.white,
+        body: BlocBuilder<NotificationCubit, NotificationState>(
+          builder: (context, state) {
+            if (state is NotificationInitial) {
+              BlocProvider.of<NotificationCubit>(context)
+                  .fetchNotificationPage();
+            }
+            if (state is NotificationLoaded) {
+              return ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  itemCount: state.notifs.length,
+                  padding: EdgeInsets.only(top: 30),
+                  itemBuilder: (BuildContext context, int index) {
+                    return NotificationCardWidget(
+                        notification_card: state.notifs[index]);
+                  });
+            }
+
+            return const Center(child: CircularProgressBar());
+          },
         ),
       ),
     );

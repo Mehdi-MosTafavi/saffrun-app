@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
+
 // import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/models/notification/notif_model.dart';
-void showDialogForNotification(BuildContext context, Notification_card notif) {
+
+import '../../../logical/general/size_function.dart';
+
+void showDialogForNotification(BuildContext context, NotificationData notif) {
   String text = "texttexttexttext";
   showDialog(
       context: context,
@@ -34,7 +38,7 @@ void showDialogForNotification(BuildContext context, Notification_card notif) {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'بازی مافیا',
+                              notif.title,
                               style: boldTextStyle(color: colorPallet3),
                             ),
                             Row(
@@ -45,8 +49,8 @@ void showDialogForNotification(BuildContext context, Notification_card notif) {
                                   color: Colors.black,
                                 ),
                                 4.width,
-                                const Text(
-                                  '10 مرداد 1400',
+                                Text(
+                                  formatTimeString(notif.createtime),
                                   style: TextStyle(
                                       fontSize: 15, letterSpacing: -0.4),
                                 ),
@@ -71,11 +75,19 @@ void showDialogForNotification(BuildContext context, Notification_card notif) {
                           'متن پیام:',
                           style: boldTextStyle(color: colorPallet5),
                         ),
-                        Text(
-                          text + '\n' + text + '\n' + text + '\n' + text,
-                          style: boldTextStyle(),
-                          textDirection: TextDirection.rtl,
-                        ).paddingOnly(right: 7),
+                        Container(
+                          height: context.height() * 0.15,
+                          child: ListView(
+                            physics: ClampingScrollPhysics(),
+                            children: [
+                              Text(
+                                notif.text,
+                                style: boldTextStyle(),
+                                textDirection: TextDirection.rtl,
+                              ).paddingOnly(right: 7),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                     Align(

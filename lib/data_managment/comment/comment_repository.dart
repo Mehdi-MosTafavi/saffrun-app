@@ -18,4 +18,16 @@ class CommentRepository {
       rethrow;
     }
   }
+
+  Future<List<CommentData>> fetchCommentPageAdmin(int i) async {
+    try {
+      dynamic comments = await commentNetworkService.getCommentAdmin(i);
+      print(comments);
+      if (comments == null) return [];
+
+      return CommentData.fromJsonList(comments["comments"]);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

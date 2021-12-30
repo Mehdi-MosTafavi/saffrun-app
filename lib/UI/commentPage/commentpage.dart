@@ -20,9 +20,10 @@ import 'components/message.dart';
 
 class CommentPage extends StatefulWidget {
   // Product product;
-  final int eventId;
+  final int? eventId;
+  final int? adminId;
 
-  CommentPage({required this.eventId});
+  CommentPage({this.eventId, this.adminId});
 
   @override
   State<StatefulWidget> createState() => CommentPageState();
@@ -127,8 +128,13 @@ class CommentPageState extends State<CommentPage>
                   body: BlocBuilder<CommentCubit, CommentState>(
                     builder: (context, state) {
                       if (state is CommentInitial) {
-                        BlocProvider.of<CommentCubit>(context)
-                            .fetchCommentEvent(1);
+                        if (widget.adminId == null) {
+                          BlocProvider.of<CommentCubit>(context)
+                              .fetchCommentEvent(widget.eventId!);
+                        } else {
+                          BlocProvider.of<CommentCubit>(context)
+                              .fetchCommentAdmin(widget.adminId!);
+                        }
                       }
                       if (state is CommentLoaded) {
                         return Container(
@@ -577,17 +583,30 @@ class CommentPageState extends State<CommentPage>
                                         child: TextButton(
                                           onPressed: () {
                                             setState(() async {
+                                              bool status = false;
                                               if (textcontroller.text != '') {
-                                                bool status = await BlocProvider
-                                                        .of<CommentCubit>(
-                                                            context)
-                                                    .sendCommentEvent(
-                                                        widget.eventId,
-                                                        textcontroller.text);
-
+                                                if (widget.eventId != null) {
+                                                  status = await BlocProvider
+                                                          .of<CommentCubit>(
+                                                              context)
+                                                      .sendCommentEvent(
+                                                          eventId:
+                                                              widget.eventId!,
+                                                          text: textcontroller
+                                                              .text);
+                                                } else {
+                                                  status = await BlocProvider
+                                                          .of<CommentCubit>(
+                                                              context)
+                                                      .sendCommentEvent(
+                                                          adminId:
+                                                              widget.adminId!,
+                                                          text: textcontroller
+                                                              .text);
+                                                }
                                                 if (status) {
                                                   toast('نظر با موفقیت ثبت شد');
-                                                }
+                                                } else {}
                                                 textcontroller.text = '';
                                               }
                                             });

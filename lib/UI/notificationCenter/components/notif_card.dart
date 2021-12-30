@@ -6,6 +6,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/models/notification/notif_model.dart';
 
+import '../../../logical/general/size_function.dart';
 import 'notif_dialog.dart';
 
 final List<String> imgList2 = [
@@ -22,7 +23,7 @@ class NotificationCardWidget extends StatelessWidget {
   }) : super(key: key);
 
   DateTime now = DateTime.now();
-  final Notification_card notification_card;
+  final NotificationData notification_card;
   final String item = 'assets/images/mafia1.jpg';
 
   int current = 0;
@@ -71,41 +72,57 @@ class NotificationCardWidget extends StatelessWidget {
                                     MainAxisAlignment.spaceAround,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    notification_card.title,
-                                    style: boldTextStyle(
-                                        color: colorPallet3, size: 18),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        notification_card.title,
+                                        style: boldTextStyle(
+                                            color: colorPallet3, size: 18),
+                                      ),
+                                      10.width,
+                                      Text(
+                                        notification_card.senderName,
+                                        style: primaryTextStyle(
+                                            color: colorPallet5),
+                                      ),
+                                    ],
                                   ),
                                   10.height,
-                                  Text(
-                                    text + '  ' + text,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.fade,
+                                  Container(
+                                    width: context.width() * 0.5,
+                                    child: Text(
+                                      notification_card.text,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
                             Column(
                               children: [
-                                const Text(
-                                  '10 مرداد 1400',
-                                  style: TextStyle(letterSpacing: -0.6),
+                                Text(
+                                  formatTimeString(
+                                      notification_card.createtime),
+                                  style: TextStyle(
+                                      letterSpacing: -0.6, fontSize: 13),
                                 ).paddingOnly(top: 12, left: 12),
-                                8.height,
-                                GestureDetector(
-                                  onTap: () {
+                                2.height,
+                                TextButton(
+                                  onPressed: () {
                                     showDialogForNotification(
                                         context, notification_card);
                                   },
-                                  child: CircleAvatar(
-                                    radius: context.width() * 0.035,
-                                    backgroundColor: colorPallet2,
-                                    child: const Icon(
-                                      Icons.arrow_forward_rounded,
-                                      color: Colors.white,
-                                    ).paddingAll(3),
+                                  child: Container(
+                                    child: Center(
+                                      child: Text(
+                                        'جزئیات',
+                                        style:
+                                            boldTextStyle(color: colorPallet2),
+                                      ),
+                                    ),
                                   ),
-                                ).paddingOnly(bottom: 10)
+                                ).paddingOnly(bottom: 5)
                               ],
                             ),
                           ],

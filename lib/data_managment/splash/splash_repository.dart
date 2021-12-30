@@ -2,7 +2,6 @@ import 'package:saffrun_app/data_managment/splash/splash_networkservice.dart';
 import 'package:saffrun_app/models/user/user_2.dart';
 
 import '../../main.dart';
-import '../notification/notification_repository.dart';
 
 class SplashRepository {
   late SplashNetworkService splashNetworkService;
@@ -21,7 +20,6 @@ class SplashRepository {
         }
         await splashNetworkService
             .sendNotifToken(await najva.getSubscribedToken());
-        await NotificationRepository().getNotificationUser();
         UserProfile.userLogin = UserProfile.fromJson(result);
       }
       return status;
