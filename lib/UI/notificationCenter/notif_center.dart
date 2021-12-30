@@ -9,12 +9,10 @@ import 'package:saffrun_app/UI/utils/appbar/appbar_type1.dart';
 // import 'package:saffrun_app/UI/eventPage/components/add_button.dart';
 // import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/models/notification/notif_model.dart';
-// import 'package:saffrun_app/models/history/reserve_model.dart';
 
 // import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 import 'components/notif_card.dart';
-import 'components/notif_dialog.dart';
 
 class NotificationCenter extends StatefulWidget {
   const NotificationCenter({Key? key}) : super(key: key);
@@ -145,37 +143,11 @@ class _NotificationCenterState extends State<NotificationCenter> {
           scrollDirection: Axis.vertical,
           children: <Widget>[
             20.height,
-
-            GestureDetector(
-                child: NotificationCardWidget(notification_card: notifications[0]),
-                onTap: (){
-                  showDialogForNotification(context, notifications[0]);
-                },
-            ),
-            GestureDetector(
-              child: NotificationCardWidget(notification_card: notifications[1]),
-              onTap: (){
-                showDialogForNotification(context, notifications[1]);
-              },
-            ),
-            GestureDetector(
-              child: NotificationCardWidget(notification_card: notifications[2]),
-              onTap: (){
-                showDialogForNotification(context, notifications[2]);
-              },
-            ),
-            GestureDetector(
-              child: NotificationCardWidget(notification_card: notifications[3]),
-              onTap: (){
-                showDialogForNotification(context, notifications[3]);
-              },
-            ),
-            GestureDetector(
-              child: NotificationCardWidget(notification_card: notifications[4]),
-              onTap: (){
-                showDialogForNotification(context, notifications[4]);
-              },
-            ),
+            NotificationCardWidget(notification_card: notifications[0]),
+            NotificationCardWidget(notification_card: notifications[1]),
+            NotificationCardWidget(notification_card: notifications[2]),
+            NotificationCardWidget(notification_card: notifications[3]),
+            NotificationCardWidget(notification_card: notifications[4]),
           ],
         ),
       ),

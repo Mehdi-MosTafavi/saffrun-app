@@ -6,6 +6,8 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/models/notification/notif_model.dart';
 
+import 'notif_dialog.dart';
+
 final List<String> imgList2 = [
   'assets/images/mafia1.jpg',
   'assets/images/mafia1.jpg',
@@ -26,8 +28,7 @@ class NotificationCardWidget extends StatelessWidget {
   int current = 0;
   final CarouselController controller = CarouselController();
 
-
-String text = "texttexttexttext";
+  String text = "texttexttexttext";
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +36,7 @@ String text = "texttexttexttext";
       textDirection: TextDirection.rtl,
       child: Container(
         // width: context.width() * 0.3,
-        margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+        margin: const EdgeInsets.only(left: 30, right: 10, bottom: 12),
         decoration: BoxDecoration(
             boxShadow: defaultBoxShadow(),
             borderRadius: BorderRadius.circular(12)),
@@ -58,24 +59,8 @@ String text = "texttexttexttext";
                         alignment: Alignment.topRight,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                              height: context.height() * 0.15,
-                              width: context.width() * 0.35,
-                              decoration: BoxDecoration(
-                                  boxShadow: defaultBoxShadow(),
-                                  image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: AssetImage(item)),
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(12),
-                                      bottomLeft: Radius.circular(12))),
-                            ),
-                            // SizedBox(
-                            //   width: context.width() * 0.05,
-                            // ),
-
                             Padding(
                               padding: EdgeInsets.only(
                                 right: 8,
@@ -83,20 +68,46 @@ String text = "texttexttexttext";
                               ),
                               child: Column(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceAround,
+                                    MainAxisAlignment.spaceAround,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     notification_card.title,
-                                    style: boldTextStyle(color: colorPallet3),
+                                    style: boldTextStyle(
+                                        color: colorPallet3, size: 18),
                                   ),
                                   10.height,
-                                  Text(text + '\n' + text),
-                                  Text('10 مرداد 1400',style: TextStyle(fontSize: 10),),
+                                  Text(
+                                    text + '  ' + text,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.fade,
+                                  ),
                                 ],
                               ),
                             ),
-
+                            Column(
+                              children: [
+                                const Text(
+                                  '10 مرداد 1400',
+                                  style: TextStyle(letterSpacing: -0.6),
+                                ).paddingOnly(top: 12, left: 12),
+                                8.height,
+                                GestureDetector(
+                                  onTap: () {
+                                    showDialogForNotification(
+                                        context, notification_card);
+                                  },
+                                  child: CircleAvatar(
+                                    radius: context.width() * 0.035,
+                                    backgroundColor: colorPallet2,
+                                    child: const Icon(
+                                      Icons.arrow_forward_rounded,
+                                      color: Colors.white,
+                                    ).paddingAll(3),
+                                  ),
+                                ).paddingOnly(bottom: 10)
+                              ],
+                            ),
                           ],
                         ),
                       ),
@@ -118,17 +129,17 @@ String text = "texttexttexttext";
 
 final List<Widget> imageSliders = imgList2
     .map((item) => Container(
-  child: Container(
-    margin: const EdgeInsets.all(5.0),
-    child: ClipRRect(
-        borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-        child: Stack(
-          children: <Widget>[
-            Image(
-              image: AssetImage(item),
-            ),
-          ],
-        )),
-  ),
-))
+          child: Container(
+            margin: const EdgeInsets.all(5.0),
+            child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+                child: Stack(
+                  children: <Widget>[
+                    Image(
+                      image: AssetImage(item),
+                    ),
+                  ],
+                )),
+          ),
+        ))
     .toList();
