@@ -27,6 +27,7 @@ class SplashRepository {
       return status;
     }
     catch (e) {
+      print(e);
       rethrow;
     }
   }

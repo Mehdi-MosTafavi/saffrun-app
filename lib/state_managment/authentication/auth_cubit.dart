@@ -45,4 +45,21 @@ class AuthCubit extends Cubit<AuthState> {
       return false;
     }
   }
+
+  recoverPassword(String userName) async {
+    emit(AuthSendingToServerState());
+    try {
+      bool status = await authRepository.authNetworkService
+          .recoverPasswordToServer(userName);
+      if (status) {
+        emit(AuthGoToPrivacyState());
+      } else {
+        emit(AuthErrorSendToServerState());
+      }
+      return status;
+    } catch (error) {
+      emit(AuthErrorSendToServerState());
+      return false;
+    }
+  }
 }

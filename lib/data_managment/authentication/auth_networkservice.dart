@@ -38,4 +38,21 @@ class AuthNetworkService extends BaseNetworkService {
       return false;
     }
   }
+
+  recoverPasswordToServer(String username) async {
+    try {
+      Map<String, String> body = {"username": username};
+      print(body);
+      dynamic? jsonResponse =
+          await postTemplate('/auth/change_password/', body);
+      print(jsonResponse);
+      if (jsonResponse == null) {
+        return false;
+      }
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
 }

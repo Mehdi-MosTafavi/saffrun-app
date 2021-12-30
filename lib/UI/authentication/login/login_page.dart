@@ -50,7 +50,14 @@ class LoginBody extends StatelessWidget {
           return 'ثبت نام با مشکل مواجه شده است';
         }
       },
-      onRecoverPassword: (userName) {},
+      onRecoverPassword: (userName) async {
+        bool status =
+            await BlocProvider.of<AuthCubit>(context).recoverPassword(userName);
+        if (status) {
+        } else {
+          return "در ارسال مشکلی وجود دارد";
+        }
+      },
       title: 'صَفران',
       logo: 'assets/images/logo.png',
       theme: loginTheme,

@@ -7,7 +7,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
-import 'package:saffrun_app/constants/const.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/logical/general/size_function.dart';
 
@@ -255,11 +254,8 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
                                         ),
                                       );
                                     },
-                                    imageUrl: widget.reserve.adminImage ==
-                                            DefaultImage
-                                        ? DefaultImage
-                                        : getImageUrlUsers(
-                                            widget.reserve.adminImage),
+                                    imageUrl: getImageUrlUsers(
+                                        widget.reserve.adminImage),
                                     fit: BoxFit.fill,
                                     height: context.height() * 0.15,
                                     width: context.width() * 0.3,

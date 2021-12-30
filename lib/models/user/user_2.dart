@@ -1,3 +1,5 @@
+import 'package:saffrun_app/constants/const.dart';
+
 class UserProfile {
   String username;
   String firstName;
@@ -10,17 +12,16 @@ class UserProfile {
   String image;
   String gender;
 
-  UserProfile(
-      {required this.username,
-      required this.firstName,
-      required this.lastName,
-      required this.email,
-      required this.phone,
-      required this.country,
-      required this.province,
-      required this.image,
-      required this.gender,
-      required this.address});
+  UserProfile({required this.username,
+    required this.firstName,
+    required this.lastName,
+    required this.email,
+    required this.phone,
+    required this.country,
+    required this.province,
+    required this.image,
+    required this.gender,
+    required this.address});
 
   static late UserProfile userLogin;
 
@@ -34,7 +35,9 @@ class UserProfile {
         phone: json['phone'] ?? " ",
         country: json['country'] ?? " ",
         province: json['province'] ?? " ",
-        image: json['avatar']['image']['thumbnail'],
+        image: json['avatar']['image'] == null
+            ? DefaultImage
+            : json['avatar']['image']['thumbnail'],
         address: json['address'] ?? " ");
   }
 
