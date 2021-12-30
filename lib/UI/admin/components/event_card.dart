@@ -151,7 +151,9 @@ class EventCardWidget extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const EventPage()));
+                            builder: (context) => EventPage(
+                                  event: event,
+                                )));
                       },
                       child: Text('جزئیات',
                           style:

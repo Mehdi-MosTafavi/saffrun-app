@@ -43,7 +43,7 @@ class AppBarTitleProfileWhite extends AppBarWidget {
           backgroundColor: Colors.black.withOpacity(0.1),
           child: const Icon(
             Icons.arrow_forward,
-            color: Colors.white,
+            color: Colors.black,
           ),
         ).paddingRight(10),
       ),
@@ -52,15 +52,9 @@ class AppBarTitleProfileWhite extends AppBarWidget {
 
   @override
   getLeading() {
-    return Container(
-      margin: const EdgeInsets.only(left: 13),
-      decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-          image: DecorationImage(
-              image: AssetImage(
-                'assets/images/mafia1.jpg',
-              ),
-              fit: BoxFit.contain)),
+    return const Icon(
+      Icons.notifications_active,
+      color: Colors.black,
     );
   }
 }
@@ -116,15 +110,6 @@ class AppBarTitleProfileSaffronColor extends AppBarWidget {
 
   @override
   getLeading() {
-    return Container(
-      margin: const EdgeInsets.only(left: 13),
-      decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-          image: DecorationImage(
-              image: AssetImage(
-                'assets/images/mafia1.jpg',
-              ),
-              fit: BoxFit.contain)),
-    );
+    return Icon(Icons.notifications_active);
   }
 }

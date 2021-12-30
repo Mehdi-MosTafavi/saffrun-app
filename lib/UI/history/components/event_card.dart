@@ -2,12 +2,16 @@
 
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:saffrun_app/UI/eventPage/event_page.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
-import 'package:saffrun_app/models/history/event_model.dart';
+
+import '../../../constants/const.dart';
+import '../../../logical/general/size_function.dart';
+import '../../../models/event/event_model.dart';
 
 final List<String> imgList2 = [
   'assets/images/mafia1.jpg',
@@ -54,7 +58,7 @@ class _EventCardWidgetState extends State<EventCardWidget> {
 
   String getStatus(Event event, DateTime now) {
     switch (event.status) {
-      case 1:
+      case "NOT STARTED":
         {
           final date = DateTime.now();
           final difference_day =
@@ -78,7 +82,7 @@ class _EventCardWidgetState extends State<EventCardWidget> {
         }
       // break;
 
-      case 2:
+      case "RUNNING":
         {
           final date = DateTime.now();
           final difference_day =
@@ -103,7 +107,7 @@ class _EventCardWidgetState extends State<EventCardWidget> {
         }
       // break;
 
-      case 3:
+      case "FINISHED":
         {
           return "اتمام یافته";
         }
@@ -119,19 +123,19 @@ class _EventCardWidgetState extends State<EventCardWidget> {
 
   Color getColor(Event event) {
     switch (event.status) {
-      case 1:
+      case "NOT STARTED":
         {
           return colorPallet5.withOpacity(0.2);
         }
       // break;
 
-      case 2:
+      case "RUNNING":
         {
           return colorPallet2.withOpacity(0.2);
         }
       // break;
 
-      case 3:
+      case "FINISHED":
         {
           return colorPallet1.withOpacity(0.2);
         }
@@ -147,19 +151,19 @@ class _EventCardWidgetState extends State<EventCardWidget> {
 
   Color getColorText(Event event) {
     switch (event.status) {
-      case 1:
+      case "NOT STARTED":
         {
           return colorPallet5;
         }
       // break;
 
-      case 2:
+      case "RUNNING":
         {
           return colorPallet2;
         }
       // break;
 
-      case 3:
+      case "FINISHED":
         {
           return colorPallet1;
         }
@@ -211,16 +215,37 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Container(
+                                  CachedNetworkImage(
+                                    imageBuilder: (context, imageProvider) {
+                                      return Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                                bottomLeft: Radius.circular(8)),
+                                            image: DecorationImage(
+                                                fit: BoxFit.cover,
+                                                image: imageProvider)),
+                                      );
+                                    },
+                                    placeholder: (context, strImage) {
+                                      return Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.only(
+                                              bottomLeft: Radius.circular(5)),
+                                          color: Colors.grey,
+                                          border: Border.all(
+                                            color: Colors.white,
+                                            width: 2.0,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    imageUrl: widget.event.imageUrls.isNotEmpty
+                                        ? getImageUrlUsers(
+                                            widget.event.imageUrls[0])
+                                        : DefaultImage,
+                                    fit: BoxFit.fill,
                                     height: context.height() * 0.15,
                                     width: context.width() * 0.3,
-                                    decoration: BoxDecoration(
-                                        borderRadius: const BorderRadius.only(
-                                            topLeft: Radius.circular(11),
-                                            bottomLeft: Radius.circular(11)),
-                                        image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            image: AssetImage(item))),
                                   ),
                                   Text(
                                     widget.event.title,
@@ -238,7 +263,7 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                                   // ),
                                   Container(
                                     height: 30,
-                                    width: 100,
+                                    width: 110,
                                     decoration: boxDecorationWithRoundedCorners(
                                         backgroundColor:
                                             getColor(widget.event)),
@@ -272,7 +297,7 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                                         Container(
                                           child: Center(
                                             child: Text(
-                                              widget.event.participant
+                                              widget.event.participantCount
                                                   .toString(),
                                               style: boldTextStyle(
                                                 color: colorPallet3,
@@ -327,7 +352,8 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                                               style: primaryTextStyle(),
                                             ),
                                             Text(
-                                              '10 آبان | 8:00',
+                                              formatTimeString(
+                                                  widget.event.startTime),
                                               style: boldTextStyle(),
                                             ),
                                           ],
@@ -341,7 +367,8 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                                               style: primaryTextStyle(),
                                             ),
                                             Text(
-                                              '10 آبان | 14:00',
+                                              formatTimeString(
+                                                  widget.event.finishTime),
                                               style: boldTextStyle(),
                                             ),
                                           ],
@@ -355,10 +382,11 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                                       left: context.width() * 0.01),
                                   child: MaterialButton(
                                     onPressed: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const EventPage()));
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                              builder: (context) => EventPage(
+                                                    event: widget.event,
+                                                  )));
                                     },
                                     child: Container(
                                       height: context.height() * 0.07,

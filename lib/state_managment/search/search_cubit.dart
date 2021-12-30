@@ -18,7 +18,9 @@ class SearchCubit extends Cubit<SearchState> {
     emit(SearchLoadingState());
     try {
       int page = 1;
-      Map<String, String> value = {
+      Map<String, dynamic> value = {
+        'page': page,
+        'page_count': 10,
         'search_query': keyword,
       };
       if (startDate != null && endDate != null) {
