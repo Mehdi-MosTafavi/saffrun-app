@@ -117,6 +117,7 @@ final CarouselController controller = CarouselController();
 class _AdminPageState extends State<AdminPage> {
   late ScrollController scrollController;
   late bool follow;
+  late Admin adminSave;
 
   @override
   void initState() {
@@ -138,7 +139,7 @@ class _AdminPageState extends State<AdminPage> {
               pushNewScreen(
                 context,
                 screen: ReservePage(
-                  adminId: widget.adminId,
+                  adminId: adminSave,
                 ),
                 withNavBar: false, // OPTIONAL VALUE. True by default.
                 pageTransitionAnimation: PageTransitionAnimation.cupertino,
@@ -156,6 +157,7 @@ class _AdminPageState extends State<AdminPage> {
               }
               if (state is AdminLoad) {
                 Admin admin = state.admin;
+                adminSave = state.admin;
                 return Container(
                   height: context.height(),
                   width: context.width(),

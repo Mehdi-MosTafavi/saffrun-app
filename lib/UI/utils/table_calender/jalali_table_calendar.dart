@@ -333,9 +333,13 @@ class CalendarDayPicker extends StatelessWidget {
           itemStyle = themeData.textTheme.bodyText1!
               .copyWith(color: themeData.disabledColor);
         } else {
+          print(currentPDate);
+          print(getPearData);
           if (currentPDate.year == getPearData.year &&
               currentPDate.month == getPearData.month &&
               currentPDate.day == day) {
+            print('True');
+            bool haveEvent = events!.containsKey(dayToBuild);
             // The current day gets a different text color.
             itemStyle = themeData.textTheme.bodyText2!
                 .copyWith(color: haveEvent ? Colors.black : Colors.white);

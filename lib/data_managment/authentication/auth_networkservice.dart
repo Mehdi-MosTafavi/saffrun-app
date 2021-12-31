@@ -44,7 +44,7 @@ class AuthNetworkService extends BaseNetworkService {
       Map<String, String> body = {"username": username};
       print(body);
       dynamic? jsonResponse =
-          await postTemplate('/auth/change_password/', body);
+          await postTemplate('/auth/forgot_password/', body);
       print(jsonResponse);
       if (jsonResponse == null) {
         return false;

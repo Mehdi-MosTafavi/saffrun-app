@@ -249,6 +249,7 @@ class Reserve {
         id: nearest['reserve_id'],
         adminId: adminId,
         adminName: '',
+        price: nearest['price'],
         createdReserve: DateTime.now(),
         targetStartReserve:
             DateFormat('yyyy-MM-ddThh:mm').parse(nearest['datetime']),
@@ -276,7 +277,7 @@ class Reserve {
       reserves.add(Reserve(
           id: element['id'],
           adminId: element['owner']['id'],
-          adminName: element['owner']['full_name'] ?? " ",
+          adminName: element['owner']['title'] ?? " ",
           createdReserve: DateTime(2020, 0, 0),
           price: element['price'],
           status: element['status'],

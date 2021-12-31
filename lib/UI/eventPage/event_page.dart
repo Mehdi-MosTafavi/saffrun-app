@@ -5,13 +5,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:saffrun_app/UI/commentPage/commentpage.dart';
+import 'package:saffrun_app/UI/eventPage/components/add_button.dart';
 // import 'package:saffrun_app/UI/eventPage/components/add_button.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/state_managment/event/event_cubit.dart';
 
 import '../../logical/general/size_function.dart';
 import '../../models/event/event_model.dart';
-
 import 'components/payment_button.dart';
 
 class EventPage extends StatefulWidget {
@@ -54,12 +54,39 @@ class _EventPageState extends State<EventPage> {
             onPressed: () {
               if (!event.isParticipate) {
                 showDialogForParticipantEvent(context, () async {
-                  bool status = await BlocProvider.of<EventCubit>(contextState)
-                      .sendParticipant(event.id);
-                  if (status) {
-                    toast('با موفقیت به رویداد اضافه شدید');
-                  }
                   finish(context);
+                  if (event.price != 0) {
+                    showDialogForPayment(context, event, () async {
+                      bool status =
+                          await BlocProvider.of<EventCubit>(contextState)
+                              .sendParticipant(event.id);
+                      if (status) {
+                        toast('با موفقیت به رویداد اضافه شدید');
+                        finish(context);
+                        event.isParticipate = true;
+                        return true;
+                      }
+                      finish(context);
+                      return false;
+                    });
+                  } else {
+                    bool status =
+                        await BlocProvider.of<EventCubit>(contextState)
+                            .sendParticipant(event.id);
+                    if (status) {
+                      toast('با موفقیت به رویداد اضافه شدید');
+                      finish(context);
+                      event.isParticipate = true;
+                    }
+                    finish(context);
+                  }
+
+                  // bool status = await BlocProvider.of<EventCubit>(contextState)
+                  //     .sendParticipant(event.id);
+                  // if (status) {
+                  //   toast('با موفقیت به رویداد اضافه شدید');
+                  // }
+                  // finish(context);
                 });
               } else {
                 toast('شما قبلا در این رویداد شرکت کرده اید');
@@ -373,7 +400,7 @@ class _EventPageState extends State<EventPage> {
                                           pushNewScreen(
                                             context,
                                             screen: CommentPage(
-                                              eventId: 1,
+                                              eventId: event.id,
                                             ),
                                             withNavBar: false,
                                             // OPTIONAL VALUE. True by default.

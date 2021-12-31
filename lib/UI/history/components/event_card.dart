@@ -70,8 +70,8 @@ class _EventCardWidgetState extends State<EventCardWidget> {
           final difference_second =
               date.difference(event.startTime).inSeconds.round();
 
-          if (difference_day > 0) {
-            return difference_day.toString() + " روز";
+          if (difference_day != 0) {
+            return difference_day.toString() + " تا شروع ";
           } else {
             return (difference_hour - difference_day * 24).abs().toString() +
                 ":" +
@@ -94,7 +94,7 @@ class _EventCardWidgetState extends State<EventCardWidget> {
           final difference_second =
               date.difference(event.finishTime).inSeconds.round();
 
-          if (difference_day > 0) {
+          if (difference_day != 0) {
             return difference_day.toString() + " روز";
           } else {
             return (difference_hour - difference_day * 24).abs().toString() +
@@ -102,7 +102,7 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                 (difference_minute - difference_hour * 60).abs().toString() +
                 ":" +
                 (difference_second - difference_minute * 60).abs().toString() +
-                " مانده";
+                " مانده تا اتمام ";
           }
         }
       // break;
@@ -131,7 +131,7 @@ class _EventCardWidgetState extends State<EventCardWidget> {
 
       case "RUNNING":
         {
-          return colorPallet2;
+          return Colors.cyan;
         }
       // break;
 

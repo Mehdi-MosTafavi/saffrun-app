@@ -5,11 +5,11 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/models/user/user_2.dart';
 
-import '../../../models/event/event_model.dart';
+import '../../../models/reserve/reserve.dart';
 
 // import 'package:saffrun_app/models/history/event_model.dart';
 // import 'package:saffrun_app/models/history/reserve_model.dart';
-String getWalletStatus(Event event) {
+String getWalletStatus(Reserve event) {
   if (event.price <= UserProfile.userLogin.wallet) {
     return "پرداخت از کیف پول";
   } else {
@@ -17,8 +17,8 @@ String getWalletStatus(Event event) {
   }
 }
 
-void showDialogForPayment(
-    BuildContext context, Event event, Function addParticipant) {
+void showDialogForPaymentReserve(
+    BuildContext context, Reserve reserve, Function addParticipant) {
   int bank = -1;
   showDialog(
       context: context,
@@ -108,7 +108,7 @@ void showDialogForPayment(
                                                     color: colorPallet3)),
                                         child: Center(
                                           child: Text(
-                                            'مبلغ قابل پرداخت : ${event.price} ت ',
+                                            'مبلغ قابل پرداخت : ${reserve.price} ت ',
                                             style: boldTextStyle(
                                                 color: colorPallet3),
                                           ),
@@ -117,7 +117,7 @@ void showDialogForPayment(
                                       SizedBox(
                                         height: 20,
                                       ),
-                                      if (event.price <=
+                                      if (reserve.price <=
                                           UserProfile.userLogin.wallet)
                                         MaterialButton(
                                           onPressed: () async {
@@ -125,7 +125,7 @@ void showDialogForPayment(
                                                 await addParticipant();
                                             if (status) {
                                               UserProfile.userLogin.wallet -=
-                                                  event.price;
+                                                  reserve.price;
                                             }
                                           },
                                           child: Container(
@@ -136,7 +136,7 @@ void showDialogForPayment(
                                                         colorPallet3),
                                             child: Center(
                                               child: Text(
-                                                getWalletStatus(event),
+                                                getWalletStatus(reserve),
                                                 style: boldTextStyle(
                                                     color: Colors.white),
                                               ),
@@ -148,7 +148,7 @@ void showDialogForPayment(
                                           child: TextButton(
                                             onPressed: () {},
                                             child: Text(
-                                              getWalletStatus(event),
+                                              getWalletStatus(reserve),
                                               style: boldTextStyle(
                                                   color: colorPallet3),
                                             ),
@@ -323,12 +323,12 @@ void showDialogForPayment(
                                         height: 50,
                                         width: 50,
                                         decoration:
-                                        boxDecorationWithRoundedCorners(
-                                            border: Border.all(
-                                                color: colorPallet3)),
+                                            boxDecorationWithRoundedCorners(
+                                                border: Border.all(
+                                                    color: colorPallet3)),
                                         child: Center(
                                           child: Text(
-                                            'مبلغ قابل پرداخت : ${event.price} ت ',
+                                            'مبلغ قابل پرداخت : ${reserve.price} ت ',
                                             style: boldTextStyle(
                                                 color: colorPallet3),
                                           ),

@@ -1,10 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:saffrun_app/constants/const.dart';
+
+import '../../../models/admin/admin_model.dart';
 
 class CardProfileReserveWidget extends StatelessWidget {
-  const CardProfileReserveWidget({
-    Key? key,
-  }) : super(key: key);
+  Admin admin;
+
+  CardProfileReserveWidget({Key? key, required this.admin}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +23,7 @@ class CardProfileReserveWidget extends StatelessWidget {
         child: Container(
             height: 120,
             decoration:
-                boxDecorationWithRoundedCorners(backgroundColor: Colors.white),
+            boxDecorationWithRoundedCorners(backgroundColor: Colors.white),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -29,9 +33,33 @@ class CardProfileReserveWidget extends StatelessWidget {
                     fit: BoxFit.cover,
                     child: Align(
                       alignment: Alignment.centerLeft,
-                      child: const CircleAvatar(
-                        backgroundImage:
-                            AssetImage('assets/images/profile.png'),
+                      child: CachedNetworkImage(
+                        imageBuilder: (context, imageProvider) {
+                          return Container(
+                            margin: EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    fit: BoxFit.cover, image: imageProvider)),
+                          );
+                        },
+                        placeholder: (context, strImage) {
+                          return Container(
+                            decoration: BoxDecoration(
+                              color: Colors.grey,
+                              border: Border.all(
+                                color: Colors.white,
+                                width: 2.0,
+                              ),
+                            ),
+                          );
+                        },
+                        imageUrl: admin.imageUrls.isEmpty
+                            ? DefaultImage
+                            : admin.imageUrls[0],
+                        fit: BoxFit.cover,
+                        height: context.height() * 0.1,
+                        width: context.width() * 0.2,
                       ).paddingAll(8),
                     ),
                   ),
@@ -44,7 +72,7 @@ class CardProfileReserveWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'مهندس هلاکویی',
+                          admin.title,
                           style: boldTextStyle(),
                         ),
                         Row(
@@ -55,7 +83,7 @@ class CardProfileReserveWidget extends StatelessWidget {
                             ),
                             5.width,
                             Text(
-                              'مهندس ساختمان',
+                              admin.category,
                               style: secondaryTextStyle(),
                             ),
                           ],

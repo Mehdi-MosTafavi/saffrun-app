@@ -160,6 +160,7 @@ class Event {
         title: json['title'],
         description: json['description'],
         imageUrl: "",
+        price: json['price'],
         imageUrls: getImages(json['images']),
         category: json['category']['title'],
         discount: json['discount'] ?? 0,

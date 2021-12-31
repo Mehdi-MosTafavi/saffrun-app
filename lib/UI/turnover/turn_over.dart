@@ -12,11 +12,13 @@ import 'package:saffrun_app/constants/theme_color.dart';
 // import 'package:saffrun_app/UI/eventPage/components/add_button.dart';
 // import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/models/turnover/turnover_card_model.dart';
+import 'package:saffrun_app/models/user/user_2.dart';
 // import 'package:saffrun_app/models/history/reserve_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 // import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
+import 'components/payment_button.dart';
 import 'components/turnover_card.dart';
 
 class TurnOver extends StatefulWidget {
@@ -162,11 +164,48 @@ class _TurnOverState extends State<TurnOver> {
           scrollDirection: Axis.vertical,
           children: <Widget>[
             Container(
-              height: context.height() * 0.3,
-              child: Image(
-                image: AssetImage('assets/images/turnover_img.jpg'),
+              margin: EdgeInsets.fromLTRB(16, 20, 16, 8),
+              padding: EdgeInsets.fromLTRB(4, 0, 4, 0),
+              decoration: boxDecorationWithRoundedCorners(
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: defaultBoxShadow()),
+              child: Column(
+                children: [
+                  Container(
+                    height: context.height() * 0.4,
+                    child: TopCard(),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      showDialogForPaymentAdd(context, () {});
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.only(top: 8, bottom: 8),
+                          decoration: boxDecorationWithRoundedCorners(
+                              backgroundColor: colorPallet2,
+                              borderRadius: BorderRadius.circular(8)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.payment,
+                                  color: Colors.white, size: 24),
+                              10.width,
+                              Text('شارژ کیف پول',
+                                  style: primaryTextStyle(
+                                      size: 16, color: Colors.white)),
+                            ],
+                          ),
+                        ).expand(),
+                      ],
+                    ).paddingAll(16),
+                  )
+                ],
               ),
             ),
+
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -383,4 +422,57 @@ class SalesData {
 
   final String month;
   final double sales;
+}
+
+class TopCard extends StatelessWidget {
+  TopCard({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: context.width(),
+      height: context.height(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Row(
+              children: [
+                Icon(Icons.account_balance_wallet,
+                        color: colorPallet2, size: 30)
+                    .paddingOnly(top: 8, left: 8),
+                Text(" کیف پول", style: boldTextStyle(color: colorPallet4))
+                    .paddingOnly(left: 8, top: 8)
+                    .expand(),
+              ],
+            ),
+          ),
+          Container(
+            height: context.height() * 0.3,
+            child: Image(
+              image: AssetImage('assets/images/turnover_img.jpg'),
+              fit: BoxFit.fill,
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("مقدار حساب", style: secondaryTextStyle(size: 16))
+                  .paddingOnly(right: 8, top: 8, bottom: 8),
+              Text(UserProfile.userLogin.wallet.toString(),
+                      style: boldTextStyle(color: colorPallet2))
+                  .paddingOnly(left: 8, top: 8, bottom: 8),
+            ],
+          ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     Text("Balance", style: secondaryTextStyle(size: 16)).paddingOnly(left: 8, top: 8, bottom: 8),
+          //     Text("200", style: primaryTextStyle(color: colorPallet2)).paddingOnly(right: 8, top: 8, bottom: 8),
+          //   ],
+          // )
+        ],
+      ),
+    );
+  }
 }

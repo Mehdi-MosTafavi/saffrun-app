@@ -3,16 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
+import 'package:saffrun_app/UI/admin/components/pament_button_reserve.dart';
 import 'package:saffrun_app/UI/utils/appbar/appbar_type1.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/models/reserve/reserve.dart';
 import 'package:saffrun_app/state_managment/reserve/reserve_cubit.dart';
 
+import '../../models/admin/admin_model.dart';
+import '../admin/components/reserve_reserve_dialog.dart';
 import 'components/card_profile_user.dart';
 import 'components/time_component.dart';
 
 class ReservePage extends StatefulWidget {
-  int adminId;
+  Admin adminId;
 
   ReservePage({Key? key, required this.adminId}) : super(key: key);
 
@@ -62,11 +65,39 @@ class _ReservePageState extends State<ReservePage> {
                 toast('لطفا یک زمان انتخاب کنید');
                 return;
               }
-              bool status = await BlocProvider.of<ReserveCubit>(contextCubit)
-                  .sendReserveId(selectedReserve!);
-              if (status) {
-                toast('نوبت با موفقیت گرفته شد');
-              }
+              showDialogForParticipantReserve(context, () async {
+                if (selectedReserve?.price != 0) {
+                  finish(context);
+                  showDialogForPaymentReserve(context, selectedReserve!,
+                      () async {
+                    bool status =
+                        await BlocProvider.of<ReserveCubit>(contextCubit)
+                            .sendReserveId(selectedReserve!);
+                    if (status) {
+                      toast('نوبت با موفقیت گرفته شد');
+                      finish(context);
+                      Navigator.pop(context);
+                      return true;
+                    }
+                    toast('با خطا مواجه شد');
+                    finish(context);
+                    return false;
+                  });
+                } else {
+                  bool status =
+                      await BlocProvider.of<ReserveCubit>(contextCubit)
+                          .sendReserveId(selectedReserve!);
+                  if (status) {
+                    toast('نوبت با موفقیت گرفته شد');
+                    finish(context);
+                    Navigator.pop(context);
+                    return true;
+                  }
+                  toast('با خطا مواجه شد');
+                  finish(context);
+                  return false;
+                }
+              });
             },
             child: const Icon(Icons.check_rounded),
             backgroundColor: colorPallet5,
@@ -78,15 +109,16 @@ class _ReservePageState extends State<ReservePage> {
             contextCubit = context;
             if (state is ReserveInitial) {
               BlocProvider.of<ReserveCubit>(context)
-                  .loadTimeReserve(widget.adminId);
+                  .loadTimeReserve(widget.adminId.ownerId);
             }
             if (state is ReserveError) {
               return Column(
                 children: [
                   SizedBox(
                     height: context.height() * 0.16,
-                    child: const CardProfileReserveWidget()
-                        .paddingSymmetric(horizontal: 25),
+                    child: CardProfileReserveWidget(
+                      admin: widget.adminId,
+                    ).paddingSymmetric(horizontal: 25),
                   ),
                   const Center(
                           child: Text("هیچ نوبتی برای این کارفرما وجود ندارد"))
@@ -109,7 +141,7 @@ class _ReservePageState extends State<ReservePage> {
                 children: [
                   SizedBox(
                     height: context.height() * 0.16,
-                    child: const CardProfileReserveWidget()
+                    child: CardProfileReserveWidget(admin: widget.adminId)
                         .paddingSymmetric(horizontal: 25),
                   ),
                   10.height,
@@ -237,8 +269,11 @@ class _ReservePageState extends State<ReservePage> {
                                                 },
                                                 child: TimeWidget(
                                                   selected:
-                                                  (selectedReserve ?? -1) ==
-                                                      reserve.id,
+                                                  (selectedReserve == null
+                                                              ? -1
+                                                              : selectedReserve
+                                                                  ?.id) ==
+                                                          reserve.id,
                                                   reserve: reserve,
                                                 ));
                                           },

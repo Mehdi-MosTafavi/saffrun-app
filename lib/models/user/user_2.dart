@@ -11,17 +11,20 @@ class UserProfile {
   String address;
   String image;
   String gender;
+  double wallet;
 
-  UserProfile({required this.username,
-    required this.firstName,
-    required this.lastName,
-    required this.email,
-    required this.phone,
-    required this.country,
-    required this.province,
-    required this.image,
-    required this.gender,
-    required this.address});
+  UserProfile(
+      {required this.username,
+      required this.firstName,
+      required this.lastName,
+      required this.email,
+      required this.phone,
+      required this.country,
+      required this.province,
+      required this.image,
+      required this.gender,
+      this.wallet = 120000,
+      required this.address});
 
   static late UserProfile userLogin;
 

@@ -7,6 +7,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
+import 'package:saffrun_app/UI/admin/admin_page.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/logical/general/size_function.dart';
 
@@ -70,9 +71,8 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
               date.difference(reserve.targetStartReserve).inMinutes.round();
           final difference_second =
               date.difference(reserve.targetStartReserve).inSeconds.round();
-
-          if (difference_day > 0) {
-            // return difference_day.toString() + " روز";
+          if (difference_day != 0) {
+            return difference_day.abs().toString() + " مانده تا شروع";
             // return (difference_hour - difference_day * 24 - hours).toString() + ":" +
             //     (difference_minute - difference_hour * 60 - minutes).toString() + ":" +
             //     (difference_second - difference_minute * 60 - seconds).toString();
@@ -111,7 +111,7 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
                 (difference_minute - difference_hour * 60).abs().toString() +
                 ":" +
                 (difference_second - difference_minute * 60).abs().toString() +
-                " مانده";
+                " مانده تا اتمام ";
           }
         }
     // break;
@@ -140,7 +140,7 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
 
       case "RUNNING":
         {
-          return colorPallet2;
+          return Colors.cyan;
         }
     // break;
 
@@ -198,181 +198,190 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
     Jalali endDateJalali = Jalali.fromDateTime(reserve.targetEndReserve);
     return Directionality(
       textDirection: TextDirection.rtl,
-      child: Container(
-        // width: context.width() * 0.3,
-        margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-        decoration: BoxDecoration(
-            boxShadow: defaultBoxShadow(),
-            borderRadius: BorderRadius.circular(12)),
-        child: IntrinsicHeight(
-          child: Card(
-            semanticContainer: true,
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            color: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Container(color: colorPallet2, width: 10),
-                Expanded(
-                  child: Column(
-                    children: <Widget>[
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: Padding(
-                          padding:
-                              EdgeInsets.only(left: context.width() * 0.05),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              CachedNetworkImage(
-                                imageBuilder: (context, imageProvider) {
-                                  return Container(
-                                    decoration: BoxDecoration(
+      child: GestureDetector(
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => AdminPage(
+                    adminId: reserve.adminId,
+                  )));
+        },
+        child: Container(
+          // width: context.width() * 0.3,
+          margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+          decoration: BoxDecoration(
+              boxShadow: defaultBoxShadow(),
+              borderRadius: BorderRadius.circular(12)),
+          child: IntrinsicHeight(
+            child: Card(
+              semanticContainer: true,
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Container(color: colorPallet2, width: 10),
+                  Expanded(
+                    child: Column(
+                      children: <Widget>[
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: Padding(
+                            padding:
+                                EdgeInsets.only(left: context.width() * 0.05),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                CachedNetworkImage(
+                                  imageBuilder: (context, imageProvider) {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.only(
+                                              bottomLeft: Radius.circular(8)),
+                                          image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: imageProvider)),
+                                    );
+                                  },
+                                  placeholder: (context, strImage) {
+                                    return Container(
+                                      decoration: BoxDecoration(
                                         borderRadius: BorderRadius.only(
-                                            bottomLeft: Radius.circular(8)),
-                                        image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            image: imageProvider)),
-                                  );
-                                },
-                                placeholder: (context, strImage) {
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                          bottomLeft: Radius.circular(5)),
-                                      color: Colors.grey,
-                                      border: Border.all(
-                                        color: Colors.white,
-                                        width: 2.0,
+                                            bottomLeft: Radius.circular(5)),
+                                        color: Colors.grey,
+                                        border: Border.all(
+                                          color: Colors.white,
+                                          width: 2.0,
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                },
-                                imageUrl:
-                                    getImageUrlUsers(widget.reserve.adminImage),
-                                fit: BoxFit.fill,
-                                height: context.height() * 0.15,
-                                width: context.width() * 0.3,
-                              ),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              widget.reserve.adminName,
-                                              style: boldTextStyle(),
-                                            ).paddingOnly(top: 15, right: 10),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          right: 16, left: 6),
-                                                  child: Center(
-                                                      child: Icon(
-                                                    LineIcons.money_bill,
-                                                    color: colorPallet3,
-                                                  )),
-                                                ),
-                                                Text(
-                                                  widget.reserve.price
-                                                      .toString(),
-                                                  style: boldTextStyle(),
-                                                ).paddingOnly(
-                                                    top: 0, right: 10),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                        Tooltip(
-                                          message:
-                                              getStatus(widget.reserve, now),
-                                          child: Container(
-                                            height: 35,
-                                            width: 35,
-                                            decoration:
-                                                boxDecorationWithRoundedCorners(
-                                                    boxShape: BoxShape.circle,
-                                                    backgroundColor: getColor(
-                                                        widget.reserve)),
-                                          ).paddingTop(15),
-                                        ),
-                                      ],
-                                    ),
-                                    10.height,
-                                    Row(
-                                      children: [
-                                        Container(
-                                          padding: const EdgeInsets.only(
-                                              right: 16, left: 6),
-                                          child: Center(
-                                              child: Icon(
-                                            LineIcons.calendar_1,
-                                            color: colorPallet3,
-                                          )),
-                                        ),
-                                        Text(
-                                          formatDateReserveString(
-                                            widget.reserve.targetStartReserve,
-                                          ),
-                                          style: boldTextStyle(
-                                              color: colorPallet3),
-                                        )
-                                      ],
-                                    ),
-                                    FittedBox(
-                                      alignment: Alignment.centerRight,
-                                      fit: BoxFit.scaleDown,
-                                      child: Row(
+                                    );
+                                  },
+                                  imageUrl: getImageUrlUsers(
+                                      widget.reserve.adminImage),
+                                  fit: BoxFit.fill,
+                                  height: context.height() * 0.15,
+                                  width: context.width() * 0.3,
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text('زمان نوبت:  ',
-                                              style: boldTextStyle(
-                                                  color: colorPallet2)),
-                                          Text(
-                                              getTimeReserve(reserve
-                                                      .targetEndReserve) +
-                                                  ' - ' +
-                                                  getTimeReserve(reserve
-                                                      .targetStartReserve),
-                                              style: boldTextStyle(
-                                                  color: colorPallet2),
-                                              maxLines: 2),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                widget.reserve.adminName,
+                                                style: boldTextStyle(),
+                                              ).paddingOnly(top: 15, right: 10),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 16, left: 6),
+                                                    child: Center(
+                                                        child: Icon(
+                                                      LineIcons.money_bill,
+                                                      color: colorPallet3,
+                                                    )),
+                                                  ),
+                                                  Text(
+                                                    widget.reserve.price
+                                                        .toString(),
+                                                    style: boldTextStyle(),
+                                                  ).paddingOnly(
+                                                      top: 0, right: 10),
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                          Tooltip(
+                                            message:
+                                                getStatus(widget.reserve, now),
+                                            child: Container(
+                                              height: 35,
+                                              width: 35,
+                                              decoration:
+                                                  boxDecorationWithRoundedCorners(
+                                                      boxShape: BoxShape.circle,
+                                                      backgroundColor: getColor(
+                                                          widget.reserve)),
+                                            ).paddingTop(15),
+                                          ),
                                         ],
                                       ),
-                                    ),
-                                    10.height,
-                                  ],
+                                      10.height,
+                                      Row(
+                                        children: [
+                                          Container(
+                                            padding: const EdgeInsets.only(
+                                                right: 16, left: 6),
+                                            child: Center(
+                                                child: Icon(
+                                              LineIcons.calendar_1,
+                                              color: colorPallet3,
+                                            )),
+                                          ),
+                                          Text(
+                                            formatDateReserveString(
+                                              widget.reserve.targetStartReserve,
+                                            ),
+                                            style: boldTextStyle(
+                                                color: colorPallet3),
+                                          )
+                                        ],
+                                      ),
+                                      FittedBox(
+                                        alignment: Alignment.centerRight,
+                                        fit: BoxFit.scaleDown,
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text('زمان نوبت:  ',
+                                                style: boldTextStyle(
+                                                    color: colorPallet2)),
+                                            Text(
+                                                getTimeReserve(reserve
+                                                        .targetEndReserve) +
+                                                    ' - ' +
+                                                    getTimeReserve(reserve
+                                                        .targetStartReserve),
+                                                style: boldTextStyle(
+                                                    color: colorPallet2),
+                                                maxLines: 2),
+                                          ],
+                                        ),
+                                      ),
+                                      10.height,
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      // 10.height,
-                    ],
-                  ),
-                )
-              ],
+                        // 10.height,
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),

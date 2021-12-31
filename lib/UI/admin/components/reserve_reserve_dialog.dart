@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 
-void showDialogForParticipantEvent(
+void showDialogForParticipantReserve(
     BuildContext context, Function confirmFunction) {
   showDialog(
       context: context,
@@ -24,7 +24,7 @@ void showDialogForParticipantEvent(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'اضافه شدن به رویداد؟',
+                      'آیا از گرفتن این نوبت اطمینان دارید؟',
                       style: boldTextStyle(),
                       textDirection: TextDirection.rtl,
                     ),

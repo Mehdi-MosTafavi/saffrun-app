@@ -65,12 +65,14 @@ class _CalenderPageState extends State<CalenderPage> {
               }
               if (state is CalendarLoadedDateEvent) {
                 days = state.days;
+                print('---------------');
+                print(days);
                 DateTime now = DateTime.now();
                 BlocProvider.of<CalendarCubit>(context)
                     .selectDate(DateTime(now.year, now.month, now.day));
               }
               return ListView(
-                physics: ClampingScrollPhysics(),
+                physics: BouncingScrollPhysics(),
                 padding: const EdgeInsets.only(bottom: 70),
                 children: [
                   const SizedBox(
