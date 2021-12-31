@@ -64,7 +64,7 @@ class _EventPageState extends State<EventPage> {
         child: FloatingActionButton(
           onPressed: () {
             // showDialogForParticipantEvent(context);
-            showDialogForPayment(context);
+            showDialogForPayment(context, 10000);
           },
           child: const Icon(Icons.add),
           backgroundColor: colorPallet5,
