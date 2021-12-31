@@ -18,7 +18,7 @@ class _OfferPageState extends State<OfferPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    mListings = Admin.admins;
+    mListings = [];
   }
 
   @override
@@ -49,7 +49,7 @@ class _OfferPageState extends State<OfferPage> {
                                 color: Colors.grey,
                               );
                             },
-                            imageUrl: mListings[index].getImageUrls()[0],
+                            imageUrl: mListings[index].imageUrls[0],
                             fit: BoxFit.fill,
                             height: width * 0.32,
                             width: width * 0.32,
@@ -72,10 +72,10 @@ class _OfferPageState extends State<OfferPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         text(
-                          mListings[index].getName(),
-                          textColor: Colors.black,
+                            mListings[index].title,
+                            textColor: Colors.black,
                             fontWeight: FontWeight.bold),
-                        text(mListings[index].getDescription(),
+                        text(mListings[index].description,
                             maxLine: 1, textColor: Colors.black, fontSize: 13),
                         SizedBox(height: 2),
                         Row(
@@ -93,7 +93,7 @@ class _OfferPageState extends State<OfferPage> {
                             //   ),
                             //   onRatingUpdate: (rating) {},
                             // ),
-                            text(mListings[index].getCategory(),
+                            text(mListings[index].category,
                                 textColor: Colors.white, fontSize: 13),
                           ],
                         ),
@@ -106,7 +106,7 @@ class _OfferPageState extends State<OfferPage> {
                               children: [
                                 text('تعداد دنبال کننده ها: ',
                                     textColor: Colors.white, fontSize: 13),
-                                text(mListings[index].getFollowers().toString(),
+                                text(mListings[index].followerCount.toString(),
                                     fontWeight: FontWeight.bold,
                                     textColor: Colors.white,
                                     fontSize: 13),

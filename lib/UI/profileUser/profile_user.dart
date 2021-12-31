@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:nb_utils/src/extensions/context_extensions.dart';
@@ -9,6 +11,8 @@ import 'package:saffrun_app/UI/turnover/turn_over.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/models/user/user_2.dart';
 
+import '../../logical/general/size_function.dart';
+import '../utils/show_dialog.dart';
 import 'components/profile_list_item.dart';
 
 class ProfileUserPage extends StatefulWidget {
@@ -23,18 +27,18 @@ class _ProfileUserPageState extends State<ProfileUserPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Column(
-      // padding: EdgeInsets.symmetric(vertical: context.height() * 0.025,
-      //                               horizontal: context.width() * 0.05),
-      children: <Widget>[
-        buildTop(),
-        Padding(
-          padding: EdgeInsets.symmetric(
-              vertical: context.height() * 0.008,
-              horizontal: context.width() * 0.05),
-          child: const ProfileListItems(),
-        ),
-      ],
-    ));
+          // padding: EdgeInsets.symmetric(vertical: context.height() * 0.025,
+          //                               horizontal: context.width() * 0.05),
+          children: <Widget>[
+            buildTop(),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  vertical: context.height() * 0.008,
+                  horizontal: context.width() * 0.05),
+              child: const ProfileListItems(),
+            ),
+          ],
+        ));
   }
 
   Widget buildTop() {
@@ -88,23 +92,46 @@ class _ProfileUserPageState extends State<ProfileUserPage> {
   }
 
   Widget buildCoverImage(double coverHeight) => Container(
-        color: colorPallet2,
-        height: coverHeight,
-      );
+    color: colorPallet2,
+    height: coverHeight,
+  );
 
   Widget buildProfileImage(double profileHeight) => Container(
-        width: profileHeight,
+    width: profileHeight,
         height: profileHeight,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          image: const DecorationImage(
-            image: ExactAssetImage('assets/images/mafia1.jpg'),
-            fit: BoxFit.cover,
-          ),
           border: Border.all(
             color: Colors.white,
             width: 4.0,
           ),
+        ),
+        child: CachedNetworkImage(
+          placeholder: (context, strImage) {
+            return Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: Colors.white,
+                  width: 4.0,
+                ),
+                color: Colors.grey.withOpacity(0.85),
+              ),
+            );
+          },
+          imageUrl: getImageUrl(),
+          imageBuilder: (context, imageProvider) {
+            return Container(
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Colors.white,
+                    width: 4.0,
+                  ),
+                  image:
+                      DecorationImage(fit: BoxFit.cover, image: imageProvider)),
+            );
+          },
         ),
       );
 }
@@ -130,6 +157,13 @@ class ProfileListItems extends StatelessWidget {
             );
           },
         ),
+        15.height,
+        Divider(
+          height: 5,
+          color: Colors.black.withOpacity(0.1),
+          thickness: 1,
+        ),
+        15.height,
         ProfileListItem(
           icon: LineAwesomeIcons.history,
           text: 'تاریخچه',
@@ -142,6 +176,13 @@ class ProfileListItems extends StatelessWidget {
             );
           },
         ),
+        15.height,
+        Divider(
+          height: 5,
+          color: Colors.black.withOpacity(0.1),
+          thickness: 1,
+        ),
+        15.height,
         ProfileListItem(
           icon: LineAwesomeIcons.money_bill,
           text: 'گردش مالی',
@@ -154,21 +195,26 @@ class ProfileListItems extends StatelessWidget {
             );
           },
         ),
-        ProfileListItem(
-          icon: LineAwesomeIcons.cog,
-          text: 'تنظیمات',
-          onTapRow: () {},
+        15.height,
+        Divider(
+          height: 10,
+          color: Colors.black.withOpacity(0.1),
+          thickness: 1,
         ),
-        ProfileListItem(
-          icon: LineAwesomeIcons.user_plus,
-          text: 'دعوت دوستان',
-          onTapRow: () {},
-        ),
+        15.height,
         ProfileListItem(
           icon: LineAwesomeIcons.alternate_sign_out,
           text: 'خروج',
           hasNavigation: false,
-          onTapRow: () {},
+          onTapRow: () {
+            showMessage(context, 'خروج', 'آیا از خروج از برنامه اطمینان دارد؟',
+                functionRun: () async {
+              final _prefs = await SharedPreferences.getInstance();
+              await _prefs.clear();
+              print('1');
+              Phoenix.rebirth(context);
+            });
+          },
         ),
       ],
     );

@@ -1,15 +1,17 @@
 // import 'package:like_button/like_button.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/src/extensions/context_extensions.dart';
-// import 'package:saffrun_app/constants/theme_color.dart';
-import 'package:saffrun_app/UI/commentPage/components/comments.dart';
+import 'package:saffrun_app/logical/general/size_function.dart';
+
+import '../../../models/comment/comment.dart';
 
 class Message extends StatefulWidget {
   // double width = 0, height = 60;
   Color clr;
 
-  Comment comment;
+  CommentData comment;
 
   Message(
       {Key? key,
@@ -38,7 +40,7 @@ class _MessageState extends State<Message> {
   Widget build(BuildContext context) {
     double width = context.width() * 0.6;
     double height = context.height() *
-        (0.05 + (widget.comment.cmText.length / 25 + 1) * 0.02);
+        (0.05 + (widget.comment.content.length / 25 + 1) * 0.02);
     double imHeight = context.height() * 0.075;
     return Padding(
       padding: EdgeInsets.only(right: 10, left: 10),
@@ -49,6 +51,7 @@ class _MessageState extends State<Message> {
             height: imHeight,
             color: widget.clr,
             child: Material(
+              color: Colors.white,
               shape: RoundedRectangleBorder(
                 side: BorderSide(color: Colors.white),
                 borderRadius: BorderRadius.only(
@@ -62,15 +65,38 @@ class _MessageState extends State<Message> {
                     margin: const EdgeInsets.only(top: 0.0),
                     alignment: Alignment.centerRight,
                     decoration: BoxDecoration(
+                      color: Colors.white,
                       shape: BoxShape.circle,
-                      image: const DecorationImage(
-                        image: ExactAssetImage('assets/images/mafia1.jpg'),
-                        fit: BoxFit.cover,
-                      ),
                       border: Border.all(
                         color: Colors.white,
                         width: 2.0,
                       ),
+                    ),
+                    child: CachedNetworkImage(
+                      imageBuilder: (context, imageProvider) {
+                        return Container(
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  fit: BoxFit.cover, image: imageProvider)),
+                        );
+                      },
+                      placeholder: (context, strImage) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey,
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 2.0,
+                            ),
+                          ),
+                        );
+                      },
+                      imageUrl: getImageUrlUsers(widget.comment.image),
+                      fit: BoxFit.fill,
+                      height: width * 0.32,
+                      width: width * 0.32,
                     ),
                   ),
                 ],
@@ -94,9 +120,7 @@ class _MessageState extends State<Message> {
                       Container(
                         alignment: Alignment.centerRight,
                         child: Text(
-                          widget.comment.user.Name +
-                              ' ' +
-                              widget.comment.user.LastName,
+                          widget.comment.userName,
                           style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -156,7 +180,7 @@ class _MessageState extends State<Message> {
                   Container(
                     alignment: Alignment.centerRight,
                     child: Text(
-                      widget.comment.cmText,
+                      widget.comment.content,
                       style: TextStyle(
                         color: Colors.white,
                         // fontWeight: FontWeight.bold,

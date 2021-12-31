@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 
-void showDialogForParticipantEvent(BuildContext context)
-{
+void showDialogForParticipantEvent(
+    BuildContext context, Function confirmFunction) {
   showDialog(
       context: context,
       // useSafeArea: false,
@@ -48,7 +48,9 @@ void showDialogForParticipantEvent(BuildContext context)
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         MaterialButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            confirmFunction();
+                          },
                           child: Container(
                             height: 50,
                             width: 100,

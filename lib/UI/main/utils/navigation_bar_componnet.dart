@@ -63,7 +63,6 @@ class NavigationBarWidget extends StatelessWidget {
     return [
       const HomePage(),
       const SearchPage(),
-      Container(),
       const CalenderPage(),
       // const CalenderPage2(),
       const ProfileUserPage()
@@ -85,15 +84,6 @@ class NavigationBarWidget extends StatelessWidget {
         icon: const Icon(
           CupertinoIcons.search,
           // key: IntroRepository.introHomePage.keys[4] ,
-        ),
-        // title: ("Settings"),
-        activeColorPrimary: colorBottomNavigation,
-        inactiveColorPrimary: CupertinoColors.inactiveGray,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(
-          Icons.add_box_outlined,
-          // key: IntroRepository.introHomePage.keys[5] ,
         ),
         // title: ("Settings"),
         activeColorPrimary: colorBottomNavigation,

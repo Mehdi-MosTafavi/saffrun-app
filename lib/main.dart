@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:najvaflutter/najvaflutter.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:responsive_framework/utils/scroll_behavior.dart';
@@ -21,9 +22,12 @@ Future<void> main() async {
   najva.setOnUserSubscribedListener(onUserSubscribed);
   najva.setOnNotificationReceivedListener(onNotificationReceived);
   najva.setOnNotificationClickListener(onNotificationClicked);
+  print(await najva.getSubscribedToken());
   runApp(
-    MyApp(
-      router: AppRouter(),
+    Phoenix(
+      child: MyApp(
+        router: AppRouter(),
+      ),
     ), // Wrap your app
   );
 }

@@ -103,16 +103,20 @@ class EventCardWidget extends StatelessWidget {
                                     mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(event.title,
-                                          style: boldTextStyle(
-                                              color: colorPallet2),
-                                          maxLines: 2),
+                                      Text(
+                                        event.title,
+                                        style:
+                                            boldTextStyle(color: colorPallet2),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
                                       Text("کافه رخ",
                                           style: boldTextStyle(
                                               // weight: FontWeight.w500,
-                                              size: 15,
+                                              size: 13,
                                               color: colorPallet5),
-                                          maxLines: 2),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis),
                                     ],
                                   ),
                                   5.height,
@@ -151,7 +155,9 @@ class EventCardWidget extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const EventPage()));
+                            builder: (context) => EventPage(
+                                  event: event,
+                                )));
                       },
                       child: Text('جزئیات',
                           style:
@@ -169,19 +175,3 @@ class EventCardWidget extends StatelessWidget {
     );
   }
 }
-
-
-final List<Widget> imageSliders = imgList2
-    .map((item) => Container(
-          margin: const EdgeInsets.all(5.0),
-          child: ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-              child: Stack(
-                children: <Widget>[
-                  Image(
-                    image: AssetImage(item),
-                  ),
-                ],
-              )),
-        ))
-    .toList();

@@ -110,7 +110,9 @@ class ReserveHomePageCard extends StatelessWidget {
                             onPressed: () {
                               pushNewScreen(
                                 context,
-                                screen: AdminPage(),
+                                screen: AdminPage(
+                                  adminId: reserve.adminId,
+                                ),
                                 withNavBar: false,
                                 // OPTIONAL VALUE. True by default.
                                 pageTransitionAnimation:

@@ -12,7 +12,9 @@ import 'components/card_profile_user.dart';
 import 'components/time_component.dart';
 
 class ReservePage extends StatefulWidget {
-  const ReservePage({Key? key}) : super(key: key);
+  int adminId;
+
+  ReservePage({Key? key, required this.adminId}) : super(key: key);
 
   @override
   _ReservePageState createState() => _ReservePageState();
@@ -75,7 +77,8 @@ class _ReservePageState extends State<ReservePage> {
             print(state);
             contextCubit = context;
             if (state is ReserveInitial) {
-              BlocProvider.of<ReserveCubit>(context).loadTimeReserve(2);
+              BlocProvider.of<ReserveCubit>(context)
+                  .loadTimeReserve(widget.adminId);
             }
             if (state is ReserveError) {
               return Column(

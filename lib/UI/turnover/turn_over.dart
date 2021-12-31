@@ -123,6 +123,20 @@ List<Turnover_card> turnovers = [
 class _TurnOverState extends State<TurnOver> {
   late List<SalesData> _chartData;
   late TooltipBehavior _tooltipBehavior;
+  List<String> months = [
+    'فروردین',
+    'اردیبهشت',
+    'خرداد',
+    'تیر',
+    'مرداد',
+    'شهریور',
+    'مهر',
+    'آبان',
+    'آذر',
+    'دی',
+    'بهمن',
+    'اسفند'
+  ];
 
   @override
   void initState() {
@@ -233,15 +247,16 @@ class _TurnOverState extends State<TurnOver> {
                 return ChartAxisLabel(x.text, TextStyle(fontFamily: 'Dana'));
               },
               series: <ChartSeries>[
-                LineSeries<SalesData, dynamic>(
+                LineSeries<SalesData, int>(
                     name: 'میزان هزینه',
                     color: colorPallet2,
                     dataSource: _chartData,
-                    xValueMapper: (SalesData sales, int x) => x,
-                    dataLabelSettings: DataLabelSettings(
-                        isVisible: true,
+                    xValueMapper: (SalesData sales, int x) => x + 1,
+                    dataLabelMapper: (SalesData sales, int x) => months[x],
+                    dataLabelSettings: const DataLabelSettings(
+                        isVisible: false,
                         textStyle: TextStyle(fontFamily: 'Dana')),
-                    yValueMapper: (SalesData sales, _) => sales.sales)
+                    yValueMapper: (SalesData sales, int x) => sales.sales)
               ],
             ),
             TurnoverCardWidget(turnover_card: turnovers[0]),

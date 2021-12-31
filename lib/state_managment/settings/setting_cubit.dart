@@ -18,4 +18,17 @@ class SettingCubit extends Cubit<SettingState> {
       emit(SettingEnterValidValue(file));
     }
   }
+
+  Future<bool> sendInformationUser(Map<String, dynamic> userInfo) async {
+    emit(SettingSendingProfileData());
+    try {
+      bool status = await settingRepository.sendInfo(userInfo);
+
+      emit(SettingSendProfileData());
+      return status;
+    } catch (e) {
+      emit(SettingError());
+      return false;
+    }
+  }
 }

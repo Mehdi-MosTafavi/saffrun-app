@@ -1,104 +1,103 @@
+import '../../logical/general/size_function.dart';
+import '../comment/comment.dart';
+import '../event/event_model.dart';
+
 class Admin {
-  late int _id;
-  late String _name;
-  late String _description;
-  late String _category;
-  late List<String> _imageUrls;
-  late int _followers;
-  late int _following;
-  late List<String> _comments;
-  late List<String> _events;
-  late String _rate;
+  int id;
+  int ownerId;
+  String ownerName;
+  String category;
+  List<String> imageUrls;
+  int followerCount;
+  List<Event> events;
+  List<CommentData> comments;
+  String title;
+  DateTime date;
+  int workerCount;
+  String email;
+  String phoneNumber;
+  String fullAddress;
+  String description;
+  double rate;
+  int rateCount;
+  bool isFollowing;
 
   Admin(
-      int id,
-      String name,
-      String description,
-      String category,
-      List<String> imageUrls,
-      int followers,
-      int following,
-      List<String> comments,
-      List<String> events,
-      String rate) {
-    _id = id;
-    _name = name;
-    _description = description;
-    _category = category;
-    _imageUrls = imageUrls;
-    _followers = followers;
-    _following = following;
-    _comments = comments;
-    _events = events;
-    _rate = rate;
+      {required this.id,
+      required this.ownerId,
+      required this.ownerName,
+      required this.category,
+      this.imageUrls = const [],
+      this.comments = const [],
+      required this.followerCount,
+      required this.events,
+      required this.title,
+      required this.date,
+      required this.workerCount,
+      required this.email,
+      required this.phoneNumber,
+      required this.fullAddress,
+      required this.description,
+      required this.rate,
+      required this.isFollowing,
+      required this.rateCount});
+
+  static getComments(List<dynamic> json) {
+    List<CommentData> listComments = [];
+    for (var element in json) {
+      listComments.add(CommentData(
+          id: element['id'],
+          image: "",
+          content: element['content'] ?? " ",
+          userName: element['user']['name'] ?? " ",
+          date: getTime(element['created_at'])));
+    }
+    return listComments;
   }
 
-  int getId() {
-    return _id;
+  static Admin fromJson(result) {
+    return Admin(
+        id: result['id'],
+        ownerId: result['owner']['id'],
+        ownerName: result['owner']['full_name'] ?? " ",
+        category: result['category'] == null ? " " : result['category']['name'],
+        imageUrls: getImages(result['images']),
+        followerCount: result['follower_count'] ?? 0,
+        comments: getComments(result['comments']),
+        events: getEvents(result['events']),
+        title: result['title'] ?? " ",
+        isFollowing: result['is_following'],
+        date: result['establishment_date'] == null
+            ? DateTime(2021, 12, 30)
+            : getTime(result['establishment_date']),
+        workerCount: result['worker_count'] ?? 0,
+        email: result['email'] ?? " ",
+        phoneNumber: result['phone_number'] ?? " ",
+        fullAddress: result['full_address'] ?? " ",
+        description: result['description'] ?? " ",
+        rate: result['rate'] ?? 0,
+        rateCount: result['rate_count'] ?? 0);
   }
 
-  String getName() {
-    return _name;
+  static getEvents(result) {
+    List<Event> listComments = [];
+    for (var element in result) {
+      listComments.add(Event(
+          id: element['id'],
+          title: element['title'] ?? " ",
+          startTime: getTime(element['start_datetime']),
+          finishTime: getTime(element['end_datetime']),
+          category: element['category']['title'] ?? " ",
+          ownerId: element['owner']['id'] ?? 0));
+    }
+    return listComments;
   }
 
-  String getDescription() {
-    return _description;
+  static getImages(result) {
+    List<String> listString = [];
+    for (var element in result) {
+      listString.add(element['image']['full_size']);
+    }
+    return listString;
   }
-
-  String getCategory() {
-    return _category;
-  }
-
-  List<String> getImageUrls() {
-    return _imageUrls;
-  }
-
-  int getFollowers() {
-    return _followers;
-  }
-
-  int getFollowing() {
-    return _following;
-  }
-
-  List<String> getComments() {
-    return _comments;
-  }
-
-  List<String> getEvents() {
-    return _events;
-  }
-
-  String getRate() {
-    return _rate;
-  }
-
-  static List<Admin> admins = <Admin>[
-    Admin(
-        1,
-        'امیر مهدی ایکانی',
-        'ایشون ادم بسیار فهمیده ای هستن',
-        'دسته بندی',
-        [
-          'https://res.cloudinary.com/culturemap-com/image/upload/ar_4:3,c_fill,g_faces:center,w_980/v1519064369/photos/269761_original.jpg'
-        ],
-        20,
-        20,
-        [''],
-        [''],
-        '3.5'),
-    Admin(
-        1,
-        'امیر مهدی ایکانی',
-        'ایشون ادم بسیار فهمیده ای هستن',
-        'دسته بندی',
-        [
-          'https://res.cloudinary.com/culturemap-com/image/upload/ar_4:3,c_fill,g_faces:center,w_980/v1519064369/photos/269761_original.jpg'
-        ],
-        20,
-        20,
-        [''],
-        [''],
-        '3.5'),
-  ];
 }
