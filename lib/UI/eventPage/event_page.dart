@@ -5,12 +5,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:saffrun_app/UI/commentPage/commentpage.dart';
-import 'package:saffrun_app/UI/eventPage/components/add_button.dart';
+// import 'package:saffrun_app/UI/eventPage/components/add_button.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/state_managment/event/event_cubit.dart';
 
 import '../../logical/general/size_function.dart';
 import '../../models/event/event_model.dart';
+
+import 'components/payment_button.dart';
 
 class EventPage extends StatefulWidget {
   final Event event;
