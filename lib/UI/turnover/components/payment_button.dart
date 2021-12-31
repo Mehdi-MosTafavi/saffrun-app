@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 // import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
@@ -20,6 +19,7 @@ String getWalletStatus(Event event) {
 
 void showDialogForPaymentAdd(BuildContext context, Function addParticipant) {
   int bank = -1;
+  TextEditingController controller = TextEditingController();
   showDialog(
       context: context,
       // useSafeArea: false,
@@ -197,11 +197,12 @@ void showDialogForPaymentAdd(BuildContext context, Function addParticipant) {
                             inputFormatters: [
                               FilteringTextInputFormatter.digitsOnly
                             ],
+                            controller: controller,
                             decoration: const InputDecoration(
                                 alignLabelWithHint: true,
                                 filled: true,
                                 fillColor: Colors.white,
-                                hintText: 'مقدار افزایش...',
+                                hintText: 'میزان شارژ',
                                 prefixIcon: Icon(
                                   Icons.add_box_rounded,
                                   color: Color(0xff5a5a5a),
@@ -222,8 +223,7 @@ void showDialogForPaymentAdd(BuildContext context, Function addParticipant) {
                       MaterialButton(
                         onPressed: () async {
                           if (bank != -1) {
-                            bool status = await addParticipant();
-                            if (status) {}
+                            await addParticipant(controller.text.toInt());
                           }
                         },
                         child: Container(
@@ -267,7 +267,7 @@ getBank(int bank) {
     );
   } else {
     return Text(
-      'پرداخت',
+      'پرداخت و شارژ کیف پول',
       style: boldTextStyle(color: Colors.white),
     );
   }

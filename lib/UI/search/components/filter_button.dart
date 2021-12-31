@@ -267,22 +267,6 @@ class _FilterButtonWidgetState extends State<FilterButtonWidget> {
               ),
               Text('عنوان', style: primaryTextStyle()),
               Theme(
-                data: Theme.of(context).copyWith(
-                  unselectedWidgetColor: colorPallet5,
-                ),
-                child: Radio(
-                  value: 'start_datetime',
-                  fillColor: MaterialStateProperty.all(colorPallet2),
-                  groupValue: sortField,
-                  onChanged: (dynamic value) {
-                    setState(() {
-                      sortField = value;
-                    });
-                  },
-                ),
-              ),
-              Text('تخفیف', style: primaryTextStyle()),
-              Theme(
                 data: Theme.of(context)
                     .copyWith(unselectedWidgetColor: colorPallet5),
                 child: Radio(

@@ -75,7 +75,9 @@ class Admin {
         phoneNumber: result['phone_number'] ?? " ",
         fullAddress: result['full_address'] ?? " ",
         description: result['description'] ?? " ",
-        rate: result['rate'] ?? 0,
+        rate: result['rate'] == null
+            ? 0
+            : double.parse(result['rate'].toStringAsFixed(2)),
         rateCount: result['rate_count'] ?? 0);
   }
 

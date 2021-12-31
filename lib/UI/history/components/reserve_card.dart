@@ -72,7 +72,7 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
           final difference_second =
               date.difference(reserve.targetStartReserve).inSeconds.round();
           if (difference_day != 0) {
-            return difference_day.abs().toString() + " مانده تا شروع";
+            return difference_day.abs().toString() + " روز مانده تا شروع ";
             // return (difference_hour - difference_day * 24 - hours).toString() + ":" +
             //     (difference_minute - difference_hour * 60 - minutes).toString() + ":" +
             //     (difference_second - difference_minute * 60 - seconds).toString();

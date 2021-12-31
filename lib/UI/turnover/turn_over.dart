@@ -177,7 +177,11 @@ class _TurnOverState extends State<TurnOver> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      showDialogForPaymentAdd(context, () {});
+                      showDialogForPaymentAdd(context, (int x) {
+                        print(x);
+                        UserProfile.userLogin.wallet += x;
+                        finish(context);
+                      });
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

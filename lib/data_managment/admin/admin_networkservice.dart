@@ -9,4 +9,15 @@ class AdminNetworkService extends BaseNetworkService {
   dynamic fetchAdminNetworkService(i) async {
     return await getTemplateInLink('/core/client/business/', i);
   }
+
+  Future<double> postRateOfAdminToServer(int ownerId, double value) async {
+    try {
+      dynamic rate = await postTemplate(
+          '/core/business/rate/', {'employee_id': ownerId, 'rate': value});
+
+      return rate['new_rate'];
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
