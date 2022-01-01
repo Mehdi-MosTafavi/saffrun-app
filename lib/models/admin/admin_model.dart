@@ -66,7 +66,7 @@ class Admin {
         comments: getComments(result['comments']),
         events: getEvents(result['events']),
         title: result['title'] ?? " ",
-        isFollowing: result['is_following'],
+        isFollowing: result['is_following'] ?? false,
         date: result['establishment_date'] == null
             ? DateTime(2021, 12, 30)
             : getTime(result['establishment_date']),

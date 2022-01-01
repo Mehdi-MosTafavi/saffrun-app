@@ -33,6 +33,12 @@ String formatTimeString(DateTime dateTime) {
       dateTime.minute.toString();
 }
 
+String getDateForm(DateTime dateTime) {
+  Jalali date = Jalali.fromDateTime(dateTime);
+  var f = date.formatter;
+  return f.dd + ' ' + f.mN + ' ' + f.yyyy;
+}
+
 String formatTimeReserveString(DateTime dateTime) {
   Jalali date = Jalali.fromDateTime(dateTime);
   var f = date.formatter;

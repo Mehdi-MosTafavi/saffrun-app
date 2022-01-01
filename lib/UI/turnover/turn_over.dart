@@ -1,5 +1,6 @@
 // import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:nb_utils/src/extensions/context_extensions.dart';
@@ -13,11 +14,13 @@ import 'package:saffrun_app/constants/theme_color.dart';
 // import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/models/turnover/turnover_card_model.dart';
 import 'package:saffrun_app/models/user/user_2.dart';
+import 'package:saffrun_app/state_managment/turnover/turnover_cubit.dart';
 // import 'package:saffrun_app/models/history/reserve_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 // import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
+import '../utils/circular_progressbar_component.dart';
 import 'components/payment_button.dart';
 import 'components/turnover_card.dart';
 
@@ -151,236 +154,195 @@ class _TurnOverState extends State<TurnOver> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBarTitleProfileWhite(
-        context,
-        0,
-        title: '',
-        functionBack: () {},
-      ),
-      backgroundColor: Colors.white,
-      body: Container(
-        child: ListView(
-          scrollDirection: Axis.vertical,
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.fromLTRB(16, 20, 16, 8),
-              padding: EdgeInsets.fromLTRB(4, 0, 4, 0),
-              decoration: boxDecorationWithRoundedCorners(
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: defaultBoxShadow()),
-              child: Column(
-                children: [
-                  Container(
-                    height: context.height() * 0.4,
-                    child: TopCard(),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      showDialogForPaymentAdd(context, (int x) {
-                        print(x);
-                        UserProfile.userLogin.wallet += x;
-                        finish(context);
-                      });
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+    return BlocProvider(
+      create: (context) => TurnoverCubit(),
+      child: Scaffold(
+        appBar: AppBarTitleProfileWhite(
+          context,
+          0,
+          title: '',
+          functionBack: () {},
+        ),
+        backgroundColor: Colors.white,
+        body: Container(
+          child: ListView(
+            scrollDirection: Axis.vertical,
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.fromLTRB(16, 20, 16, 8),
+                padding: EdgeInsets.fromLTRB(4, 0, 4, 0),
+                decoration: boxDecorationWithRoundedCorners(
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: defaultBoxShadow()),
+                child: Column(
+                  children: [
+                    Container(
+                      height: context.height() * 0.4,
+                      child: TopCard(),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        showDialogForPaymentAdd(context, (int x) {
+                          print(x);
+                          UserProfile.userLogin.wallet += x;
+                          finish(context);
+                        });
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.only(top: 8, bottom: 8),
+                            decoration: boxDecorationWithRoundedCorners(
+                                backgroundColor: colorPallet2,
+                                borderRadius: BorderRadius.circular(8)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.payment,
+                                    color: Colors.white, size: 24),
+                                10.width,
+                                Text('شارژ کیف پول',
+                                    style: primaryTextStyle(
+                                        size: 16, color: Colors.white)),
+                              ],
+                            ),
+                          ).expand(),
+                        ],
+                      ).paddingAll(16),
+                    )
+                  ],
+                ),
+              ),
+              BlocBuilder<TurnoverCubit, TurnoverState>(
+                builder: (context, state) {
+                  if (state is TurnoverInitial) {
+                    BlocProvider.of<TurnoverCubit>(context).fetchTurnOver();
+                  }
+                  if (state is TurnoverLoad) {
+                    List<SalesData> dateChart = state.data
+                        .map((e) => SalesData(e.toString(), e))
+                        .toList();
+                    print(state.payments.length);
+                    return Column(
                       children: [
                         Container(
-                          padding: EdgeInsets.only(top: 8, bottom: 8),
-                          decoration: boxDecorationWithRoundedCorners(
-                              backgroundColor: colorPallet2,
-                              borderRadius: BorderRadius.circular(8)),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Icon(Icons.payment,
-                                  color: Colors.white, size: 24),
-                              10.width,
-                              Text('شارژ کیف پول',
-                                  style: primaryTextStyle(
-                                      size: 16, color: Colors.white)),
+                              Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'رویداد ها',
+                                        style:
+                                            boldTextStyle(color: colorPallet2),
+                                      ),
+                                      6.width,
+                                      Icon(
+                                        LineAwesomeIcons.gamepad,
+                                        color: colorPallet2,
+                                      )
+                                    ],
+                                  ),
+                                  Text(
+                                    '${state.eventPayment} تومان ',
+                                    style: boldTextStyle(),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'نوبت ها',
+                                        style:
+                                            boldTextStyle(color: colorPallet2),
+                                      ),
+                                      6.width,
+                                      Icon(
+                                        LineIcons.book,
+                                        color: colorPallet2,
+                                      )
+                                    ],
+                                  ),
+                                  Text(
+                                    '${state.reservePayment} تومان ',
+                                    style: boldTextStyle(),
+                                  ),
+                                ],
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(6),
+                                decoration: BoxDecoration(
+                                    color: colorPallet5,
+                                    borderRadius: BorderRadius.circular(7)),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'مجموع',
+                                          style: boldTextStyle(
+                                              color: Colors.white),
+                                        ),
+                                        6.width,
+                                      ],
+                                    ),
+                                    Text(
+                                      '${state.totalPayment} تومان ',
+                                      style: boldTextStyle(color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
-                        ).expand(),
-                      ],
-                    ).paddingAll(16),
-                  )
-                ],
-              ),
-            ),
-
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            'رویداد ها',
-                            style: boldTextStyle(color: colorPallet2),
-                          ),
-                          6.width,
-                          Icon(
-                            LineAwesomeIcons.gamepad,
-                            color: colorPallet2,
-                          )
-                        ],
-                      ),
-                      Text(
-                        '1000 تومان',
-                        style: boldTextStyle(),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            'نوبت ها',
-                            style: boldTextStyle(color: colorPallet2),
-                          ),
-                          6.width,
-                          Icon(
-                            LineIcons.book,
-                            color: colorPallet2,
-                          )
-                        ],
-                      ),
-                      Text(
-                        '1500 تومان',
-                        style: boldTextStyle(),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(6),
-                    decoration: BoxDecoration(
-                        color: colorPallet2,
-                        borderRadius: BorderRadius.circular(7)),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              'مجموع',
-                              style: boldTextStyle(color: Colors.white),
-                            ),
-                            6.width,
+                        ),
+                        20.height,
+                        SfCartesianChart(
+                          // Enable tooltip
+                          tooltipBehavior: _tooltipBehavior,
+                          axisLabelFormatter: (AxisLabelRenderDetails x) {
+                            return ChartAxisLabel(
+                                x.text, TextStyle(fontFamily: 'Dana'));
+                          },
+                          series: <ChartSeries>[
+                            LineSeries<SalesData, int>(
+                                name: 'میزان هزینه',
+                                color: colorPallet2,
+                                dataSource: dateChart,
+                                xValueMapper: (SalesData sales, int x) => x + 1,
+                                dataLabelMapper: (SalesData sales, int x) =>
+                                    months[x],
+                                dataLabelSettings: const DataLabelSettings(
+                                    isVisible: false,
+                                    textStyle: TextStyle(fontFamily: 'Dana')),
+                                yValueMapper: (SalesData sales, int x) =>
+                                    sales.sales / 1000)
                           ],
                         ),
-                        Text(
-                          '1000 تومان',
-                          style: boldTextStyle(color: Colors.white),
-                        ),
+                        ListView.builder(
+                            itemBuilder: (context, index) {
+                              print(index);
+                              return TurnoverCardWidget(
+                                  turnover_card: state.payments[index]);
+                            },
+                            itemCount: state.payments.length,
+                            physics: ScrollPhysics(),
+                            shrinkWrap: true)
                       ],
-                    ),
-                  ),
-                ],
+                    );
+                  }
+                  return const Center(child: CircularProgressBar())
+                      .paddingTop(40);
+                },
               ),
-            ),
-            20.height,
-            SfCartesianChart(
-              // Enable tooltip
-              tooltipBehavior: _tooltipBehavior,
-              axisLabelFormatter: (AxisLabelRenderDetails x) {
-                return ChartAxisLabel(x.text, TextStyle(fontFamily: 'Dana'));
-              },
-              series: <ChartSeries>[
-                LineSeries<SalesData, int>(
-                    name: 'میزان هزینه',
-                    color: colorPallet2,
-                    dataSource: _chartData,
-                    xValueMapper: (SalesData sales, int x) => x + 1,
-                    dataLabelMapper: (SalesData sales, int x) => months[x],
-                    dataLabelSettings: const DataLabelSettings(
-                        isVisible: false,
-                        textStyle: TextStyle(fontFamily: 'Dana')),
-                    yValueMapper: (SalesData sales, int x) => sales.sales)
-              ],
-            ),
-            TurnoverCardWidget(turnover_card: turnovers[0]),
-            TurnoverCardWidget(turnover_card: turnovers[1]),
-            TurnoverCardWidget(turnover_card: turnovers[2]),
-            TurnoverCardWidget(turnover_card: turnovers[3]),
-            TurnoverCardWidget(turnover_card: turnovers[4]),
-
-            // Container(
-            //   margin: EdgeInsets.symmetric(vertical: 20.0),
-            //   height: 280,
-            //   child: ListView(
-            //     scrollDirection: Axis.vertical,
-            //     children: <Widget>[
-            //       TurnoverCardWidget(turnover_card: turnovers[0]),
-            //       TurnoverCardWidget(turnover_card: turnovers[1]),
-            //       TurnoverCardWidget(turnover_card: turnovers[2]),
-            //       TurnoverCardWidget(turnover_card: turnovers[3]),
-            //       TurnoverCardWidget(turnover_card: turnovers[4]),
-            //     ],
-            //   ),
-            // ),
-
-            // DefaultTabController(
-            //   length: 2,
-            //   child: SizedBox(
-            //     height: 100.0,
-            //     child: Column(
-            //       children: <Widget>[
-            //         const TabBar(
-            //           labelColor: colorPallet5,
-            //           indicatorColor: colorPallet5,
-            //           tabs: [
-            //             Tab(text: 'Events',
-            //                 icon: Icon(Icons.favorite, color: colorPallet5,)),
-            //             Tab(text: 'Reserves',
-            //                 icon: Icon(Icons.music_note, color: colorPallet5,)),
-            //             // Tab(text: 'BIRDS', icon: Icon(Icons.search)),
-            //           ],
-            //         ),
-            //         Expanded(
-            //           child: TabBarView(
-            //             children: <Widget>[
-            //               Container(
-            //                 margin: EdgeInsets.symmetric(vertical: 20.0),
-            //                 height: 280,
-            //                 child: ListView(
-            //                   scrollDirection: Axis.vertical,
-            //                   children: <Widget>[
-            //                     TurnoverCardWidget(turnover_card: turnovers[0]),
-            //                     TurnoverCardWidget(turnover_card: turnovers[1]),
-            //                     TurnoverCardWidget(turnover_card: turnovers[2]),
-            //                     TurnoverCardWidget(turnover_card: turnovers[3]),
-            //                     TurnoverCardWidget(turnover_card: turnovers[4]),
-            //                   ],
-            //                 ),
-            //                 // color: Colors.yellow,
-            //               ),
-            //               Container(
-            //                 margin: EdgeInsets.symmetric(vertical: 20.0),
-            //                 height: 280,
-            //                 child: ListView(
-            //                   scrollDirection: Axis.vertical,
-            //                   children: <Widget>[
-            //                     TurnoverCardWidget(turnover_card: turnovers[0]),
-            //                     TurnoverCardWidget(turnover_card: turnovers[1]),
-            //                     TurnoverCardWidget(turnover_card: turnovers[2]),
-            //                     TurnoverCardWidget(turnover_card: turnovers[3]),
-            //                     TurnoverCardWidget(turnover_card: turnovers[4]),
-            //                   ],
-            //                 ),
-            //                 // color: Colors.yellow,
-            //               ),
-            //             ],
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
-          ],
+              20.height,
+            ],
+          ),
         ),
       ),
     );

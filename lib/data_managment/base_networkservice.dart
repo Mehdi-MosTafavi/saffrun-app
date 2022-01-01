@@ -69,14 +69,11 @@ class BaseNetworkService {
           urlOfBody = "$urlOfBody$key=$value&";
         });
       }
-      print(urlServer + url + urlOfBody);
       http.Response response = await http
           .get(Uri.parse(urlServer + url + urlOfBody), headers: header);
-      print(response.body);
       if (response.statusCode == 200) {
         String body = convert.utf8.decode(response.bodyBytes);
         var _jsonResponse = convert.jsonDecode(body);
-        print(_jsonResponse);
         return _jsonResponse;
       }
     } catch (e) {

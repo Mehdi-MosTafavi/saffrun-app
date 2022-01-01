@@ -311,6 +311,8 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                                                       boxShape: BoxShape.circle,
                                                       backgroundColor: getColor(
                                                           widget.event)),
+                                              child: Center(
+                                                  child: Icon(LineIcons.info)),
                                             ).paddingTop(15),
                                           ),
                                         ],

@@ -9,6 +9,7 @@ import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/models/reserve/reserve.dart';
 import 'package:saffrun_app/state_managment/reserve/reserve_cubit.dart';
 
+import '../../data_managment/turnover/turnover_networkservice.dart';
 import '../../models/admin/admin_model.dart';
 import '../admin/components/reserve_reserve_dialog.dart';
 import 'components/card_profile_user.dart';
@@ -70,9 +71,16 @@ class _ReservePageState extends State<ReservePage> {
                   finish(context);
                   showDialogForPaymentReserve(context, selectedReserve!,
                       () async {
-                    bool status =
+                        bool status =
                         await BlocProvider.of<ReserveCubit>(contextCubit)
                             .sendReserveId(selectedReserve!);
+                    if (status) {
+                      await TurnoverNetworkService().postPayment(
+                          selectedReserve!.price,
+                          selectedReserve!.adminId,
+                          selectedReserve!.id,
+                          'reserve');
+                    }
                     if (status) {
                       toast('نوبت با موفقیت گرفته شد');
                       finish(context);
@@ -172,8 +180,8 @@ class _ReservePageState extends State<ReservePage> {
                                 Row(
                                   children: [
                                     Text(getDateString(
-                                        nearReserve!.targetStartReserve,
-                                        true) +
+                                            nearReserve!.targetStartReserve,
+                                            true) +
                                         ":"),
                                     15.width,
                                     InkWell(
@@ -185,8 +193,8 @@ class _ReservePageState extends State<ReservePage> {
                                         },
                                         child: TimeWidget(
                                           selected: (selectedReserve == null
-                                              ? -1
-                                              : selectedReserve!.id) ==
+                                                  ? -1
+                                                  : selectedReserve!.id) ==
                                               nearReserve!.id,
                                           reserve: nearReserve!,
                                         ))
@@ -230,7 +238,7 @@ class _ReservePageState extends State<ReservePage> {
                                       return Container();
                                     return ListView(
                                       padding:
-                                      EdgeInsets.symmetric(vertical: 5),
+                                          EdgeInsets.symmetric(vertical: 5),
                                       physics: NeverScrollableScrollPhysics(),
                                       shrinkWrap: true,
                                       children: [
@@ -245,23 +253,23 @@ class _ReservePageState extends State<ReservePage> {
                                         ),
                                         GridView.builder(
                                           physics:
-                                          NeverScrollableScrollPhysics(),
+                                              NeverScrollableScrollPhysics(),
                                           shrinkWrap: true,
                                           gridDelegate:
-                                          const SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 3,
-                                              childAspectRatio: 1.65
-                                            // crossAxisSpacing: 5.0,
-                                            // mainAxisSpacing: 5.0,
-                                          ),
+                                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount: 3,
+                                                  childAspectRatio: 1.65
+                                                  // crossAxisSpacing: 5.0,
+                                                  // mainAxisSpacing: 5.0,
+                                                  ),
                                           itemBuilder: (context, i) {
                                             Reserve reserve =
-                                            listReserves![index][i];
+                                                listReserves![index][i];
                                             return InkWell(
                                                 onTap: () {
                                                   selectedReserve = reserve;
                                                   BlocProvider.of<ReserveCubit>(
-                                                      context)
+                                                          context)
                                                       .selectedReserve(reserve);
                                                   controller.animateToPosition(
                                                       controller.position
@@ -269,7 +277,7 @@ class _ReservePageState extends State<ReservePage> {
                                                 },
                                                 child: TimeWidget(
                                                   selected:
-                                                  (selectedReserve == null
+                                                      (selectedReserve == null
                                                               ? -1
                                                               : selectedReserve
                                                                   ?.id) ==
@@ -278,7 +286,7 @@ class _ReservePageState extends State<ReservePage> {
                                                 ));
                                           },
                                           itemCount:
-                                          listReserves![index].length,
+                                              listReserves![index].length,
                                         )
                                       ],
                                     );

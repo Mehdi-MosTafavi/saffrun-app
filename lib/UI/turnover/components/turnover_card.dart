@@ -4,8 +4,13 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:saffrun_app/UI/eventPage/event_page.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
+import 'package:saffrun_app/models/payment/payment.dart';
 import 'package:saffrun_app/models/turnover/turnover_card_model.dart';
+
+import '../../../logical/general/size_function.dart';
+import '../../admin/admin_page.dart';
 
 final List<String> imgList2 = [
   'assets/images/mafia1.jpg',
@@ -21,7 +26,7 @@ class TurnoverCardWidget extends StatelessWidget {
   }) : super(key: key);
 
   DateTime now = DateTime.now();
-  final Turnover_card turnover_card;
+  final PaymentData turnover_card;
   final String item = 'assets/images/mafia1.jpg';
 
   int current = 0;
@@ -121,113 +126,133 @@ class TurnoverCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Container(
-        // width: context.width() * 0.3,
-        margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-        decoration: BoxDecoration(
-            boxShadow: defaultBoxShadow(),
-            borderRadius: BorderRadius.circular(12)),
-        child: IntrinsicHeight(
-          child: Card(
-            semanticContainer: true,
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            color: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Container(color: colorPallet2, width: 10),
-                Expanded(
-                  child: Column(
-                    children: <Widget>[
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              height: context.height() * 0.15,
-                              width: context.width() * 0.35,
-                              decoration: BoxDecoration(
-                                  boxShadow: defaultBoxShadow(),
-                                  image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: AssetImage(item)),
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(12),
-                                      bottomLeft: Radius.circular(12))),
-                            ),
-                            // SizedBox(
-                            //   width: context.width() * 0.05,
-                            // ),
-
-                            Padding(
-                              padding: EdgeInsets.only(
-                                right: 8,
-                                top: 8,
+    return GestureDetector(
+      onTap: () {
+        if (turnover_card.event != null) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => EventPage(event: turnover_card.event!)));
+        } else {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => AdminPage(
+                        adminId: turnover_card.reserve!.adminId,
+                      )));
+        }
+      },
+      child: Directionality(
+        textDirection: TextDirection.rtl,
+        child: Container(
+          // width: context.width() * 0.3,
+          margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+          decoration: BoxDecoration(
+              boxShadow: defaultBoxShadow(),
+              borderRadius: BorderRadius.circular(12)),
+          child: IntrinsicHeight(
+            child: Card(
+              semanticContainer: true,
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Container(color: colorPallet2, width: 10),
+                  Expanded(
+                    child: Column(
+                      children: <Widget>[
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                height: context.height() * 0.15,
+                                width: context.width() * 0.35,
+                                decoration: BoxDecoration(
+                                    boxShadow: defaultBoxShadow(),
+                                    image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: AssetImage(item)),
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(12),
+                                        bottomLeft: Radius.circular(12))),
                               ),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                              // SizedBox(
+                              //   width: context.width() * 0.05,
+                              // ),
+
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  right: 8,
+                                  top: 8,
+                                ),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      turnover_card.event == null
+                                          ? turnover_card.reserve!.adminName
+                                          : turnover_card.event!.title,
+                                      style: boldTextStyle(color: colorPallet3),
+                                    ),
+                                    4.height,
+                                    Text(
+                                      turnover_card.type,
+                                      style: boldTextStyle(
+                                          color: Colors.blueGrey, size: 13),
+                                    ),
+                                    6.height,
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          LineAwesomeIcons.wavy_money_bill,
+                                          color: colorPallet2,
+                                        ),
+                                        3.width,
+                                        Text(
+                                          '${turnover_card.amout} تومان ',
+                                          style: boldTextStyle(
+                                              color: colorPallet2),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
+                                  3.height,
                                   Text(
-                                    turnover_card.title,
-                                    style: boldTextStyle(color: colorPallet3),
-                                  ),
-                                  4.height,
-                                  Text(
-                                    'رویداد',
-                                    style: boldTextStyle(
-                                        color: Colors.blueGrey, size: 13),
-                                  ),
-                                  6.height,
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        LineAwesomeIcons.wavy_money_bill,
-                                        color: colorPallet2,
-                                      ),
-                                      3.width,
-                                      Text(
-                                        '10000 تومان',
-                                        style:
-                                            boldTextStyle(color: colorPallet2),
-                                      ),
-                                    ],
-                                  )
+                                    getDateForm(turnover_card.date),
+                                  ).paddingOnly(left: 5, top: 5),
+                                  5.height,
                                 ],
-                              ),
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                3.height,
-                                Text(
-                                  '10 مرداد 1400',
-                                ).paddingOnly(left: 5, top: 5),
-                                5.height,
-                              ],
-                            ).paddingOnly(left: 5, top: 5),
-                          ],
+                              ).paddingOnly(left: 5, top: 5),
+                            ],
+                          ),
                         ),
-                      ),
 
-                      // SizedBox(height: 8),
+                        // SizedBox(height: 8),
 
-                      // 10.height,
-                    ],
-                  ),
-                )
-              ],
+                        // 10.height,
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
