@@ -1,7 +1,9 @@
+import 'dart:convert' as convert;
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:nb_utils/nb_utils.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
-import 'package:saffrun_app/data_managment/base_networkservice.dart';
 
 class EnhancedDropDown extends StatefulWidget {
   final ValueChanged<String> valueReturned;
@@ -62,21 +64,22 @@ class _EnhancedDropDownState extends State<EnhancedDropDown> {
     ));
 
     if (widget.urlToFetchData != null) {
-      List? jsonResponse =
-          await BaseNetworkService().getTemplate('/category/get-all/');
-      if (jsonResponse != null) {
-        jsonResponse.forEach((value) {
-          data.add(value['name']);
+      var response = await http.get(widget.urlToFetchData!);
+      if (response.statusCode == 200) {
+        Map<String, dynamic> jsonResponse = convert.jsonDecode(response.body);
+        jsonResponse.forEach((key, value) {
+          data.add(value);
           menuItems.add(new DropdownMenuItem(
-            child: new Text(value['name'].toString()),
-            value: value['id'].toString(),
+            child: new Text(value.toString()),
+            value: value.toString(),
           ));
         });
         setState(() {
           _data = menuItems;
         });
       } else {
-        print("EnhancedDropDownWidget Request failed with status: ${400}.");
+        print(
+            "EnhancedDropDownWidget Request failed with status: ${response.statusCode}.");
       }
     } else if (widget.dataSource != null) {
       for (int i = 0; i < widget.dataSource!.length; i++) {

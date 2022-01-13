@@ -28,61 +28,29 @@ class _NearestEventReservePageState extends State<NearestEventReservePage> {
             BlocProvider.of<HomePageCubit>(context).fetchHomePage();
           }
           if (state is HomePageLoad) {
-            return Container(
-              // height: 200,
-              width: context.width(),
-              decoration: const BoxDecoration(
-                  // color: Colors.red
-                  ),
-              child: Column(
-                children: [
-                  24.height,
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      'نوبت های نزدیک',
-                      style: boldTextStyle(
-                          textDecorationStyle: TextDecorationStyle.solid),
-                    ).paddingAll(12),
-                  ),
-                  10.height,
-                  Card(
-                    semanticContainer: true,
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+            return RefreshIndicator(
+              onRefresh: () async {
+                BlocProvider.of<HomePageCubit>(context).emit(HomePageInitial());
+              },
+              child: Container(
+                // height: 200,
+                width: context.width(),
+                decoration: const BoxDecoration(
+                    // color: Colors.red
                     ),
-                    child: Column(
-                      children: [
-                        if (state.reserves.isEmpty)
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Center(
-                                child: Text(
-                              'هیچ نوبتی نزدیکی وجود ندارد',
-                              style: boldTextStyle(),
-                            )),
-                          ),
-                        for (Reserve reserve in state.reserves)
-                          ReserveHomePageCard(
-                            reserve: reserve,
-                            onTapCard: () {},
-                          )
-                      ],
+                child: Column(
+                  children: [
+                    24.height,
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        'نوبت های نزدیک',
+                        style: boldTextStyle(
+                            textDecorationStyle: TextDecorationStyle.solid),
+                      ).paddingAll(12),
                     ),
-                  ),
-                  24.height,
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      'رویداد های نزدیک',
-                      style: boldTextStyle(
-                          textDecorationStyle: TextDecorationStyle.solid),
-                    ).paddingAll(12),
-                  ),
-                  10.height,
-                  Card(
+                    10.height,
+                    Card(
                       semanticContainer: true,
                       clipBehavior: Clip.antiAliasWithSaveLayer,
                       color: Colors.white,
@@ -91,26 +59,63 @@ class _NearestEventReservePageState extends State<NearestEventReservePage> {
                       ),
                       child: Column(
                         children: [
-                          if (state.events.isEmpty)
+                          if (state.reserves.isEmpty)
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Center(
                                   child: Text(
-                                'هیچ رویدادی نزدیکی وجود ندارد',
+                                'هیچ نوبتی نزدیکی وجود ندارد',
                                 style: boldTextStyle(),
                               )),
                             ),
-                          for (Event event in state.events)
-                            EventHomePageCard(
-                              event: event,
+                          for (Reserve reserve in state.reserves)
+                            ReserveHomePageCard(
+                              reserve: reserve,
+                              onTapCard: () {},
                             )
                         ],
-                      ))
-                ],
+                      ),
+                    ),
+                    24.height,
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        'رویداد های نزدیک',
+                        style: boldTextStyle(
+                            textDecorationStyle: TextDecorationStyle.solid),
+                      ).paddingAll(12),
+                    ),
+                    10.height,
+                    Card(
+                        semanticContainer: true,
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: Column(
+                          children: [
+                            if (state.events.isEmpty)
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Center(
+                                    child: Text(
+                                  'هیچ رویدادی نزدیکی وجود ندارد',
+                                  style: boldTextStyle(),
+                                )),
+                              ),
+                            for (Event event in state.events)
+                              EventHomePageCard(
+                                event: event,
+                              )
+                          ],
+                        ))
+                  ],
+                ),
               ),
             );
           }
-          return const Center(child: CircularProgressBar());
+          return const Center(child: CircularProgressBar()).paddingTop(40);
         },
       ),
     );

@@ -26,9 +26,9 @@ class NotificationData {
         title: element['title'],
         createtime: getTime(element['created_at']),
         text: element['text'],
-        senderName: element['sender']['full_name'],
+        senderName: element['sender']['full_name'] ?? " ",
         type: element['type'],
-        url: element['url'],
+        url: element['url'] ?? " ",
       ));
     });
     return events;

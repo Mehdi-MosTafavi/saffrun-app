@@ -21,12 +21,16 @@ class CommentData {
     for (Map element in comments) {
       if (element["reply"] != null) {
         listComments.add(CommentData(
-            image: element['user']['image']['image']['thumbnail'],
+            image: element['reply']['image']['image'] == null
+                ? DefaultImage
+                : element['reply']['image']['image']['thumbnail'],
             id: element['id'],
             content: element['content'],
             userName: element['user']['name'],
             reply: CommentData(
-                image: element['reply']['image']['image']['thumbnail'],
+                image: element['reply']['image']['image'] == null
+                    ? DefaultImage
+                    : element['reply']['image']['image']['thumbnail'],
                 id: element['reply']['id'],
                 date: getTime(element['reply']['time']),
                 content: element['reply']['content'],

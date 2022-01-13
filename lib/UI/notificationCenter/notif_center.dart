@@ -19,6 +19,7 @@ class NotificationCenter extends StatefulWidget {
 class _NotificationCenterState extends State<NotificationCenter> {
   // late List<SalesData> _chartData;
   // late TooltipBehavior _tooltipBehavior;
+  late BuildContext contextCubit;
 
   @override
   void initState() {
@@ -33,34 +34,41 @@ class _NotificationCenterState extends State<NotificationCenter> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => NotificationCubit(),
-      child: Scaffold(
-        appBar: AppBarTitleProfileWhite(
-          context,
-          0,
-          title: '',
-          functionBack: () {},
-          notifCenter: true,
-        ),
-        backgroundColor: Colors.white,
-        body: BlocBuilder<NotificationCubit, NotificationState>(
-          builder: (context, state) {
-            if (state is NotificationInitial) {
-              BlocProvider.of<NotificationCubit>(context)
-                  .fetchNotificationPage();
-            }
-            if (state is NotificationLoaded) {
-              return ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  itemCount: state.notifs.length,
-                  padding: EdgeInsets.only(top: 30),
-                  itemBuilder: (BuildContext context, int index) {
-                    return NotificationCardWidget(
-                        notification_card: state.notifs[index]);
-                  });
-            }
+      child: RefreshIndicator(
+        onRefresh: () async {
+          await BlocProvider.of<NotificationCubit>(contextCubit)
+              .fetchNotificationPage();
+        },
+        child: Scaffold(
+          appBar: AppBarTitleProfileWhite(
+            context,
+            0,
+            title: '',
+            functionBack: () {},
+            notifCenter: true,
+          ),
+          backgroundColor: Colors.white,
+          body: BlocBuilder<NotificationCubit, NotificationState>(
+            builder: (context, state) {
+              contextCubit = context;
+              if (state is NotificationInitial) {
+                BlocProvider.of<NotificationCubit>(context)
+                    .fetchNotificationPage();
+              }
+              if (state is NotificationLoaded) {
+                return ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    itemCount: state.notifs.length,
+                    padding: EdgeInsets.only(top: 30),
+                    itemBuilder: (BuildContext context, int index) {
+                      return NotificationCardWidget(
+                          notification_card: state.notifs[index]);
+                    });
+              }
 
-            return const Center(child: CircularProgressBar());
-          },
+              return const Center(child: CircularProgressBar());
+            },
+          ),
         ),
       ),
     );

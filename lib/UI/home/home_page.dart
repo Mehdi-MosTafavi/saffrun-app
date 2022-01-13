@@ -16,6 +16,7 @@ class _HomePageState extends State<HomePage> {
   int selectedPos = 1;
 
   double spacing_standard_new = 16.0;
+  late BuildContext contextCubit;
 
   @override
   void initState() {

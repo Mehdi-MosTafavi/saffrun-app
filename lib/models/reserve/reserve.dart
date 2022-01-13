@@ -298,6 +298,9 @@ class Reserve {
           adminId: element['ownerId'],
           adminName: element['owner_name'] ?? " ",
           createdReserve: DateTime(2020, 0, 0),
+          adminImage: element['picture']['image'] == null
+              ? DefaultImage
+              : element['picture']['image']['thumbnail'],
           targetStartReserve: getTime(element['start_datetime']),
           targetEndReserve: getTime(element['end_datetime'])));
     }

@@ -1,10 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:saffrun_app/UI/eventPage/event_page.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
+import 'package:saffrun_app/logical/general/size_function.dart';
 import 'package:saffrun_app/models/event/event_model.dart';
-
 
 final List<String> imgList2 = [
   'assets/images/mafia1.jpg',
@@ -60,12 +61,37 @@ class EventCardWidget extends StatelessWidget {
                     // ),
                     Expanded(
                       flex: 2,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                fit: BoxFit.fitHeight,
-                                image: AssetImage(item))),
-                      ),
+                      child: Hero(
+                          tag: event.id.toString() + "profile",
+                          child: CachedNetworkImage(
+                            imageBuilder: (context, imageProvider) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(8)),
+                                    image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: imageProvider)),
+                              );
+                            },
+                            placeholder: (context, strImage) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(5)),
+                                  color: Colors.grey,
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 2.0,
+                                  ),
+                                ),
+                              );
+                            },
+                            imageUrl: getImageUrlUsers(event.imageUrls[0]),
+                            fit: BoxFit.fill,
+                            height: context.height() * 0.15,
+                            width: context.width(),
+                          )),
                     ),
                     // const SizedBox(width: 10,height: 10,),
 
@@ -103,12 +129,15 @@ class EventCardWidget extends StatelessWidget {
                                     mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(
-                                        event.title,
-                                        style:
-                                            boldTextStyle(color: colorPallet2),
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
+                                      Container(
+                                        width: context.width() * 0.28,
+                                        child: Text(
+                                          event.title,
+                                          style: boldTextStyle(
+                                              color: colorPallet2),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       ),
                                       Text("کافه رخ",
                                           style: boldTextStyle(
@@ -156,12 +185,13 @@ class EventCardWidget extends StatelessWidget {
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => EventPage(
-                                  event: event,
+                              event: event,
+                                  heroTag: event.id.toString() + "profile",
                                 )));
                       },
                       child: Text('جزئیات',
                           style:
-                              primaryTextStyle(size: 15, color: colorPallet4),
+                          primaryTextStyle(size: 15, color: colorPallet4),
                           maxLines: 2),
                     ),
                     10.height,

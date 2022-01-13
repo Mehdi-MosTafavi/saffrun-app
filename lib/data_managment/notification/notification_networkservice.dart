@@ -5,7 +5,7 @@ class NotificationNetworkService extends BaseNetworkService {
     try {
       dynamic result = await getTemplate(
           '/notification/client/get-notifications/',
-          body: {'page': 1, 'page_count': 10});
+          body: {'page': 1, 'page_count': 20});
       return result;
     } catch (e) {
       print(e);

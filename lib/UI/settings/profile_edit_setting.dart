@@ -90,17 +90,13 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                                               child: state
                                                       is SettingEnterValidValue
                                                   ? Container(
-                                                      child: Image.file(
-                                                        (state.file),
-                                                        fit: BoxFit.cover,
-                                                      ),
                                                       decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(16),
-                                                        color:
-                                                            Colors.transparent,
-                                                      ),
+                                                          shape:
+                                                              BoxShape.circle,
+                                                          image: DecorationImage(
+                                                              fit: BoxFit.cover,
+                                                              image: FileImage(
+                                                                  state.file))),
                                                       width: 80,
                                                       height: 80,
                                                     )
@@ -140,17 +136,19 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                                                               imageProvider) {
                                                             return Container(
                                                               decoration: BoxDecoration(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              16),
-                                                                  color: Colors
-                                                                      .white,
-                                                                  image: DecorationImage(
-                                                                      fit: BoxFit
-                                                                          .cover,
-                                                                      image:
-                                                                          imageProvider)),
+                                                                      // borderRadius:
+                                                                      //     BorderRadius
+                                                                      //         .circular(
+                                                                      //             16),
+                                                                      shape: BoxShape
+                                                                          .circle,
+                                                                      color: Colors
+                                                                          .white,
+                                                                      image: DecorationImage(
+                                                                          fit: BoxFit
+                                                                              .cover,
+                                                                          image:
+                                                                              imageProvider)),
                                                             );
                                                           },
                                                           height: 80),
@@ -185,7 +183,8 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                                         GestureDetector(
                                           onTap: () async {
                                             print(state);
-                                            if (state is SettingInitial) {
+                                            if (state
+                                                is! SettingEnterValidValue) {
                                               BlocProvider.of<SettingCubit>(
                                                       context)
                                                   .selectImage(
@@ -199,15 +198,16 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                                             }
                                           },
                                           child: Container(
-                                            width: 40,
-                                            height: 40,
+                                            width: 45,
+                                            height: 29,
                                             decoration: BoxDecoration(
                                                 color: white,
                                                 shape: BoxShape.circle),
                                             child: Icon(
-                                                (state is SettingInitial)
+                                                (state is! SettingEnterValidValue)
                                                     ? Icons.edit
                                                     : Icons.delete,
+                                                size: 17,
                                                 color: colorPallet2),
                                           ),
                                         )
@@ -404,6 +404,12 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                   builder: (context, state) {
                     return GestureDetector(
                       onTap: () async {
+                        int imageId = -1;
+                        if (state is SettingEnterValidValue) {
+                          imageId = await BlocProvider.of<SettingCubit>(context)
+                              .uploadImage(state.file);
+                        }
+
                         Map<String, dynamic> userInfo = {
                           "username": UserProfile.userLogin.username,
                           "first_name": "",
@@ -412,12 +418,13 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                           "phone": contactController.text,
                           "country": "",
                           "province": "",
+                          "image_id": imageId,
                           "gender": gender == "male" ? "M" : "F",
                           "address": addressController.text
                         };
                         bool status =
-                            await BlocProvider.of<SettingCubit>(context)
-                                .sendInformationUser(userInfo);
+                        await BlocProvider.of<SettingCubit>(context)
+                            .sendInformationUser(userInfo);
                         if (status) {
                           toast("تغییرات با موفقیت انجام شد.");
                         }

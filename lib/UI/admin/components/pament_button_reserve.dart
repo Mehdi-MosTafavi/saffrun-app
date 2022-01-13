@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 // import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
@@ -90,13 +89,13 @@ void showDialogForPaymentReserve(
                                               width: MediaQuery.of(context)
                                                   .size
                                                   .width,
-                                              image: AssetImage(
-                                                  'assets/images/wallet.jpg'),
+                                              image: const AssetImage(
+                                                  'assets/images/wallet.png'),
                                               height: context.height() * 0.4,
-                                              fit: BoxFit.cover),
+                                              fit: BoxFit.contain),
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 20,
                                       ),
                                       Container(
@@ -142,7 +141,7 @@ void showDialogForPaymentReserve(
                                               ),
                                             ),
                                           ),
-                                        ).paddingSymmetric(horizontal: 15)
+                                        ).paddingSymmetric(horizontal: 0)
                                       else
                                         Center(
                                           child: TextButton(

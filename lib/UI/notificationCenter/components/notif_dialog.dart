@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
-
 // import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/models/notification/notif_model.dart';
 
@@ -22,7 +21,7 @@ void showDialogForNotification(BuildContext context, NotificationData notif) {
                 borderRadius: BorderRadius.all(Radius.circular(10.0))),
             // contentPadding: const EdgeInsets.all(0.0),
             content: Container(
-              height: context.height() * 0.34,
+              height: context.height() * 0.37,
               width: context.width() * 0.7,
               padding: EdgeInsets.all(5),
               child: Center(
@@ -37,9 +36,13 @@ void showDialogForNotification(BuildContext context, NotificationData notif) {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              notif.title,
-                              style: boldTextStyle(color: colorPallet3),
+                            Container(
+                              width: context.width() * 0.3,
+                              child: Text(
+                                notif.title,
+                                style: boldTextStyle(color: colorPallet3),
+                                // overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -70,13 +73,26 @@ void showDialogForNotification(BuildContext context, NotificationData notif) {
                             color: Colors.red,
                           ),
                         ),
+                        Row(
+                          children: [
+                            Text(
+                              'ارسال کننده:',
+                              style: boldTextStyle(color: colorPallet5),
+                            ),
+                            5.width,
+                            Text(
+                              notif.senderName,
+                              style: boldTextStyle(color: colorPallet4),
+                            ),
+                          ],
+                        ),
                         10.height,
                         Text(
                           'متن پیام:',
                           style: boldTextStyle(color: colorPallet5),
                         ),
                         Container(
-                          height: context.height() * 0.15,
+                          height: context.height() * 0.1,
                           child: ListView(
                             physics: ClampingScrollPhysics(),
                             children: [

@@ -7,11 +7,13 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:saffrun_app/UI/admin/admin_page.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/logical/general/size_function.dart';
 
 import '../../../models/reserve/reserve.dart';
+import '../../utils/numeral/Numeral.dart';
 
 final List<String> imgList2 = [
   'assets/images/mafia1.jpg',
@@ -21,10 +23,9 @@ final List<String> imgList2 = [
 ];
 
 class ReserveCardWidget extends StatefulWidget {
-  ReserveCardWidget({
-    Key? key,
-    required this.reserve,
-  }) : super(key: key);
+  ReserveCardWidget({Key? key, required this.reserve, required this.index})
+      : super(key: key);
+  final int index;
 
   final Reserve reserve;
 
@@ -200,10 +201,17 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
       textDirection: TextDirection.rtl,
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => AdminPage(
-                    adminId: reserve.adminId,
-                  )));
+          pushNewScreen(
+            context,
+            screen: AdminPage(
+              adminId: reserve.adminId,
+              heroTag: reserve.id,
+            ),
+            withNavBar: false,
+            // OPTIONAL VALUE. True by default.
+
+            pageTransitionAnimation: PageTransitionAnimation.fade,
+          );
         },
         child: Container(
           // width: context.width() * 0.3,
@@ -235,35 +243,38 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                CachedNetworkImage(
-                                  imageBuilder: (context, imageProvider) {
-                                    return Container(
-                                      decoration: BoxDecoration(
+                                Hero(
+                                  tag: reserve.id,
+                                  child: CachedNetworkImage(
+                                    imageBuilder: (context, imageProvider) {
+                                      return Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                                bottomLeft: Radius.circular(8)),
+                                            image: DecorationImage(
+                                                fit: BoxFit.cover,
+                                                image: imageProvider)),
+                                      );
+                                    },
+                                    placeholder: (context, strImage) {
+                                      return Container(
+                                        decoration: BoxDecoration(
                                           borderRadius: BorderRadius.only(
-                                              bottomLeft: Radius.circular(8)),
-                                          image: DecorationImage(
-                                              fit: BoxFit.cover,
-                                              image: imageProvider)),
-                                    );
-                                  },
-                                  placeholder: (context, strImage) {
-                                    return Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                            bottomLeft: Radius.circular(5)),
-                                        color: Colors.grey,
-                                        border: Border.all(
-                                          color: Colors.white,
-                                          width: 2.0,
+                                              bottomLeft: Radius.circular(5)),
+                                          color: Colors.grey,
+                                          border: Border.all(
+                                            color: Colors.white,
+                                            width: 2.0,
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  },
-                                  imageUrl: getImageUrlUsers(
-                                      widget.reserve.adminImage),
-                                  fit: BoxFit.fill,
-                                  height: context.height() * 0.15,
-                                  width: context.width() * 0.3,
+                                      );
+                                    },
+                                    imageUrl: getImageUrlUsers(
+                                        widget.reserve.adminImage),
+                                    fit: BoxFit.fill,
+                                    height: context.height() * 0.15,
+                                    width: context.width() * 0.3,
+                                  ),
                                 ),
                                 Expanded(
                                   child: Column(
@@ -292,15 +303,16 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
                                                     padding:
                                                         const EdgeInsets.only(
                                                             right: 16, left: 6),
-                                                    child: Center(
+                                                    child: const Center(
                                                         child: Icon(
                                                       LineIcons.money_bill,
                                                       color: colorPallet3,
                                                     )),
                                                   ),
                                                   Text(
-                                                    widget.reserve.price
-                                                        .toString(),
+                                                    widget.reserve.price == 0
+                                                        ? 'رایگان'
+                                                        : '${Numeral(reserve.price)} تومان ',
                                                     style: boldTextStyle(),
                                                   ).paddingOnly(
                                                       top: 0, right: 10),
@@ -319,6 +331,8 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
                                                       boxShape: BoxShape.circle,
                                                       backgroundColor: getColor(
                                                           widget.reserve)),
+                                              child: Center(
+                                                  child: Icon(LineIcons.info)),
                                             ).paddingTop(15),
                                           ),
                                         ],

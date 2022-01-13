@@ -13,12 +13,15 @@ import 'package:saffrun_app/state_managment/event/event_cubit.dart';
 
 import '../../logical/general/size_function.dart';
 import '../../models/event/event_model.dart';
+import '../admin/admin_page.dart';
 import 'components/payment_button.dart';
 
 class EventPage extends StatefulWidget {
   final Event event;
+  final Object? heroTag;
 
-  const EventPage({Key? key, required this.event}) : super(key: key);
+  const EventPage({Key? key, required this.event, this.heroTag})
+      : super(key: key);
 
   @override
   _EventPageState createState() => _EventPageState();
@@ -122,46 +125,49 @@ class _EventPageState extends State<EventPage> {
                   child: Stack(
                     children: [
                       Column(children: [
-                        CarouselSlider(
-                          items: state.event.imageUrls
-                              .map((item) => CachedNetworkImage(
-                                    imageBuilder: (context, imageProvider) {
-                                      return Container(
-                                        margin: EdgeInsets.all(5),
-                                        decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                                fit: BoxFit.cover,
-                                                image: imageProvider)),
-                                      );
-                                    },
-                                    placeholder: (context, strImage) {
-                                      return Container(
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey,
-                                          border: Border.all(
-                                            color: Colors.white,
-                                            width: 2.0,
+                        Hero(
+                          tag: widget.heroTag ?? "",
+                          child: CarouselSlider(
+                            items: state.event.imageUrls
+                                .map((item) => CachedNetworkImage(
+                                      imageBuilder: (context, imageProvider) {
+                                        return Container(
+                                          margin: EdgeInsets.all(5),
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  fit: BoxFit.cover,
+                                                  image: imageProvider)),
+                                        );
+                                      },
+                                      placeholder: (context, strImage) {
+                                        return Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey,
+                                            border: Border.all(
+                                              color: Colors.white,
+                                              width: 2.0,
+                                            ),
                                           ),
-                                        ),
-                                      );
-                                    },
-                                    imageUrl: item,
-                                    fit: BoxFit.fill,
-                                    height: context.width() * 0.32,
-                                    width: context.height() * 0.6,
-                                  ))
-                              .toList(),
-                          carouselController: controller,
-                          options: CarouselOptions(
-                              autoPlay: true,
-                              enlargeCenterPage: true,
-                              aspectRatio: 2.0,
-                              enableInfiniteScroll: false,
-                              onPageChanged: (index, reason) {
-                                setState(() {
-                                  current = index;
-                                });
-                              }),
+                                        );
+                                      },
+                                      imageUrl: item,
+                                      fit: BoxFit.fill,
+                                      height: context.width() * 0.32,
+                                      width: context.height() * 0.6,
+                                    ))
+                                .toList(),
+                            carouselController: controller,
+                            options: CarouselOptions(
+                                autoPlay: true,
+                                enlargeCenterPage: true,
+                                aspectRatio: 2.0,
+                                enableInfiniteScroll: false,
+                                onPageChanged: (index, reason) {
+                                  setState(() {
+                                    current = index;
+                                  });
+                                }),
+                          ),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -248,7 +254,7 @@ class _EventPageState extends State<EventPage> {
                                                                         12)),
                                                     child: Center(
                                                       child: Text(
-                                                        "10%",
+                                                        "${state.event.discount}%",
                                                         style: primaryTextStyle(
                                                           color: Colors.white,
                                                         ),
@@ -258,12 +264,28 @@ class _EventPageState extends State<EventPage> {
                                                 ),
                                             ],
                                           ),
-                                          Container(
-                                            child: Center(
-                                              child: Text(
-                                                state.event.ownerName,
-                                                style: boldTextStyle(
-                                                  color: colorPallet5,
+                                          GestureDetector(
+                                            onTap: () {
+                                              pushNewScreen(
+                                                context,
+                                                screen: AdminPage(
+                                                  adminId: event.ownerId,
+                                                ),
+                                                withNavBar: false,
+                                                // OPTIONAL VALUE. True by default.
+
+                                                pageTransitionAnimation:
+                                                    PageTransitionAnimation
+                                                        .cupertino,
+                                              );
+                                            },
+                                            child: Container(
+                                              child: Center(
+                                                child: Text(
+                                                  state.event.ownerName,
+                                                  style: boldTextStyle(
+                                                    color: colorPallet5,
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -422,53 +444,67 @@ class _EventPageState extends State<EventPage> {
                                       )
                                     ],
                                   ),
-                                  Container(
-                                    height: 300,
-                                    child: ListView.builder(
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      // itemExtent: ,
-                                      itemBuilder: (context, index) {
-                                        return ListTile(
-                                          contentPadding:
-                                              const EdgeInsets.symmetric(
-                                                  vertical: 10),
-                                          leading: CircleAvatar(
-                                            backgroundColor: colorPallet1,
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(2),
-                                              child: FittedBox(
-                                                fit: BoxFit.scaleDown,
-                                                child: Text(
-                                                  getDateForCircle(state.event
-                                                      .comments[index].date),
-                                                  style: secondaryTextStyle(
-                                                      color: Colors.white),
+                                  state.event.comments.isNotEmpty
+                                      ? SizedBox(
+                                          height: 300,
+                                          child: ListView.builder(
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            // itemExtent: ,
+                                            itemBuilder: (context, index) {
+                                              return ListTile(
+                                                contentPadding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 10),
+                                                leading: CircleAvatar(
+                                                  backgroundColor: colorPallet1,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(2),
+                                                    child: FittedBox(
+                                                      fit: BoxFit.scaleDown,
+                                                      child: Text(
+                                                        getDateForCircle(state
+                                                            .event
+                                                            .comments[index]
+                                                            .date),
+                                                        style:
+                                                            secondaryTextStyle(
+                                                                color: Colors
+                                                                    .white),
+                                                      ),
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
-                                            ),
+                                                title: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      state
+                                                          .event
+                                                          .comments[index]
+                                                          .userName,
+                                                      style: boldTextStyle(),
+                                                    ),
+                                                    Text(
+                                                      state
+                                                          .event
+                                                          .comments[index]
+                                                          .content,
+                                                      style:
+                                                          secondaryTextStyle(),
+                                                    )
+                                                  ],
+                                                ),
+                                              );
+                                            },
+                                            itemCount:
+                                                state.event.comments.length,
                                           ),
-                                          title: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                state.event.comments[index]
-                                                    .userName,
-                                                style: boldTextStyle(),
-                                              ),
-                                              Text(
-                                                state.event.comments[index]
-                                                    .content,
-                                                style: secondaryTextStyle(),
-                                              )
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                      itemCount: state.event.comments.length,
-                                    ),
-                                  )
+                                        )
+                                      : const Center(
+                                          child: Text("هیچ نظری یافت نشد"))
                                 ],
                               ),
                             );

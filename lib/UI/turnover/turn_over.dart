@@ -21,6 +21,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 // import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 import '../utils/circular_progressbar_component.dart';
+import '../utils/numeral/Numeral.dart';
 import 'components/payment_button.dart';
 import 'components/turnover_card.dart';
 
@@ -129,7 +130,10 @@ class _TurnOverState extends State<TurnOver> {
   late List<SalesData> _chartData;
   late TooltipBehavior _tooltipBehavior;
   List<String> months = [
-    'فروردین',
+    'دی',
+    'بهمن',
+    'اسفند',
+    'فرورودین',
     'اردیبهشت',
     'خرداد',
     'تیر',
@@ -137,10 +141,7 @@ class _TurnOverState extends State<TurnOver> {
     'شهریور',
     'مهر',
     'آبان',
-    'آذر',
-    'دی',
-    'بهمن',
-    'اسفند'
+    'آذر'
   ];
 
   @override
@@ -223,7 +224,7 @@ class _TurnOverState extends State<TurnOver> {
                     List<SalesData> dateChart = state.data
                         .map((e) => SalesData(e.toString(), e))
                         .toList();
-                    print(state.payments.length);
+                    print(getMonth(0));
                     return Column(
                       children: [
                         Container(
@@ -247,7 +248,7 @@ class _TurnOverState extends State<TurnOver> {
                                     ],
                                   ),
                                   Text(
-                                    '${state.eventPayment} تومان ',
+                                    '${Numeral(state.eventPayment)} تومان ',
                                     style: boldTextStyle(),
                                   ),
                                 ],
@@ -269,7 +270,7 @@ class _TurnOverState extends State<TurnOver> {
                                     ],
                                   ),
                                   Text(
-                                    '${state.reservePayment} تومان ',
+                                    '${Numeral(state.reservePayment)} تومان ',
                                     style: boldTextStyle(),
                                   ),
                                 ],
@@ -292,7 +293,7 @@ class _TurnOverState extends State<TurnOver> {
                                       ],
                                     ),
                                     Text(
-                                      '${state.totalPayment} تومان ',
+                                      ' ${Numeral(state.totalPayment)}تومان ',
                                       style: boldTextStyle(color: Colors.white),
                                     ),
                                   ],
@@ -304,17 +305,19 @@ class _TurnOverState extends State<TurnOver> {
                         20.height,
                         SfCartesianChart(
                           // Enable tooltip
+                          primaryXAxis: CategoryAxis(),
                           tooltipBehavior: _tooltipBehavior,
                           axisLabelFormatter: (AxisLabelRenderDetails x) {
                             return ChartAxisLabel(
                                 x.text, TextStyle(fontFamily: 'Dana'));
                           },
-                          series: <ChartSeries>[
-                            LineSeries<SalesData, int>(
+                          series: <LineSeries<SalesData, String>>[
+                            LineSeries<SalesData, String>(
                                 name: 'میزان هزینه',
                                 color: colorPallet2,
                                 dataSource: dateChart,
-                                xValueMapper: (SalesData sales, int x) => x + 1,
+                                xValueMapper: (SalesData sales, int x) =>
+                                    (months[getMonth(x) - 1]),
                                 dataLabelMapper: (SalesData sales, int x) =>
                                     months[x],
                                 dataLabelSettings: const DataLabelSettings(
@@ -326,7 +329,6 @@ class _TurnOverState extends State<TurnOver> {
                         ),
                         ListView.builder(
                             itemBuilder: (context, index) {
-                              print(index);
                               return TurnoverCardWidget(
                                   turnover_card: state.payments[index]);
                             },
@@ -357,6 +359,17 @@ class _TurnOverState extends State<TurnOver> {
       SalesData('مرداد', 10),
     ];
     return chartData;
+  }
+
+  DateTime dateTime = DateTime.now();
+
+  getMonth(int d) {
+    int x = 4 - d;
+    print('1 :   ' + dateTime.month.toString());
+    if (dateTime.month - x > 0) {
+      return dateTime.month - x;
+    }
+    return 12 + (dateTime.month - x);
   }
 
 // String getMonthName(int month){

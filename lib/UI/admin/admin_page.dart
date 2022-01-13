@@ -20,8 +20,9 @@ import '../../state_managment/admin/admin_cubit.dart';
 
 class AdminPage extends StatefulWidget {
   int adminId;
+  Object? heroTag;
 
-  AdminPage({Key? key, required this.adminId}) : super(key: key);
+  AdminPage({Key? key, required this.adminId, this.heroTag}) : super(key: key);
 
   @override
   _AdminPageState createState() => _AdminPageState();
@@ -164,47 +165,50 @@ class _AdminPageState extends State<AdminPage> {
                   child: Stack(
                     children: [
                       Column(children: [
-                        CarouselSlider(
-                          items: state.admin.imageUrls
-                              .map((item) => CachedNetworkImage(
-                                    imageBuilder: (context, imageProvider) {
-                                      return Container(
-                                        margin: EdgeInsets.all(5),
-                                        decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                                fit: BoxFit.cover,
-                                                image: imageProvider)),
-                                      );
-                                    },
-                                    placeholder: (context, strImage) {
-                                      return Container(
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey,
-                                          border: Border.all(
-                                            color: Colors.white,
-                                            width: 2.0,
+                        Hero(
+                          tag: widget.heroTag ?? "",
+                          child: CarouselSlider(
+                            items: state.admin.imageUrls
+                                .map((item) => CachedNetworkImage(
+                                      imageBuilder: (context, imageProvider) {
+                                        return Container(
+                                          margin: EdgeInsets.all(5),
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  fit: BoxFit.cover,
+                                                  image: imageProvider)),
+                                        );
+                                      },
+                                      placeholder: (context, strImage) {
+                                        return Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey,
+                                            border: Border.all(
+                                              color: Colors.white,
+                                              width: 2.0,
+                                            ),
                                           ),
-                                        ),
-                                      );
-                                    },
-                                    imageUrl: item,
-                                    fit: BoxFit.fill,
-                                    height: context.width() * 0.32,
-                                    width: context.height() * 0.6,
-                                  ))
-                              .toList(),
-                          carouselController: controller,
-                          options: CarouselOptions(
-                              autoPlay: true,
-                              enlargeCenterPage: true,
-                              aspectRatio: 2.0,
-                              enableInfiniteScroll: false,
-                              onPageChanged: (index, reason) {
-                                print(index);
-                                setState(() {
-                                  current = index;
-                                });
-                              }),
+                                        );
+                                      },
+                                      imageUrl: item,
+                                      fit: BoxFit.fill,
+                                      height: context.width() * 0.32,
+                                      width: context.height() * 0.6,
+                                    ))
+                                .toList(),
+                            carouselController: controller,
+                            options: CarouselOptions(
+                                autoPlay: true,
+                                enlargeCenterPage: true,
+                                aspectRatio: 2.0,
+                                enableInfiniteScroll: false,
+                                onPageChanged: (index, reason) {
+                                  print(index);
+                                  setState(() {
+                                    current = index;
+                                  });
+                                }),
+                          ),
                         ),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -307,6 +311,11 @@ class _AdminPageState extends State<AdminPage> {
                                           padding: EdgeInsets.zero,
                                           onPressed: () async {
                                             setState(() {
+                                              if (admin.isFollowing) {
+                                                admin.followerCount -= 1;
+                                              } else {
+                                                admin.followerCount += 1;
+                                              }
                                               admin.isFollowing =
                                                   !admin.isFollowing;
                                             });
@@ -315,6 +324,11 @@ class _AdminPageState extends State<AdminPage> {
                                                 .followAdmin(admin.ownerId);
                                             if (!status) {
                                               setState(() {
+                                                if (admin.isFollowing) {
+                                                  admin.followerCount += 1;
+                                                } else {
+                                                  admin.followerCount -= 1;
+                                                }
                                                 admin.isFollowing =
                                                     !admin.isFollowing;
                                               });
@@ -400,13 +414,15 @@ class _AdminPageState extends State<AdminPage> {
                                           children: [
                                             Row(
                                               children: [
-                                                Icon(
-                                                  Icons.stars_outlined,
-                                                  color: Colors.amber,
-                                                ),
-                                                5.width,
+                                                // Icon(
+                                                //   Icons.stars_outlined,
+                                                //   color: Colors.amber,
+                                                // ),
+                                                // 5.width,
                                                 Text(
-                                                  admin.rate.toString(),
+                                                  admin.rateCount == 0
+                                                      ? "رای داده نشده"
+                                                      : admin.rate.toString(),
                                                   style: boldTextStyle(
                                                       color: colorPallet2),
                                                 ),
@@ -420,7 +436,8 @@ class _AdminPageState extends State<AdminPage> {
                                               ),
                                               itemCount: 5,
                                               itemSize: 25.0,
-                                              initialRating: 3,
+                                              initialRating:
+                                                  admin.rateInitial.toDouble(),
                                               glow: false,
                                               direction: Axis.horizontal,
                                               textDirection: TextDirection.ltr,
@@ -558,46 +575,52 @@ class _AdminPageState extends State<AdminPage> {
                                       )
                                     ],
                                   ),
-                                  SizedBox(
-                                    height: 300,
-                                    child: ListView.builder(
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      // itemExtent: ,
-                                      itemBuilder: (context, index) {
-                                        CommentData comment =
-                                            state.admin.comments[index];
-                                        return ListTile(
-                                          contentPadding:
-                                              const EdgeInsets.symmetric(
-                                                  vertical: 10),
-                                          leading: CircleAvatar(
-                                            backgroundColor: colorPallet1,
-                                            child: Text(
-                                              getDateForCircle(comment.date),
-                                              style: secondaryTextStyle(
-                                                  color: Colors.white),
-                                            ),
+                                  state.admin.comments.isNotEmpty
+                                      ? SizedBox(
+                                          height: 300,
+                                          child: ListView.builder(
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            // itemExtent: ,
+                                            itemBuilder: (context, index) {
+                                              CommentData comment =
+                                                  state.admin.comments[index];
+                                              return ListTile(
+                                                contentPadding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 10),
+                                                leading: CircleAvatar(
+                                                  backgroundColor: colorPallet1,
+                                                  child: Text(
+                                                    getDateForCircle(
+                                                        comment.date),
+                                                    style: secondaryTextStyle(
+                                                        color: Colors.white),
+                                                  ),
+                                                ),
+                                                title: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      comment.userName,
+                                                      style: boldTextStyle(),
+                                                    ),
+                                                    Text(
+                                                      comment.content,
+                                                      style:
+                                                          secondaryTextStyle(),
+                                                    )
+                                                  ],
+                                                ),
+                                              );
+                                            },
+                                            itemCount:
+                                                state.admin.comments.length,
                                           ),
-                                          title: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                comment.userName,
-                                                style: boldTextStyle(),
-                                              ),
-                                              Text(
-                                                comment.content,
-                                                style: secondaryTextStyle(),
-                                              )
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                      itemCount: state.admin.comments.length,
-                                    ),
-                                  )
+                                        )
+                                      : const Center(
+                                          child: Text("هیچ نظری یافت نشد"))
                                 ],
                               ),
                             );

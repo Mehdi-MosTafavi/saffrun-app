@@ -16,6 +16,7 @@ class HomeRepository {
       if (result == null) {
         return {'events': <Event>[], 'reserves': <Reserve>[]};
       }
+      print(result);
       List<Event> events = Event.fromJsonListEvents(result['list_event']);
       List<Reserve> reserves =
           Reserve.fromJsonListHomePage(result['list_reserve']);

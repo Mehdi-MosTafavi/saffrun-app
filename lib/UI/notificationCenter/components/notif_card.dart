@@ -74,16 +74,14 @@ class NotificationCardWidget extends StatelessWidget {
                                 children: [
                                   Row(
                                     children: [
-                                      Text(
-                                        notification_card.title,
-                                        style: boldTextStyle(
-                                            color: colorPallet3, size: 18),
-                                      ),
-                                      10.width,
-                                      Text(
-                                        notification_card.senderName,
-                                        style: primaryTextStyle(
-                                            color: colorPallet5),
+                                      Container(
+                                        width: context.width() * 0.38,
+                                        child: Text(
+                                          notification_card.title,
+                                          style: boldTextStyle(
+                                              color: colorPallet3, size: 18),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       ),
                                     ],
                                   ),

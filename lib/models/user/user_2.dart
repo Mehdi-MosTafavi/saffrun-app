@@ -38,9 +38,10 @@ class UserProfile {
         phone: json['phone'] ?? " ",
         country: json['country'] ?? " ",
         province: json['province'] ?? " ",
-        image: json['avatar']['image'] == null
+        image: json['avatar']['image'] == null ||
+                (json['avatar']['image']).length == 0
             ? DefaultImage
-            : json['avatar']['image']['thumbnail'],
+            : json['avatar']['image']['full_size'],
         address: json['address'] ?? " ");
   }
 

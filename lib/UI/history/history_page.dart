@@ -288,6 +288,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                 itemCount: state.events.length,
                                 itemBuilder: (context, index) {
                                   return EventCardWidget(
+                                    index: index,
                                     event: state.events[index],
                                   );
                                 },
@@ -316,6 +317,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                 scrollDirection: Axis.vertical,
                                 itemBuilder: (BuildContext context, int index) {
                                   return ReserveCardWidget(
+                                    index: index,
                                     reserve: state.reserves[index],
                                   );
                                 },

@@ -31,4 +31,14 @@ class SettingCubit extends Cubit<SettingState> {
       return false;
     }
   }
+
+  Future<int> uploadImage(File file) async {
+    try {
+      print(1);
+      return await settingRepository.settingNetworkService.uploadImage(file);
+    } catch (e) {
+      print(e);
+      return -1;
+    }
+  }
 }

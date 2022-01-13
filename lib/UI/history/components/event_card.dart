@@ -6,6 +6,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:saffrun_app/UI/eventPage/event_page.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 
@@ -21,9 +22,12 @@ final List<String> imgList2 = [
 ];
 
 class EventCardWidget extends StatefulWidget {
+  final int index;
+
   EventCardWidget({
     Key? key,
     required this.event,
+    required this.index,
   }) : super(key: key);
   final Event event;
 
@@ -71,7 +75,7 @@ class _EventCardWidgetState extends State<EventCardWidget> {
               date.difference(event.startTime).inSeconds.round();
 
           if (difference_day != 0) {
-            return difference_day.toString() + " تا شروع ";
+            return difference_day.abs().toString() + " روز تا شروع ";
           } else {
             return (difference_hour - difference_day * 24).abs().toString() +
                 ":" +
@@ -182,10 +186,16 @@ class _EventCardWidgetState extends State<EventCardWidget> {
     // Timer timer = Timer.periodic(Duration(seconds: 1), (Timer t) => buildCountWidget());
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => EventPage(
-                  event: widget.event,
-                )));
+        pushNewScreen(
+          context,
+          screen: EventPage(
+              event: widget.event,
+              heroTag: widget.event.id.toString() + widget.toString()),
+          withNavBar: false,
+          // OPTIONAL VALUE. True by default.
+
+          pageTransitionAnimation: PageTransitionAnimation.fade,
+        );
       },
       child: Directionality(
         textDirection: TextDirection.rtl,
@@ -219,37 +229,41 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                CachedNetworkImage(
-                                  imageBuilder: (context, imageProvider) {
-                                    return Container(
-                                      decoration: BoxDecoration(
+                                Hero(
+                                  tag: widget.event.id.toString() +
+                                      widget.toString(),
+                                  child: CachedNetworkImage(
+                                    imageBuilder: (context, imageProvider) {
+                                      return Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                                bottomLeft: Radius.circular(8)),
+                                            image: DecorationImage(
+                                                fit: BoxFit.cover,
+                                                image: imageProvider)),
+                                      );
+                                    },
+                                    placeholder: (context, strImage) {
+                                      return Container(
+                                        decoration: BoxDecoration(
                                           borderRadius: BorderRadius.only(
-                                              bottomLeft: Radius.circular(8)),
-                                          image: DecorationImage(
-                                              fit: BoxFit.cover,
-                                              image: imageProvider)),
-                                    );
-                                  },
-                                  placeholder: (context, strImage) {
-                                    return Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                            bottomLeft: Radius.circular(5)),
-                                        color: Colors.grey,
-                                        border: Border.all(
-                                          color: Colors.white,
-                                          width: 2.0,
+                                              bottomLeft: Radius.circular(5)),
+                                          color: Colors.grey,
+                                          border: Border.all(
+                                            color: Colors.white,
+                                            width: 2.0,
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  },
-                                  imageUrl: widget.event.imageUrls.isNotEmpty
-                                      ? getImageUrlUsers(
-                                          widget.event.imageUrls[0])
-                                      : DefaultImage,
-                                  fit: BoxFit.fill,
-                                  height: context.height() * 0.15,
-                                  width: context.width() * 0.3,
+                                      );
+                                    },
+                                    imageUrl: widget.event.imageUrls.isNotEmpty
+                                        ? getImageUrlUsers(
+                                            widget.event.imageUrls[0])
+                                        : DefaultImage,
+                                    fit: BoxFit.fill,
+                                    height: context.height() * 0.15,
+                                    width: context.width() * 0.3,
+                                  ),
                                 ),
                                 Expanded(
                                   child: Column(

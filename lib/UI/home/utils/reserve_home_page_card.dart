@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:saffrun_app/UI/admin/admin_page.dart';
+import 'package:saffrun_app/logical/general/size_function.dart';
 import 'package:saffrun_app/models/reserve/reserve.dart';
 import 'package:shamsi_date/shamsi_date.dart';
 
@@ -9,8 +11,7 @@ class ReserveHomePageCard extends StatelessWidget {
   final Reserve reserve;
   final Function onTapCard;
 
-  const ReserveHomePageCard(
-      {Key? key, required this.reserve, required this.onTapCard})
+  const ReserveHomePageCard({Key? key, required this.reserve, required this.onTapCard})
       : super(key: key);
 
   String getStringFormatJalali(Jalali date) {
@@ -36,7 +37,7 @@ class ReserveHomePageCard extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0),
+                const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0),
                 child: Row(
                   children: [
                     Expanded(
@@ -47,17 +48,35 @@ class ReserveHomePageCard extends StatelessWidget {
                             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Expanded(
-                                flex: 2,
-                                child: Container(
-                                  // width: 20,
-                                  // height: 20,
-                                  padding: EdgeInsets.all(15),
-                                  child: const Image(
-                                    image:
-                                        AssetImage('assets/images/profile.png'),
-                                  ),
-                                ),
-                              ),
+                                  flex: 2,
+                                  child: CachedNetworkImage(
+                                    imageBuilder: (context, imageProvider) {
+                                      return Container(
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                                fit: BoxFit.contain,
+                                                image: imageProvider)),
+                                      );
+                                    },
+                                    placeholder: (context, strImage) {
+                                      return Container(
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.grey,
+                                          border: Border.all(
+                                            color: Colors.white,
+                                            width: 2.0,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    imageUrl:
+                                        getImageUrlUsers(reserve.adminImage),
+                                    fit: BoxFit.cover,
+                                    height: context.height() * 0.11,
+                                    width: context.width() * 0.2,
+                                  ).paddingAll(8)),
                               Expanded(
                                 flex: 6,
                                 child: FittedBox(
@@ -67,9 +86,9 @@ class ReserveHomePageCard extends StatelessWidget {
                                     padding: const EdgeInsets.only(left: 5),
                                     child: Column(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      CrossAxisAlignment.start,
                                       children: [
                                         FittedBox(
                                           fit: BoxFit.scaleDown,
@@ -85,7 +104,7 @@ class ReserveHomePageCard extends StatelessWidget {
                                           fit: BoxFit.scaleDown,
                                           child: Text(
                                               getStringFormatJalali(
-                                                      endDateJalali) +
+                                                  endDateJalali) +
                                                   ' - ' +
                                                   getStringFormatJalali(
                                                       startDateJalali),
@@ -116,7 +135,7 @@ class ReserveHomePageCard extends StatelessWidget {
                                 withNavBar: false,
                                 // OPTIONAL VALUE. True by default.
                                 pageTransitionAnimation:
-                                    PageTransitionAnimation.cupertino,
+                                PageTransitionAnimation.cupertino,
                               );
                             },
                             icon: const Icon(

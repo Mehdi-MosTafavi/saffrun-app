@@ -18,6 +18,7 @@ class HomePageCubit extends Cubit<HomePageState> {
     try {
       Map<String, dynamic> result =
           await homeRepository.fetchHomePageRepository();
+      print(result);
       emit(HomePageLoad(result['events'] as List<Event>, result['reserves']));
     } catch (e) {
       print(e);

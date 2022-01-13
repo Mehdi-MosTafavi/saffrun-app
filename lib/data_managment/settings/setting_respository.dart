@@ -12,6 +12,7 @@ class SettingRepository {
     if (status) {
       return true;
     }
+
     throw ('error');
   }
 }

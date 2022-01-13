@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:saffrun_app/constants/theme_color.dart';
 
 showMessage(BuildContext context, String title, String message,
     {dynamic functionRun}) async {
@@ -46,8 +47,8 @@ showMessage(BuildContext context, String title, String message,
                                   child: Column(
                                     children: [
                                       Icon(
-                                        Icons.error,
-                                        color: Color(0xff72add7),
+                                        Icons.exit_to_app,
+                                        color: colorPallet2,
                                         size: width * 0.15,
                                       ),
                                       SizedBox(
@@ -107,8 +108,8 @@ showMessage(BuildContext context, String title, String message,
                                                 await functionRun();
                                               },
                                               child: Container(
-                                                decoration: BoxDecoration(
-                                                    color: Color(0xff72add7),
+                                                decoration: const BoxDecoration(
+                                                    color: colorPallet5,
                                                     borderRadius:
                                                         BorderRadius.only(
                                                             bottomLeft:

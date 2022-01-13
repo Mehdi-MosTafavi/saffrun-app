@@ -26,8 +26,11 @@ class AuthNetworkService extends BaseNetworkService {
 
   Future<bool> sendSignUpDataToServer(String username, String password) async {
     try {
-      Map<String, String> body = {"username": username, "password": password};
-      print(body);
+      Map<String, String> body = {
+        "username": username,
+        "password": password,
+        "client": "app"
+      };
       dynamic? jsonResponse = await postTemplate('/auth/register/', body);
       if (jsonResponse == null) {
         return false;

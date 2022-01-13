@@ -82,6 +82,7 @@ class EventCardWidget extends StatelessWidget {
                       SizedBox(height: 16),
                       InkWell(
                         onTap: () {
+                          FocusScope.of(context).unfocus();
                           pushNewScreen(
                             context,
                             screen: EventPage(

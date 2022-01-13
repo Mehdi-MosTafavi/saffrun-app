@@ -5,6 +5,7 @@ import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:saffrun_app/UI/utils/dropdown_fetch_data.dart';
 import 'package:saffrun_app/UI/utils/painter/dash.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
+import 'package:saffrun_app/data_managment/base_networkservice.dart';
 import 'package:saffrun_app/state_managment/search/search_cubit.dart';
 
 late Jalali startDate = Jalali(1, 1, 1);
@@ -43,7 +44,7 @@ class _FilterButtonWidgetState extends State<FilterButtonWidget> {
                           BorderRadius.all(Radius.circular(10.0))),
                       // contentPadding: const EdgeInsets.all(0.0),
                       content: Container(
-                        height: context.height() * 0.43,
+                        height: context.height() * 0.4,
                         width: context.width() * 0.8,
                         child: Column(
                           children: [
@@ -62,13 +63,11 @@ class _FilterButtonWidgetState extends State<FilterButtonWidget> {
                                 children: [
                                   filterTime(context, setState),
                                   CustomPaint(painter: DashedLinePainter()),
-                                  filterOwner(context, setState),
-                                  CustomPaint(painter: DashedLinePainter()),
                                   EnhancedDropDown.withEndpoint(
                                       dropdownLabelTitle: "",
                                       defaultOptionText: "Choose",
-                                      urlToFetchData: Uri.https("run.mocky.io",
-                                          "/v3/babc0845-8163-4f1e-80df-9bcabd3d4c43"),
+                                      urlToFetchData: Uri.parse(
+                                          BaseNetworkService().urlServer + ""),
                                       valueReturned: (chosen) {
                                         category = chosen;
                                         print(chosen);

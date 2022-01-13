@@ -30,6 +30,7 @@ class SplashNetworkService extends BaseNetworkService {
       if (jsonResponse == null) {
         return null;
       }
+      print(jsonResponse);
       return jsonResponse;
     } catch (e) {
       print(e);

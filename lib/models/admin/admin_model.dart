@@ -1,3 +1,5 @@
+import 'package:saffrun_app/constants/const.dart';
+
 import '../../logical/general/size_function.dart';
 import '../comment/comment.dart';
 import '../event/event_model.dart';
@@ -21,6 +23,7 @@ class Admin {
   double rate;
   int rateCount;
   bool isFollowing;
+  double rateInitial;
 
   Admin(
       {required this.id,
@@ -39,6 +42,7 @@ class Admin {
       required this.fullAddress,
       required this.description,
       required this.rate,
+      this.rateInitial = 3,
       required this.isFollowing,
       required this.rateCount});
 
@@ -78,10 +82,12 @@ class Admin {
         rate: result['rate'] == null
             ? 0
             : double.parse(result['rate'].toStringAsFixed(2)),
+        rateInitial: result['my_rate'] ?? 3,
         rateCount: result['rate_count'] ?? 0);
   }
 
   static getEvents(result) {
+    print(result);
     List<Event> listComments = [];
     for (var element in result) {
       listComments.add(Event(
@@ -90,6 +96,7 @@ class Admin {
           startTime: getTime(element['start_datetime']),
           finishTime: getTime(element['end_datetime']),
           category: element['category']['title'] ?? " ",
+          imageUrls: getImages(element['images']),
           ownerId: element['owner']['id'] ?? 0));
     }
     return listComments;
@@ -100,6 +107,6 @@ class Admin {
     for (var element in result) {
       listString.add(element['image']['full_size']);
     }
-    return listString;
+    return listString.isNotEmpty ? listString : [DefaultImage];
   }
 }

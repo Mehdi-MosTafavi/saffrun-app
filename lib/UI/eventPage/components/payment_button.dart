@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 // import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
@@ -91,7 +90,7 @@ void showDialogForPayment(
                                                   .size
                                                   .width,
                                               image: AssetImage(
-                                                  'assets/images/wallet.jpg'),
+                                                  'assets/images/wallet.png'),
                                               height: context.height() * 0.4,
                                               fit: BoxFit.cover),
                                         ),

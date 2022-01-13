@@ -1,9 +1,11 @@
 // import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:saffrun_app/UI/eventPage/event_page.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/models/payment/payment.dart';
@@ -11,6 +13,7 @@ import 'package:saffrun_app/models/turnover/turnover_card_model.dart';
 
 import '../../../logical/general/size_function.dart';
 import '../../admin/admin_page.dart';
+import '../../utils/numeral/Numeral.dart';
 
 final List<String> imgList2 = [
   'assets/images/mafia1.jpg',
@@ -129,17 +132,33 @@ class TurnoverCardWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (turnover_card.event != null) {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (_) => EventPage(event: turnover_card.event!)));
+          // Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //         builder: (_) => EventPage(event: turnover_card.event!)));
+          pushNewScreen(
+            context,
+            screen: EventPage(
+              event: turnover_card.event!,
+              heroTag: turnover_card.id,
+            ),
+            withNavBar: false,
+            // OPTIONAL VALUE. True by default.
+
+            pageTransitionAnimation: PageTransitionAnimation.fade,
+          );
         } else {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (_) => AdminPage(
-                        adminId: turnover_card.reserve!.adminId,
-                      )));
+          pushNewScreen(
+            context,
+            screen: AdminPage(
+              adminId: turnover_card.reserve!.adminId,
+              heroTag: turnover_card.id,
+            ),
+            withNavBar: false,
+            // OPTIONAL VALUE. True by default.
+
+            pageTransitionAnimation: PageTransitionAnimation.fade,
+          );
         }
       },
       child: Directionality(
@@ -171,17 +190,41 @@ class TurnoverCardWidget extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                height: context.height() * 0.15,
-                                width: context.width() * 0.35,
-                                decoration: BoxDecoration(
-                                    boxShadow: defaultBoxShadow(),
-                                    image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: AssetImage(item)),
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(12),
-                                        bottomLeft: Radius.circular(12))),
+                              Hero(
+                                tag: turnover_card.id,
+                                child: CachedNetworkImage(
+                                  imageBuilder: (context, imageProvider) {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.only(
+                                              bottomLeft: Radius.circular(8)),
+                                          image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: imageProvider)),
+                                    );
+                                  },
+                                  placeholder: (context, strImage) {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                            bottomLeft: Radius.circular(5)),
+                                        color: Colors.grey,
+                                        border: Border.all(
+                                          color: Colors.white,
+                                          width: 2.0,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  imageUrl: turnover_card.event == null
+                                      ? getImageUrlUsers(
+                                          turnover_card.reserve!.adminImage)
+                                      : getImageUrlUsers(
+                                          turnover_card.event!.imageUrls[0]),
+                                  fit: BoxFit.fill,
+                                  height: context.height() * 0.15,
+                                  width: context.width() * 0.3,
+                                ),
                               ),
                               // SizedBox(
                               //   width: context.width() * 0.05,
@@ -220,7 +263,7 @@ class TurnoverCardWidget extends StatelessWidget {
                                         ),
                                         3.width,
                                         Text(
-                                          '${turnover_card.amout} تومان ',
+                                          '${Numeral(turnover_card.amout)} تومان ',
                                           style: boldTextStyle(
                                               color: colorPallet2),
                                         ),

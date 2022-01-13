@@ -2,6 +2,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:nb_utils/src/extensions/context_extensions.dart';
 import 'package:saffrun_app/logical/general/size_function.dart';
 
@@ -58,6 +59,7 @@ class _MessageState extends State<Message> {
                     bottomRight: Radius.circular(imHeight / 2)),
               ),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
                     height: imHeight,
@@ -99,6 +101,10 @@ class _MessageState extends State<Message> {
                       width: width * 0.32,
                     ),
                   ),
+                  Text(
+                    formatTimeString(widget.comment.date),
+                    style: boldTextStyle(color: Colors.blueGrey, size: 11),
+                  )
                 ],
               ),
             ),
