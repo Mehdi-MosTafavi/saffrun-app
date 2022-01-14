@@ -455,6 +455,7 @@ class _AdminPageState extends State<AdminPage> {
                                                   state.admin.rate =
                                                       double.parse(rate
                                                           .toStringAsFixed(2));
+                                                  admin.rateCount += 1;
                                                   setState(() {});
                                                   toast(
                                                       'امتیاز با موفقیت ثبت شد');

@@ -4,6 +4,8 @@ import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:saffrun_app/data_managment/search/search_repository.dart';
 import 'package:saffrun_app/models/event/event_model.dart';
 
+import '../../models/admin/admin_model.dart';
+
 part 'search_state.dart';
 
 class SearchCubit extends Cubit<SearchState> {
@@ -19,8 +21,6 @@ class SearchCubit extends Cubit<SearchState> {
     try {
       int page = 1;
       Map<String, dynamic> value = {
-        'page': page,
-        'page_count': 10,
         'search_query': keyword,
       };
       if (startDate != null && endDate != null) {
@@ -30,9 +30,10 @@ class SearchCubit extends Cubit<SearchState> {
       if (sort != null) {
         value['sort'] = sort;
       }
-      List<Event> events =
+      Map<String, dynamic> result =
           await searchRepository.loadEventFromRepository(value, page);
-      emit(SearchLoadedState(events, keyword));
+
+      emit(SearchLoadedState(result['events'], result['business'], keyword));
     } catch (e) {
       emit(SearchErrorWhileLoadState());
     }

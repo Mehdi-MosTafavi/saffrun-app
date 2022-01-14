@@ -33,7 +33,7 @@ class Admin {
       this.imageUrls = const [],
       this.comments = const [],
       required this.followerCount,
-      required this.events,
+      this.events = const [],
       required this.title,
       required this.date,
       required this.workerCount,
@@ -43,7 +43,7 @@ class Admin {
       required this.description,
       required this.rate,
       this.rateInitial = 3,
-      required this.isFollowing,
+      this.isFollowing = false,
       required this.rateCount});
 
   static getComments(List<dynamic> json) {
@@ -86,6 +86,30 @@ class Admin {
         rateCount: result['rate_count'] ?? 0);
   }
 
+  static Admin fromJsonSearch(result) {
+    return Admin(
+        id: result['id'],
+        ownerId: result['owner']['id'],
+        ownerName: result['owner']['full_name   '] ?? " ",
+        category: result['category'] == null ? " " : result['category']['name'],
+        imageUrls: getImages(result['images']),
+        followerCount: result['follower_count'] ?? 0,
+        title: result['owner']['title'] ?? " ",
+        date: result['establishment_date'] == null
+            ? DateTime(2021, 12, 30)
+            : getTime(result['establishment_date']),
+        workerCount: result['worker_count'] ?? 0,
+        email: result['email'] ?? " ",
+        phoneNumber: result['phone_number'] ?? " ",
+        fullAddress: result['full_address'] ?? " ",
+        description: result['description'] ?? " ",
+        rate: result['rate'] == null
+            ? 0
+            : double.parse(result['rate'].toStringAsFixed(2)),
+        rateInitial: result['my_rate'] ?? 3,
+        rateCount: result['rate_count'] ?? 0);
+  }
+
   static getEvents(result) {
     print(result);
     List<Event> listComments = [];
@@ -108,5 +132,13 @@ class Admin {
       listString.add(element['image']['full_size']);
     }
     return listString.isNotEmpty ? listString : [DefaultImage];
+  }
+
+  static List<Admin> fromJsonList(List response) {
+    List<Admin> admins = [];
+    for (var element in response) {
+      admins.add(Admin.fromJsonSearch(element));
+    }
+    return admins;
   }
 }
