@@ -215,7 +215,7 @@ class Event {
           startTime: getTime(event['start_datetime']),
           description: event['description'],
           finishTime: getTime(event['end_datetime']),
-          ownerName: event['owner_name'] ?? " ",
+          ownerName: event['owner']['title'] ?? " ",
           ownerId: 0));
     }
     return events;

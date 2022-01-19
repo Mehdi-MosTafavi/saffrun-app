@@ -12,6 +12,7 @@ import 'package:saffrun_app/state_managment/search/search_cubit.dart';
 import '../../logical/general/size_function.dart';
 import '../../models/admin/admin_model.dart';
 import '../admin/admin_page.dart';
+import '../home/components/offer_page.dart';
 import 'components/event_card.dart';
 import 'components/filter_button.dart';
 import 'components/shimmer_component.dart';
@@ -116,6 +117,7 @@ class BodySearchWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
     return BlocBuilder<SearchCubit, SearchState>(
       builder: (context, state) {
         if (state is SearchLoadingState) {
@@ -142,6 +144,8 @@ class ListViewForCardSearch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+
     // TODO: implement build
     return BlocBuilder<SearchCubit, SearchState>(
       builder: (context, state) {
@@ -152,51 +156,51 @@ class ListViewForCardSearch extends StatelessWidget {
               state.events.length == 0
                   ? Center(child: Text("هیچ رویدادی یافت نشد")).paddingTop(30)
                   : ListView.builder(
-                      physics: ClampingScrollPhysics(),
-                      shrinkWrap: true,
-                      controller: controller,
-                      itemCount: state.events.length + 1,
-                      itemBuilder: (context, i) {
-                        if (i == 0) {
-                          return Column(
-                            children: [
-                              FilterButtonWidget(
-                                confirmFilter: () async {
-                                  if (state is SearchLoadedState) {
-                                    BlocProvider.of<SearchCubit>(contextBloc)
-                                        .loadEventHandler(state.textSearched,
-                                            startDate: startDate ==
-                                                    Jalali(1, 1, 1, 0, 0, 0)
-                                                ? null
-                                                : startDate,
-                                            endDate: endDate ==
-                                                    Jalali(1, 1, 1, 0, 0, 0)
-                                                ? null
-                                                : endDate,
-                                            sort: sortField);
-                                  }
-                                },
-                              ),
-                              Text(
-                                'رویداد ها',
-                                style: boldTextStyle(),
-                              ).paddingBottom(15)
-                            ],
-                          );
-                        }
-                        int index = i - 1;
-                        Event event = state.events[index];
-                        return EventCardWidget(event: event);
-                      },
-                    ),
+                physics: ClampingScrollPhysics(),
+                shrinkWrap: true,
+                controller: controller,
+                itemCount: state.events.length + 1,
+                itemBuilder: (context, i) {
+                  if (i == 0) {
+                    return Column(
+                      children: [
+                        FilterButtonWidget(
+                          confirmFilter: () async {
+                            if (state is SearchLoadedState) {
+                              BlocProvider.of<SearchCubit>(contextBloc)
+                                  .loadEventHandler(state.textSearched,
+                                  startDate: startDate ==
+                                      Jalali(1, 1, 1, 0, 0, 0)
+                                      ? null
+                                      : startDate,
+                                  endDate: endDate ==
+                                      Jalali(1, 1, 1, 0, 0, 0)
+                                      ? null
+                                      : endDate,
+                                  sort: sortField);
+                            }
+                          },
+                        ),
+                        Text(
+                          'رویداد ها',
+                          style: boldTextStyle(),
+                        ).paddingBottom(15)
+                      ],
+                    );
+                  }
+                  int index = i - 1;
+                  Event event = state.events[index];
+                  return EventCardWidget(event: event);
+                },
+              ),
               20.height,
               state.admins.length == 0
                   ? Center(child: Text("هیچ کارفرمایی یافت نشد")).paddingTop(30)
                   : ListView.builder(
-                      physics: ClampingScrollPhysics(),
+                physics: ClampingScrollPhysics(),
                       shrinkWrap: true,
                       controller: controller,
-                      itemCount: state.events.length + 1,
+                      itemCount: state.admins.length + 1,
                       itemBuilder: (context, i) {
                         if (i == 0) {
                           return Column(
@@ -210,152 +214,133 @@ class ListViewForCardSearch extends StatelessWidget {
                         }
                         int index = i - 1;
                         Admin admin = state.admins[index];
-                        return Container(
-                          margin: const EdgeInsets.only(
-                              left: 20, right: 10, bottom: 0),
-                          // decoration: BoxDecoration(
-                          //     boxShadow: defaultBoxShadow(),
-                          //     borderRadius: BorderRadius.circular(12)),
-                          child: IntrinsicHeight(
+                        return GestureDetector(
+                          onTap: () {
+                            pushNewScreen(
+                              context,
+                              screen: AdminPage(
+                                adminId: admin.ownerId,
+                                heroTag: admin.ownerId.toString() + 'offer',
+                              ),
+                              withNavBar: false,
+                              // OPTIONAL VALUE. True by default.
+
+                              pageTransitionAnimation:
+                                  PageTransitionAnimation.fade,
+                            );
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(bottom: 16),
                             child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Container(color: Colors.transparent, width: 5),
-                                const SizedBox(width: 0),
+                              children: <Widget>[
+                                Container(
+                                  height: width * 0.2,
+                                  width: width * 0.2,
+                                  child: Stack(
+                                    children: <Widget>[
+                                      Hero(
+                                        tag: admin.ownerId.toString() + 'offer',
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              new BorderRadius.circular(12.0),
+                                          child: CachedNetworkImage(
+                                            placeholder: (context, strImage) {
+                                              return Container(
+                                                color: Colors.grey,
+                                              );
+                                            },
+                                            imageUrl: getImageUrlUsers(
+                                                admin.imageUrls[0]),
+                                            fit: BoxFit.fill,
+                                            height: width * 0.32,
+                                            width: width * 0.32,
+                                          ),
+                                        ),
+                                      ),
+                                      // Align(
+                                      //   alignment: Alignment.topRight,
+                                      //   child: Container(
+                                      //     margin: const EdgeInsets.only(right: 10, top: 10),
+                                      //     child: const Icon(Icons.favorite_border,
+                                      //         color: Colors.red, size: 20),
+                                      //   ),
+                                      // ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
                                 Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 0.0, horizontal: 0),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          flex: 12,
-                                          child: Column(
-                                            children: <Widget>[
-                                              Row(
-                                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: <Widget>[
-                                                  Expanded(
-                                                      flex: 2,
-                                                      child: CachedNetworkImage(
-                                                        imageBuilder: (context,
-                                                            imageProvider) {
-                                                          return Container(
-                                                            decoration: BoxDecoration(
-                                                                shape: BoxShape
-                                                                    .circle,
-                                                                image: DecorationImage(
-                                                                    fit: BoxFit
-                                                                        .contain,
-                                                                    image:
-                                                                        imageProvider)),
-                                                          );
-                                                        },
-                                                        placeholder: (context,
-                                                            strImage) {
-                                                          return Container(
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              shape: BoxShape
-                                                                  .circle,
-                                                              color:
-                                                                  Colors.grey,
-                                                              border:
-                                                                  Border.all(
-                                                                color: Colors
-                                                                    .white,
-                                                                width: 2.0,
-                                                              ),
-                                                            ),
-                                                          );
-                                                        },
-                                                        imageUrl:
-                                                            getImageUrlUsers(
-                                                                admin.imageUrls[
-                                                                    0]),
-                                                        fit: BoxFit.cover,
-                                                        height:
-                                                            context.height() *
-                                                                0.11,
-                                                        width: context.width() *
-                                                            0.2,
-                                                      ).paddingAll(8)),
-                                                  Expanded(
-                                                    flex: 6,
-                                                    child: FittedBox(
-                                                      fit: BoxFit.scaleDown,
-                                                      alignment:
-                                                          Alignment.centerRight,
-                                                      child: Container(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(left: 5),
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            FittedBox(
-                                                              fit: BoxFit
-                                                                  .scaleDown,
-                                                              child: Text(
-                                                                  admin.title,
-                                                                  maxLines: 1,
-                                                                  overflow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
-                                                                  style: boldTextStyle(
-                                                                      size: 16,
-                                                                      color: Colors
-                                                                          .black)),
-                                                            ),
-                                                            5.height,
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                              // const SizedBox(height: 16),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      5.height,
+
+                                      text(admin.title,
+                                          textColor: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                      text(admin.description,
+                                          maxLine: 1,
+                                          textColor: Colors.black,
+                                          fontSize: 13),
+                                      SizedBox(height: 2),
+                                      Row(
+                                        children: <Widget>[
+                                          // RatingBar(
+                                          //   initialRating: 5,
+                                          //   minRating: 1,
+                                          //   itemSize: 16,
+                                          //   direction: Axis.horizontal,
+                                          //   itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
+                                          //   ratingWidget: RatingWidget(half: null, full: null),
+                                          //       (context, _) => Icon(
+                                          //     Icons.star,
+                                          //     color: t7colorPrimary,
+                                          //   ),
+                                          //   onRatingUpdate: (rating) {},
+                                          // ),
+                                          text(admin.category,
+                                              textColor: Colors.white,
+                                              fontSize: 13),
+                                        ],
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.all(3),
+                                        decoration:
+                                            boxDecorationWithRoundedCorners(
+                                                backgroundColor: colorPallet1),
+                                        child: FittedBox(
+                                          child: Row(
+                                            children: [
+                                              text('تعداد دنبال کننده ها: ',
+                                                  textColor: Colors.white,
+                                                  fontSize: 13),
+                                              text(
+                                                  admin.followerCount
+                                                      .toString(),
+                                                  fontWeight: FontWeight.bold,
+                                                  textColor: Colors.white,
+                                                  fontSize: 13),
                                             ],
                                           ),
                                         ),
-                                        Expanded(
-                                            flex: 1,
-                                            child: IconButton(
-                                                onPressed: () {
-                                                  FocusScope.of(context)
-                                                      .unfocus();
-                                                  pushNewScreen(
-                                                    context,
-                                                    screen: AdminPage(
-                                                      adminId: admin.ownerId,
-                                                    ),
-                                                    withNavBar: false,
-                                                    // OPTIONAL VALUE. True by default.
-                                                    pageTransitionAnimation:
-                                                        PageTransitionAnimation
-                                                            .cupertino,
-                                                  );
-                                                },
-                                                icon: const Icon(
-                                                  Icons.arrow_forward,
-                                                  color: Colors.black,
-                                                )))
-                                      ],
-                                    ),
+                                      ),
+                                      // text(mListings[index].getRate(),
+                                      //     maxLine: 1,
+                                      //     isLongText: true,
+                                      //     textColor: Colors.black,
+                                      //     fontSize: 13),
+                                      const SizedBox(height: 8),
+                                      // const Divider(height: 0.5, color: Colors.black, thickness: 1)
+                                    ],
                                   ),
-                                )
+                                ),
                               ],
                             ),
                           ),
                         );
                       },
-                    ),
+              ),
             ],
           );
         }

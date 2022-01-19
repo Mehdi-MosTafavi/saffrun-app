@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:saffrun_app/UI/eventPage/event_page.dart';
+import 'package:saffrun_app/constants/const.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/logical/general/size_function.dart';
 import 'package:saffrun_app/models/event/event_model.dart';
@@ -14,7 +15,6 @@ final List<String> imgList2 = [
   'assets/images/mafia1.jpg'
 ];
 
-
 class EventCardWidget extends StatelessWidget {
   EventCardWidget({
     Key? key,
@@ -22,12 +22,10 @@ class EventCardWidget extends StatelessWidget {
   }) : super(key: key);
 
   final Event event;
-  final String item='assets/images/mafia1.jpg';
-
+  final String item = 'assets/images/mafia1.jpg';
 
   int current = 0;
   final CarouselController controller = CarouselController();
-
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +85,10 @@ class EventCardWidget extends StatelessWidget {
                                 ),
                               );
                             },
-                            imageUrl: getImageUrlUsers(event.imageUrls[0]),
+                            imageUrl: getImageUrlUsers(
+                                event.imageUrls.isNotEmpty
+                                    ? event.imageUrls[0]
+                                    : DefaultImage),
                             fit: BoxFit.fill,
                             height: context.height() * 0.15,
                             width: context.width(),
@@ -127,7 +128,7 @@ class EventCardWidget extends StatelessWidget {
                                 children: <Widget>[
                                   Row(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Container(
                                         width: context.width() * 0.28,
@@ -191,7 +192,7 @@ class EventCardWidget extends StatelessWidget {
                       },
                       child: Text('جزئیات',
                           style:
-                          primaryTextStyle(size: 15, color: colorPallet4),
+                              primaryTextStyle(size: 15, color: colorPallet4),
                           maxLines: 2),
                     ),
                     10.height,

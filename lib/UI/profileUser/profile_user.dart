@@ -25,89 +25,92 @@ class ProfileUserPage extends StatefulWidget {
 class _ProfileUserPageState extends State<ProfileUserPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Column(
-          // padding: EdgeInsets.symmetric(vertical: context.height() * 0.025,
-          //                               horizontal: context.width() * 0.05),
-          children: <Widget>[
-            buildTop(),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  vertical: context.height() * 0.008,
-                  horizontal: context.width() * 0.05),
-              child: const ProfileListItems(),
-            ),
-          ],
-        ));
-  }
-
-  Widget buildTop() {
     double coverHeight = context.height() * 0.27;
     double profileHeight = context.height() * 0.2;
     final top = coverHeight - profileHeight / 2;
     final bottom = profileHeight / 2;
-    return Stack(
-      clipBehavior: Clip.none,
-      alignment: Alignment.center,
-      children: [
-        Container(
-            margin: EdgeInsets.only(bottom: bottom),
-            child: buildCoverImage(coverHeight)),
-        Positioned(
-          right: 50,
-          top: top,
-          child: buildProfileImage(profileHeight),
-        ),
-        Positioned(
-          left: 40,
-          bottom: 10,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
+    return Scaffold(
+        body: Column(
+      // padding: EdgeInsets.symmetric(vertical: context.height() * 0.025,
+      //                               horizontal: context.width() * 0.05),
+      children: <Widget>[
+        Stack(
+          clipBehavior: Clip.none,
+          alignment: Alignment.center,
+          children: [
+            Container(
+                margin: EdgeInsets.only(bottom: bottom),
+                child: buildCoverImage(coverHeight)),
+            Positioned(
+              right: 50,
+              top: top,
+              child: buildProfileImage(profileHeight),
+            ),
+            Positioned(
+              left: 40,
+              bottom: 10,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    UserProfile.userLogin.getFullName(),
-                    style: boldTextStyle(color: colorPallet3, size: 19),
+                  Row(
+                    children: [
+                      Text(
+                        UserProfile.userLogin.getFullName(),
+                        style: boldTextStyle(color: colorPallet3, size: 19),
+                      )
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        "نام کاربری: ",
+                        style: primaryTextStyle(color: colorPallet3, size: 15),
+                      ),
+                      Text(
+                        UserProfile.userLogin.username,
+                        style: primaryTextStyle(color: colorPallet3, size: 15),
+                      ),
+                    ],
                   )
                 ],
               ),
-              Row(
-                children: [
-                  Text(
-                    "نام کاربری: ",
-                    style: primaryTextStyle(color: colorPallet3, size: 15),
-                  ),
-                  Text(
-                    UserProfile.userLogin.username,
-                    style: primaryTextStyle(color: colorPallet3, size: 15),
-                  ),
-                ],
-              )
-            ],
+            ),
+          ],
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(
+              vertical: context.height() * 0.008,
+              horizontal: context.width() * 0.05),
+          child: ProfileListItems(
+            changeState: () {
+              print('1');
+              setState(() {});
+            },
           ),
         ),
       ],
-    );
+    ));
   }
 
   Widget buildCoverImage(double coverHeight) => Container(
-    color: colorPallet2,
-    height: coverHeight,
-  );
+        color: colorPallet2,
+        height: coverHeight,
+      );
 
-  Widget buildProfileImage(double profileHeight) => Container(
-    width: profileHeight,
-        height: profileHeight,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(
-            color: Colors.white,
-            width: 4.0,
-          ),
+  Widget buildProfileImage(double profileHeight) {
+    print('doroste');
+    return Container(
+      width: profileHeight,
+      height: profileHeight,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: Colors.white,
+          width: 4.0,
         ),
-        child: CachedNetworkImage(
-          placeholder: (context, strImage) {
+      ),
+      child: CachedNetworkImage(
+        placeholder: (context, strImage) {
             return Container(
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
@@ -123,22 +126,30 @@ class _ProfileUserPageState extends State<ProfileUserPage> {
           imageBuilder: (context, imageProvider) {
             return Container(
               decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: Colors.white,
-                    width: 4.0,
-                  ),
-                  image:
-                      DecorationImage(fit: BoxFit.cover, image: imageProvider)),
-            );
-          },
-        ),
-      );
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: Colors.white,
+                  width: 4.0,
+                ),
+                image:
+                    DecorationImage(fit: BoxFit.cover, image: imageProvider)),
+          );
+        },
+      ),
+    );
+  }
 }
 
-class ProfileListItems extends StatelessWidget {
-  const ProfileListItems({Key? key}) : super(key: key);
+class ProfileListItems extends StatefulWidget {
+  Function changeState;
 
+  ProfileListItems({Key? key, required this.changeState}) : super(key: key);
+
+  @override
+  State<ProfileListItems> createState() => _ProfileListItemsState();
+}
+
+class _ProfileListItemsState extends State<ProfileListItems> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -154,7 +165,10 @@ class ProfileListItems extends StatelessWidget {
               screen: ProfileSettingEditPage(),
               withNavBar: false, // OPTIONAL VALUE. True by default.
               pageTransitionAnimation: PageTransitionAnimation.cupertino,
-            );
+            ).then((value) {
+              print('2');
+              widget.changeState();
+            });
           },
         ),
         15.height,
@@ -209,11 +223,11 @@ class ProfileListItems extends StatelessWidget {
           onTapRow: () {
             showMessage(context, 'خروج', 'آیا از خروج از برنامه اطمینان دارد؟',
                 functionRun: () async {
-              final _prefs = await SharedPreferences.getInstance();
-              await _prefs.clear();
-              print('1');
-              Phoenix.rebirth(context);
-            });
+                  final _prefs = await SharedPreferences.getInstance();
+                  await _prefs.clear();
+                  print('1');
+                  Phoenix.rebirth(context);
+                });
           },
         ),
       ],

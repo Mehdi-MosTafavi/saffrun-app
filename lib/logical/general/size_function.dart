@@ -5,6 +5,9 @@ import '../../models/user/user_2.dart';
 
 String getImageUrl() {
   if (DefaultImage == UserProfile.userLogin.image) return DefaultImage;
+  if (UserProfile.userLogin.image.contains("10.0.2.2:8000")) {
+    return UserProfile.userLogin.image;
+  }
   return "http://10.0.2.2:8000" + UserProfile.userLogin.image;
 }
 

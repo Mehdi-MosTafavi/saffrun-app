@@ -404,10 +404,17 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                   builder: (context, state) {
                     return GestureDetector(
                       onTap: () async {
+                        Map imageData = {'id': -1};
                         int imageId = -1;
                         if (state is SettingEnterValidValue) {
-                          imageId = await BlocProvider.of<SettingCubit>(context)
-                              .uploadImage(state.file);
+                          imageData =
+                              await BlocProvider.of<SettingCubit>(context)
+                                  .uploadImage(state.file);
+                          await CachedNetworkImage.evictFromCache(
+                              getImageUrl());
+                          imageId = imageData['id'];
+                          UserProfile.userLogin.image =
+                              imageData['image']['thumbnail'];
                         }
 
                         Map<String, dynamic> userInfo = {

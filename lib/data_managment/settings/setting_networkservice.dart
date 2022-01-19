@@ -31,7 +31,7 @@ class SettingNetworkService extends BaseNetworkService {
     return request;
   }
 
-  Future<int> uploadImage(File file) async {
+  Future<Map> uploadImage(File file) async {
     try {
       print(file.path);
       var _prefs = await SharedPreferences.getInstance();
@@ -44,17 +44,12 @@ class SettingNetworkService extends BaseNetworkService {
           await initImageForSend(uploadProfile, file);
       final response = await request.send();
       String result = await response.stream.bytesToString();
-      print('----------------');
-      print(result);
-      print(request.url);
-      print(response.statusCode);
       if (response.statusCode == 201) {
-        return convert.jsonDecode(result)['id'];
+        return convert.jsonDecode(result);
       } else {
         throw ('Error');
       }
     } catch (error) {
-      print(error);
       throw (error);
     }
   }
