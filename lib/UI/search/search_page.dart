@@ -279,35 +279,22 @@ class ListViewForCardSearch extends StatelessWidget {
                                       text(admin.title,
                                           textColor: Colors.black,
                                           fontWeight: FontWeight.bold),
-                                      text(admin.description,
-                                          maxLine: 1,
-                                          textColor: Colors.black,
-                                          fontSize: 13),
-                                      SizedBox(height: 2),
+                                      5.height,
                                       Row(
                                         children: <Widget>[
-                                          // RatingBar(
-                                          //   initialRating: 5,
-                                          //   minRating: 1,
-                                          //   itemSize: 16,
-                                          //   direction: Axis.horizontal,
-                                          //   itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
-                                          //   ratingWidget: RatingWidget(half: null, full: null),
-                                          //       (context, _) => Icon(
-                                          //     Icons.star,
-                                          //     color: t7colorPrimary,
-                                          //   ),
-                                          //   onRatingUpdate: (rating) {},
-                                          // ),
                                           text(admin.category,
-                                              textColor: Colors.white,
+                                              textColor: Colors.blueGrey,
+                                              fontWeight: FontWeight.w700,
                                               fontSize: 13),
                                         ],
                                       ),
+                                      10.height,
                                       Container(
-                                        padding: const EdgeInsets.all(3),
+                                        padding: const EdgeInsets.all(6),
                                         decoration:
                                             boxDecorationWithRoundedCorners(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
                                                 backgroundColor: colorPallet1),
                                         child: FittedBox(
                                           child: Row(

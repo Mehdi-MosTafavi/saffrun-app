@@ -51,17 +51,18 @@ class _OfferPageState extends State<OfferPage> {
                     style: boldTextStyle(),
                   ),
                   15.height,
-                  ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      itemCount: state.admins.length,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        Admin admin = state.admins[index];
-                        return GestureDetector(
-                          onTap: () {
-                            pushNewScreen(
-                              context,
+                  state.admins.isNotEmpty
+                      ? ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          itemCount: state.admins.length,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            Admin admin = state.admins[index];
+                            return GestureDetector(
+                              onTap: () {
+                                pushNewScreen(
+                                  context,
                               screen: AdminPage(
                                 adminId: admin.ownerId,
                                 heroTag: admin.ownerId.toString() + 'offer',
@@ -70,7 +71,7 @@ class _OfferPageState extends State<OfferPage> {
                               // OPTIONAL VALUE. True by default.
 
                               pageTransitionAnimation:
-                                  PageTransitionAnimation.fade,
+                              PageTransitionAnimation.fade,
                             );
                           },
                           child: Container(
@@ -86,7 +87,7 @@ class _OfferPageState extends State<OfferPage> {
                                         tag: admin.ownerId.toString() + 'offer',
                                         child: ClipRRect(
                                           borderRadius:
-                                              new BorderRadius.circular(12.0),
+                                          new BorderRadius.circular(12.0),
                                           child: CachedNetworkImage(
                                             placeholder: (context, strImage) {
                                               return Container(
@@ -116,41 +117,44 @@ class _OfferPageState extends State<OfferPage> {
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      text(admin.title,
-                                          textColor: Colors.black,
-                                          fontWeight: FontWeight.bold),
-                                      text(admin.description,
-                                          maxLine: 1,
-                                          textColor: Colors.black,
-                                          fontSize: 13),
-                                      SizedBox(height: 2),
-                                      Row(
-                                        children: <Widget>[
-                                          // RatingBar(
-                                          //   initialRating: 5,
-                                          //   minRating: 1,
-                                          //   itemSize: 16,
-                                          //   direction: Axis.horizontal,
-                                          //   itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
-                                          //   ratingWidget: RatingWidget(half: null, full: null),
-                                          //       (context, _) => Icon(
-                                          //     Icons.star,
+                                          text(admin.title,
+                                              textColor: Colors.black,
+                                              fontWeight: FontWeight.bold),
+                                          text(admin.description,
+                                              maxLine: 1,
+                                              textColor: Colors.grey,
+                                              fontSize: 13),
+                                          6.height,
+                                          Row(
+                                            children: <Widget>[
+                                              // RatingBar(
+                                              //   initialRating: 5,
+                                              //   minRating: 1,
+                                              //   itemSize: 16,
+                                              //   direction: Axis.horizontal,
+                                              //   itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
+                                              //   ratingWidget: RatingWidget(half: null, full: null),
+                                              //       (context, _) => Icon(
+                                              //     Icons.star,
                                           //     color: t7colorPrimary,
                                           //   ),
                                           //   onRatingUpdate: (rating) {},
                                           // ),
                                           text(admin.category,
-                                              textColor: Colors.white,
+                                              textColor: Colors.blueGrey,
                                               fontSize: 13),
                                         ],
                                       ),
+                                      5.height,
                                       Container(
-                                        padding: const EdgeInsets.all(3),
+                                        padding: const EdgeInsets.all(6),
                                         decoration:
-                                            boxDecorationWithRoundedCorners(
-                                                backgroundColor: colorPallet1),
+                                        boxDecorationWithRoundedCorners(
+                                            backgroundColor: colorPallet1,
+                                            borderRadius: BorderRadius.circular(
+                                                10)),
                                         child: FittedBox(
                                           child: Row(
                                             children: [
@@ -171,34 +175,53 @@ class _OfferPageState extends State<OfferPage> {
                                       //     maxLine: 1,
                                       //     isLongText: true,
                                       //     textColor: Colors.black,
-                                      //     fontSize: 13),
-                                      const SizedBox(height: 8),
-                                      // const Divider(height: 0.5, color: Colors.black, thickness: 1)
-                                    ],
-                                  ),
-                                )
-                              ],
+                                          //     fontSize: 13),
+                                          const SizedBox(height: 8),
+                                          // const Divider(height: 0.5, color: Colors.black, thickness: 1)
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          })
+                      : Container(
+                          padding: const EdgeInsets.symmetric(vertical: 15),
+                          child: Center(
+                            child: Text(
+                              'هیچ کارفرمای پیشنهادی برای شما وجود ندارد',
+                              style: primaryTextStyle(),
                             ),
                           ),
-                        );
-                      }),
+                        ),
                   20.height,
                   Text(
                     'رویدادهای پیشنهادی',
                     style: boldTextStyle(),
                   ),
                   15.height,
-                  ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      itemCount: state.events.length,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        Event admin = state.events[index];
-                        return EventCardWidget(
-                          event: admin,
-                        );
-                      }),
+                  state.events.isNotEmpty
+                      ? ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          itemCount: state.events.length,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            Event admin = state.events[index];
+                            return EventCardWidget(
+                              event: admin,
+                            );
+                          })
+                      : Container(
+                          padding: const EdgeInsets.symmetric(vertical: 15),
+                          child: Center(
+                            child: Text(
+                              'هیچ رویداد پیشنهادی برای شما وجود ندارد',
+                              style: primaryTextStyle(),
+                            ),
+                          ),
+                        ),
                 ],
               );
             }

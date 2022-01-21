@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:najvaflutter/najvaflutter.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
@@ -10,10 +9,6 @@ import 'package:saffrun_app/logical/router.dart';
 late NajvaFlutter najva;
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
-    SystemUiOverlay.bottom, //This line is used for showing the bottom bar
-  ]);
   WidgetsFlutterBinding.ensureInitialized();
   najva = NajvaFlutter();
   najva.setFirebaseEnabled(

@@ -175,7 +175,7 @@ class _AdminPageState extends State<AdminPage> {
                                           margin: EdgeInsets.all(5),
                                           decoration: BoxDecoration(
                                               image: DecorationImage(
-                                                  fit: BoxFit.cover,
+                                                  fit: BoxFit.contain,
                                                   image: imageProvider)),
                                         );
                                       },
@@ -513,7 +513,7 @@ class _AdminPageState extends State<AdminPage> {
                                       style: boldTextStyle(),
                                     ),
                                   ),
-                                  state.admin.events.length != 0
+                                  state.admin.events.isNotEmpty
                                       ? Container(
                                           margin: const EdgeInsets.symmetric(
                                               vertical: 20.0),
@@ -531,7 +531,7 @@ class _AdminPageState extends State<AdminPage> {
                                           ),
                                         )
                                       : Container(
-                                          padding: EdgeInsets.symmetric(
+                                    padding: const EdgeInsets.symmetric(
                                               vertical: 15),
                                           child: Center(
                                             child: Text(

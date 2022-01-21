@@ -24,6 +24,7 @@ class ProfileSettingEditPage extends StatefulWidget {
 
 class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
   TextEditingController nameController = TextEditingController();
+  TextEditingController FamilyController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   TextEditingController contactController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -35,7 +36,8 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
     // TODO: implement initState
     super.initState();
     gender = UserProfile.userLogin.gender;
-    nameController.text = UserProfile.userLogin.getFullName();
+    nameController.text = UserProfile.userLogin.firstName;
+    FamilyController.text = UserProfile.userLogin.lastName;
     addressController.text = UserProfile.userLogin.address;
     contactController.text = UserProfile.userLogin.phone;
     emailController.text = UserProfile.userLogin.email;
@@ -231,29 +233,89 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
-                                        Text('نام و نام خانوادگی',
-                                            style: boldTextStyle(
-                                                color: colorPallet3)),
                                         Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
                                           children: [
-                                            CircleAvatar(
-                                              backgroundColor:
-                                                  colorPallet2.withOpacity(0.2),
-                                              child: const Icon(
-                                                LineAwesomeIcons.user_1,
-                                                color: colorPallet2,
-                                                size: 30,
-                                              ),
-                                            ).paddingTop(10),
-                                            5.width,
                                             Expanded(
-                                              child: T2EditTextField(
-                                                isPassword: false,
-                                                mController: nameController,
-                                                fontSize: 16.0,
-                                              ).paddingLeft(50),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text('نام',
+                                                          style: boldTextStyle(
+                                                              color:
+                                                                  colorPallet3))
+                                                      .paddingRight(15),
+                                                  Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      CircleAvatar(
+                                                        backgroundColor:
+                                                            colorPallet2
+                                                                .withOpacity(
+                                                                    0.2),
+                                                        child: const Icon(
+                                                          LineAwesomeIcons
+                                                              .user_1,
+                                                          color: colorPallet2,
+                                                          size: 30,
+                                                        ),
+                                                      ).paddingTop(10),
+                                                      5.width,
+                                                      Expanded(
+                                                        child: T2EditTextField(
+                                                          isPassword: false,
+                                                          mController:
+                                                              nameController,
+                                                          fontSize: 16.0,
+                                                        ).paddingLeft(50),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text('نام خانوادگی',
+                                                          style: boldTextStyle(
+                                                              color:
+                                                                  colorPallet3))
+                                                      .paddingLeft(10),
+                                                  Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      CircleAvatar(
+                                                        backgroundColor:
+                                                            colorPallet2
+                                                                .withOpacity(
+                                                                    0.2),
+                                                        child: const Icon(
+                                                          LineAwesomeIcons
+                                                              .user_tie,
+                                                          color: colorPallet2,
+                                                          size: 30,
+                                                        ),
+                                                      ).paddingTop(10),
+                                                      5.width,
+                                                      Expanded(
+                                                        child: T2EditTextField(
+                                                          isPassword: false,
+                                                          mController:
+                                                              FamilyController,
+                                                          fontSize: 16.0,
+                                                        ).paddingLeft(50),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -404,8 +466,8 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                   builder: (context, state) {
                     return GestureDetector(
                       onTap: () async {
-                        Map imageData = {'id': -1};
-                        int imageId = -1;
+                        Map imageData = {'id': UserProfile.userLogin.imageId};
+                        int imageId = UserProfile.userLogin.imageId;
                         if (state is SettingEnterValidValue) {
                           imageData =
                               await BlocProvider.of<SettingCubit>(context)
@@ -419,26 +481,34 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
 
                         Map<String, dynamic> userInfo = {
                           "username": UserProfile.userLogin.username,
-                          "first_name": "",
-                          "last_name": nameController.text,
+                          "first_name": nameController.text,
+                          "last_name": FamilyController.text,
                           "email": emailController.text,
                           "phone": contactController.text,
                           "country": "",
                           "province": "",
                           "image_id": imageId,
-                          "gender": gender == "male" ? "M" : "F",
+                          "gender": gender == "N"
+                              ? "N"
+                              : (gender == "male" ? "M" : "F"),
                           "address": addressController.text
                         };
+                        print(userInfo);
                         bool status =
-                        await BlocProvider.of<SettingCubit>(context)
-                            .sendInformationUser(userInfo);
+                            await BlocProvider.of<SettingCubit>(context)
+                                .sendInformationUser(userInfo);
                         if (status) {
                           toast("تغییرات با موفقیت انجام شد.");
                         }
+                        UserProfile.userLogin.imageId = imageId;
                         UserProfile.userLogin.email = emailController.text;
-                        UserProfile.userLogin.lastName = nameController.text;
+                        UserProfile.userLogin.firstName = nameController.text;
+                        UserProfile.userLogin.lastName = FamilyController.text;
                         UserProfile.userLogin.address = addressController.text;
                         UserProfile.userLogin.phone = contactController.text;
+                        UserProfile.userLogin.gender = (gender == "N"
+                            ? ""
+                            : (gender == "male" ? "male" : "female"));
                       },
                       child: Container(
                         alignment: Alignment.center,

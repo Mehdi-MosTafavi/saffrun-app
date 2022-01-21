@@ -6,11 +6,10 @@ import 'package:nb_utils/nb_utils.dart';
 Map<String, String> header = {
   'Accept': 'application/json',
   'Content-Type': 'application/json; charset=utf-8',
-  'Client': 'app'
 };
 
 class BaseNetworkService {
-  String urlServer = "http://10.0.2.2:8000/api";
+  String urlServer = "https://saffrun.mehdi-mostafavi.ir/api";
 
   Future<void> saveToken(String token) async {
     var _prefs = await SharedPreferences.getInstance();
@@ -30,7 +29,26 @@ class BaseNetworkService {
       var _body = convert.json.encode(body);
       http.Response response = await http.post(Uri.parse(urlServer + url),
           headers: header, body: _body);
-      ;
+      print(response.body);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        String body = convert.utf8.decode(response.bodyBytes);
+        var _jsonResponse = convert.jsonDecode(body);
+        return _jsonResponse;
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic>? postTemplateWithOutHeader(String url, var body) async {
+    try {
+      Map<String, String> header2 = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json; charset=utf-8',
+      };
+      var _body = convert.json.encode(body);
+      http.Response response = await http.post(Uri.parse(urlServer + url),
+          headers: header2, body: _body);
       print(response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         String body = convert.utf8.decode(response.bodyBytes);

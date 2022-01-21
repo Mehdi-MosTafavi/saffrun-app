@@ -12,6 +12,7 @@ class UserProfile {
   String image;
   String gender;
   double wallet;
+  int imageId;
 
   UserProfile(
       {required this.username,
@@ -24,6 +25,7 @@ class UserProfile {
       required this.image,
       required this.gender,
       this.wallet = 120000,
+      this.imageId = -1,
       required this.address});
 
   static late UserProfile userLogin;
@@ -42,6 +44,7 @@ class UserProfile {
                 (json['avatar']['image']).length == 0
             ? DefaultImage
             : json['avatar']['image']['full_size'],
+        imageId: json['avatar']['id'] ?? -1,
         address: json['address'] ?? " ");
   }
 

@@ -31,7 +31,9 @@ class AuthNetworkService extends BaseNetworkService {
         "password": password,
         "client": "app"
       };
-      dynamic? jsonResponse = await postTemplate('/auth/register/', body);
+      print(body);
+      dynamic? jsonResponse =
+          await postTemplateWithOutHeader('/auth/register/', body);
       if (jsonResponse == null) {
         return false;
       }

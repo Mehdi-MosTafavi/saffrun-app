@@ -309,7 +309,7 @@ class _ReservePageState extends State<ReservePage> {
   }
 
   String getDateString(DateTime targetStartReserve, bool near) {
-    if (targetStartReserve.isToday && near) {
+    if (targetStartReserve.isToday) {
       return 'امروز';
     }
     var jalali = Jalali.fromDateTime(targetStartReserve);

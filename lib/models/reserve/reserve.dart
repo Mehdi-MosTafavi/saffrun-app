@@ -229,17 +229,15 @@ class Reserve {
   static fromJson(List response, DateTime today) {
     List<Reserve> reserves = [];
     response.forEach((element) {
-      List listTimesStart = (element['start_time'] as String).split(':');
-      List listTimesEnd = (element['end_time'] as String).split(':');
       reserves.add(Reserve(
           id: element['id'],
           adminId: element['owner']['id'],
           adminName: element['owner']['username'],
           createdReserve: today,
-          targetStartReserve: DateTime(2020, 0, 0, int.parse(listTimesStart[0]),
-              int.parse(listTimesStart[1]), int.parse(listTimesStart[2])),
-          targetEndReserve: DateTime(2020, 0, 0, int.parse(listTimesEnd[0]),
-              int.parse(listTimesEnd[1]), int.parse(listTimesEnd[2]))));
+          targetStartReserve:
+              DateFormat('yyyy-MM-ddTHH:mm').parse(element['start_time']),
+          targetEndReserve:
+              DateFormat('yyyy-MM-ddTHH:mm').parse(element['end_time'])));
     });
     return reserves;
   }
@@ -252,7 +250,7 @@ class Reserve {
         price: nearest['price'],
         createdReserve: DateTime.now(),
         targetStartReserve:
-            DateFormat('yyyy-MM-ddThh:mm').parse(nearest['datetime']),
+            DateFormat('yyyy-MM-ddTHH:mm').parse(nearest['datetime']),
         targetEndReserve: DateTime.now());
   }
 

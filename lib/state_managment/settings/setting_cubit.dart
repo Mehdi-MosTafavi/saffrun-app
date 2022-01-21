@@ -34,6 +34,7 @@ class SettingCubit extends Cubit<SettingState> {
 
   Future<Map> uploadImage(File file) async {
     try {
+      emit(SettingSendingProfileData());
       print(1);
       return await settingRepository.settingNetworkService.uploadImage(file);
     } catch (e) {

@@ -87,10 +87,12 @@ class Admin {
   }
 
   static Admin fromJsonSearch(result) {
+    print(result);
+    print(result['category']['name']);
     return Admin(
         id: result['id'],
         ownerId: result['owner']['id'],
-        ownerName: result['owner']['full_name   '] ?? " ",
+        ownerName: result['owner']['full_name'] ?? " ",
         category: result['category'] == null ? " " : result['category']['name'],
         imageUrls: getImages(result['images']),
         followerCount: result['follower_count'] ?? 0,

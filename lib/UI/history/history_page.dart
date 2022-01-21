@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:nb_utils/src/extensions/context_extensions.dart';
 // import 'package:nb_utils/nb_utils.dart';
 // import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -282,17 +283,26 @@ class _HistoryPageState extends State<HistoryPage> {
                           print(state);
                           if (state is HistoryLoaded) {
                             return Container(
-                              child: ListView.builder(
-                                padding: EdgeInsets.only(top: 20),
-                                scrollDirection: Axis.vertical,
-                                itemCount: state.events.length,
-                                itemBuilder: (context, index) {
-                                  return EventCardWidget(
-                                    index: index,
-                                    event: state.events[index],
-                                  );
-                                },
-                              ),
+                              child: state.events.isNotEmpty
+                                  ? ListView.builder(
+                                      padding: EdgeInsets.only(top: 20),
+                                      scrollDirection: Axis.vertical,
+                                      itemCount: state.events.length,
+                                      itemBuilder: (context, index) {
+                                        return EventCardWidget(
+                                          index: index,
+                                          event: state.events[index],
+                                        );
+                                      },
+                                    )
+                                  : Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Center(
+                                          child: Text(
+                                        'هیچ رویدادی وجود ندارد',
+                                        style: boldTextStyle(),
+                                      )),
+                                    ),
                             );
                           }
                           return const Center(child: CircularProgressBar());
@@ -313,16 +323,26 @@ class _HistoryPageState extends State<HistoryPage> {
                           if (state is HistoryEventLoaded) {
                             return Container(
                               padding: EdgeInsets.only(top: 20),
-                              child: ListView.builder(
-                                scrollDirection: Axis.vertical,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return ReserveCardWidget(
-                                    index: index,
-                                    reserve: state.reserves[index],
-                                  );
-                                },
-                                itemCount: state.reserves.length,
-                              ),
+                              child: state.reserves.isNotEmpty
+                                  ? ListView.builder(
+                                      scrollDirection: Axis.vertical,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return ReserveCardWidget(
+                                          index: index,
+                                          reserve: state.reserves[index],
+                                        );
+                                      },
+                                      itemCount: state.reserves.length,
+                                    )
+                                  : Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Center(
+                                          child: Text(
+                                        'هیچ نوبتی وجود ندارد',
+                                        style: boldTextStyle(),
+                                      )),
+                                    ),
                             );
                           }
                           return const Center(child: CircularProgressBar());

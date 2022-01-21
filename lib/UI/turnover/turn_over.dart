@@ -305,12 +305,9 @@ class _TurnOverState extends State<TurnOver> {
                         20.height,
                         SfCartesianChart(
                           // Enable tooltip
-                          primaryXAxis: CategoryAxis(),
+                          primaryXAxis: CategoryAxis(
+                              labelStyle: TextStyle(fontFamily: 'Dana')),
                           tooltipBehavior: _tooltipBehavior,
-                          axisLabelFormatter: (AxisLabelRenderDetails x) {
-                            return ChartAxisLabel(
-                                x.text, TextStyle(fontFamily: 'Dana'));
-                          },
                           series: <LineSeries<SalesData, String>>[
                             LineSeries<SalesData, String>(
                                 name: 'میزان هزینه',

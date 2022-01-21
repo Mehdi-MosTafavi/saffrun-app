@@ -180,7 +180,11 @@ class TurnoverCardWidget extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  Container(color: colorPallet2, width: 10),
+                  Container(
+                      color: turnover_card.type == 'رویداد'
+                          ? colorPallet2
+                          : colorPallet5,
+                      width: 10),
                   Expanded(
                     child: Column(
                       children: <Widget>[

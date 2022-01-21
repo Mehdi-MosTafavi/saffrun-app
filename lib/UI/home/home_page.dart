@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                           child: AnimatedContainer(
                             duration: const Duration(seconds: 1),
                             child: Text(
-                              'نزدیک ترین',
+                              'فعالیت‌های پیش‌رو',
                               style: boldTextStyle(
                                   color: selectedPos == 1
                                       ? colorPallet2
@@ -127,7 +127,7 @@ class _HomePageState extends State<HomePage> {
                         width: width,
                         child: Center(
                           child: Text(
-                            'پیشنهاد ها',
+                            'پیشنهادها',
                             style: boldTextStyle(
                                 color: selectedPos == 2
                                     ? colorPallet2
