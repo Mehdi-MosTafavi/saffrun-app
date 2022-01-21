@@ -384,7 +384,7 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                                           ],
                                         ),
                                         12.height,
-                                        Text('کد ملی',
+                                        Text('ایمیل',
                                             style: boldTextStyle(
                                                 color: colorPallet3)),
                                         Row(
@@ -432,6 +432,8 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                                               child: T2EditTextField(
                                                 isPassword: false,
                                                 mController: contactController,
+                                                number: true,
+                                                maxLength: 11,
                                                 fontSize: 16.0,
                                               ).paddingLeft(50),
                                             ),
@@ -468,6 +470,17 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                       onTap: () async {
                         Map imageData = {'id': UserProfile.userLogin.imageId};
                         int imageId = UserProfile.userLogin.imageId;
+                        if (contactController.text.length != 11 &&
+                            contactController.text.length != 0) {
+                          toast('شماره موبایل نامعتبر است.');
+                          return;
+                        }
+                        if (emailController.text.length != 0) if (!RegExp(
+                                r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+                            .hasMatch(emailController.text)) {
+                          toast('ایمیل نامعتبر است.');
+                          return;
+                        }
                         if (state is SettingEnterValidValue) {
                           imageData =
                               await BlocProvider.of<SettingCubit>(context)
@@ -476,7 +489,7 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                               getImageUrl());
                           imageId = imageData['id'];
                           UserProfile.userLogin.image =
-                              imageData['image']['thumbnail'];
+                              imageData['image']['full_size'];
                         }
 
                         Map<String, dynamic> userInfo = {

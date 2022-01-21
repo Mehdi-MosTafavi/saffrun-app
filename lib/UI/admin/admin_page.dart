@@ -592,11 +592,15 @@ class _AdminPageState extends State<AdminPage> {
                                                         vertical: 10),
                                                 leading: CircleAvatar(
                                                   backgroundColor: colorPallet1,
-                                                  child: Text(
-                                                    getDateForCircle(
-                                                        comment.date),
-                                                    style: secondaryTextStyle(
-                                                        color: Colors.white),
+                                                  child: FittedBox(
+                                                    fit: BoxFit.scaleDown,
+                                                    child: Text(
+                                                      getDateForCircle(
+                                                          comment.date),
+                                                      maxLines: 1,
+                                                      style: secondaryTextStyle(
+                                                          color: Colors.white),
+                                                    ).paddingAll(3),
                                                   ),
                                                 ),
                                                 title: Column(

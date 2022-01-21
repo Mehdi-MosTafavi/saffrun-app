@@ -307,6 +307,8 @@ class _TurnOverState extends State<TurnOver> {
                           // Enable tooltip
                           primaryXAxis: CategoryAxis(
                               labelStyle: TextStyle(fontFamily: 'Dana')),
+                          primaryYAxis: CategoryAxis(
+                              labelStyle: TextStyle(fontFamily: 'Dana')),
                           tooltipBehavior: _tooltipBehavior,
                           series: <LineSeries<SalesData, String>>[
                             LineSeries<SalesData, String>(

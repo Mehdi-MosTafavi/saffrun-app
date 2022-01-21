@@ -235,9 +235,8 @@ class Reserve {
           adminName: element['owner']['username'],
           createdReserve: today,
           targetStartReserve:
-              DateFormat('yyyy-MM-ddTHH:mm').parse(element['start_time']),
-          targetEndReserve:
-              DateFormat('yyyy-MM-ddTHH:mm').parse(element['end_time'])));
+              DateFormat('HH:mm:ss').parse(element['start_time']),
+          targetEndReserve: DateFormat('HH:mm:ss').parse(element['end_time'])));
     });
     return reserves;
   }
