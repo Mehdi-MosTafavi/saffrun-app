@@ -48,11 +48,11 @@ NumeralParsedValue numeralParser(num value) {
 
     // If number > 1 million.
   } else if (abs >= 1000000) {
-    return NumeralParsedValue(value: value / 1000000, suffix: 'میلیون');
+    return NumeralParsedValue(value: value / 1000000, suffix: ' میلیون');
 
     // If number > 1 thousand.
   } else if (abs >= 1000) {
-    return NumeralParsedValue(value: value / 1000, suffix: ' هزار ');
+    return NumeralParsedValue(value: value / 1000, suffix: ' هزار');
   }
 
   return NumeralParsedValue(value: value, suffix: '');

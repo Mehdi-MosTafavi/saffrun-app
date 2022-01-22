@@ -18,6 +18,8 @@ class T2EditTextField extends StatefulWidget {
 
   var maxLength;
 
+  Function(String)? onChanged;
+
   T2EditTextField(
       {var this.fontSize = 20.0,
       var this.textColor = black,
@@ -27,6 +29,7 @@ class T2EditTextField extends StatefulWidget {
       var this.mController,
       this.number = false,
       this.maxLength = null,
+      this.onChanged,
       var this.maxLine = 1});
 
   @override
@@ -45,6 +48,7 @@ class T2EditTextFieldState extends State<T2EditTextField> {
         cursorColor: black,
         maxLines: widget.maxLine,
         maxLength: widget.maxLength,
+        onChanged: widget.onChanged,
         style: TextStyle(
             fontSize: widget.fontSize,
             color: Colors.black,

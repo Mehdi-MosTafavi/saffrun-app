@@ -123,6 +123,7 @@ class Admin {
           finishTime: getTime(element['end_datetime']),
           category: element['category']['title'] ?? " ",
           imageUrls: getImages(element['images']),
+          ownerName: element['owner']['title'] ?? " ",
           ownerId: element['owner']['id'] ?? 0));
     }
     return listComments;

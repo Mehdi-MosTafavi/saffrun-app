@@ -75,7 +75,9 @@ class NotificationCardWidget extends StatelessWidget {
                                   Row(
                                     children: [
                                       Container(
-                                        width: context.width() * 0.38,
+                                        constraints: BoxConstraints(
+                                          maxWidth: context.width() * 0.5,
+                                        ),
                                         child: Text(
                                           notification_card.title,
                                           style: boldTextStyle(
@@ -103,7 +105,7 @@ class NotificationCardWidget extends StatelessWidget {
                                   formatTimeString(
                                       notification_card.createtime),
                                   style: TextStyle(
-                                      letterSpacing: -0.6, fontSize: 13),
+                                      letterSpacing: -0.6, fontSize: 12),
                                 ).paddingOnly(top: 12, left: 12),
                                 2.height,
                                 TextButton(

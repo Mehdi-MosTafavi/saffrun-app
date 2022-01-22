@@ -152,52 +152,50 @@ class ListViewForCardSearch extends StatelessWidget {
         contextBloc = context;
         if (state is SearchLoadedState) {
           return ListView(
+            controller: controller,
+            padding: EdgeInsets.only(bottom: 50),
             children: [
+              Column(
+                children: [
+                  FilterButtonWidget(
+                    confirmFilter: () async {
+                      if (state is SearchLoadedState) {
+                        BlocProvider.of<SearchCubit>(contextBloc)
+                            .loadEventHandler(state.textSearched,
+                                startDate: startDate == Jalali(1, 1, 1, 0, 0, 0)
+                                    ? null
+                                    : startDate,
+                                endDate: endDate == Jalali(1, 1, 1, 0, 0, 0)
+                                    ? null
+                                    : endDate,
+                                sort: sortField,
+                                category: category);
+                      }
+                    },
+                  ),
+                  Text(
+                    'رویدادها',
+                    style: boldTextStyle(),
+                  ).paddingBottom(15)
+                ],
+              ),
               state.events.length == 0
                   ? Center(child: Text("هیچ رویدادی یافت نشد")).paddingTop(30)
                   : ListView.builder(
-                physics: ClampingScrollPhysics(),
-                shrinkWrap: true,
-                controller: controller,
-                itemCount: state.events.length + 1,
-                itemBuilder: (context, i) {
-                  if (i == 0) {
-                    return Column(
-                      children: [
-                        FilterButtonWidget(
-                          confirmFilter: () async {
-                            if (state is SearchLoadedState) {
-                              BlocProvider.of<SearchCubit>(contextBloc)
-                                  .loadEventHandler(state.textSearched,
-                                  startDate: startDate ==
-                                      Jalali(1, 1, 1, 0, 0, 0)
-                                      ? null
-                                      : startDate,
-                                  endDate: endDate ==
-                                      Jalali(1, 1, 1, 0, 0, 0)
-                                      ? null
-                                      : endDate,
-                                  sort: sortField);
-                            }
-                          },
-                        ),
-                        Text(
-                          'رویداد ها',
-                          style: boldTextStyle(),
-                        ).paddingBottom(15)
-                      ],
-                    );
-                  }
-                  int index = i - 1;
-                  Event event = state.events[index];
-                  return EventCardWidget(event: event);
-                },
-              ),
+                      physics: ClampingScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: state.events.length,
+                      itemBuilder: (context, i) {
+                        int index = i;
+                        Event event = state.events[index];
+                        return EventCardWidget(event: event);
+                      },
+                    ),
               20.height,
               state.admins.length == 0
                   ? Center(child: Text("هیچ کارفرمایی یافت نشد")).paddingTop(30)
                   : ListView.builder(
-                physics: ClampingScrollPhysics(),
+                      physics: ClampingScrollPhysics(),
                       shrinkWrap: true,
                       controller: controller,
                       itemCount: state.admins.length + 1,
@@ -206,7 +204,7 @@ class ListViewForCardSearch extends StatelessWidget {
                           return Column(
                             children: [
                               Text(
-                                'کارفرما ها',
+                                'کارفرماها',
                                 style: boldTextStyle(),
                               ).paddingBottom(15)
                             ],
@@ -216,6 +214,7 @@ class ListViewForCardSearch extends StatelessWidget {
                         Admin admin = state.admins[index];
                         return GestureDetector(
                           onTap: () {
+                            FocusScope.of(context).unfocus();
                             pushNewScreen(
                               context,
                               screen: AdminPage(
@@ -252,7 +251,7 @@ class ListViewForCardSearch extends StatelessWidget {
                                             imageUrl: getImageUrlUsers(
                                                 admin.imageUrls[0]),
                                             fit: BoxFit.fill,
-                                            height: width * 0.32,
+                                            height: width * 0.5,
                                             width: width * 0.32,
                                           ),
                                         ),
@@ -293,18 +292,16 @@ class ListViewForCardSearch extends StatelessWidget {
                                         padding: const EdgeInsets.all(6),
                                         decoration:
                                             boxDecorationWithRoundedCorners(
+                                                backgroundColor: colorPallet1,
                                                 borderRadius:
-                                                    BorderRadius.circular(10),
-                                                backgroundColor: colorPallet1),
+                                                    BorderRadius.circular(10)),
                                         child: FittedBox(
                                           child: Row(
                                             children: [
-                                              text('تعداد دنبال کننده ها: ',
+                                              text('امتیاز: ',
                                                   textColor: Colors.white,
                                                   fontSize: 13),
-                                              text(
-                                                  admin.followerCount
-                                                      .toString(),
+                                              text(admin.rate.toString(),
                                                   fontWeight: FontWeight.bold,
                                                   textColor: Colors.white,
                                                   fontSize: 13),
@@ -312,11 +309,6 @@ class ListViewForCardSearch extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                      // text(mListings[index].getRate(),
-                                      //     maxLine: 1,
-                                      //     isLongText: true,
-                                      //     textColor: Colors.black,
-                                      //     fontSize: 13),
                                       const SizedBox(height: 8),
                                       // const Divider(height: 0.5, color: Colors.black, thickness: 1)
                                     ],

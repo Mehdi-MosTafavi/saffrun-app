@@ -158,12 +158,11 @@ class _OfferPageState extends State<OfferPage> {
                                         child: FittedBox(
                                           child: Row(
                                             children: [
-                                              text('تعداد دنبال کننده ها: ',
-                                                  textColor: Colors.white,
-                                                  fontSize: 13),
+                                              text('امتیاز: ',
+                                                      textColor: Colors.white,
+                                                      fontSize: 13),
                                               text(
-                                                  admin.followerCount
-                                                      .toString(),
+                                                  admin.rate.toString(),
                                                   fontWeight: FontWeight.bold,
                                                   textColor: Colors.white,
                                                   fontSize: 13),

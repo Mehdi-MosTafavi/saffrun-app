@@ -16,7 +16,7 @@ class SearchCubit extends Cubit<SearchState> {
   }
 
   Future<void> loadEventHandler(String keyword,
-      {Jalali? startDate, Jalali? endDate, String? sort}) async {
+      {Jalali? startDate, Jalali? endDate, String? sort, int? category}) async {
     emit(SearchLoadingState());
     try {
       int page = 1;
@@ -24,11 +24,14 @@ class SearchCubit extends Cubit<SearchState> {
         'search_query': keyword,
       };
       if (startDate != null && endDate != null) {
-        value['from_datetime'] = startDate.toString();
-        value['until_datetime'] = endDate.toString();
+        value['from_datetime'] = startDate.toDateTime().toString();
+        value['until_datetime'] = endDate.toDateTime().toString();
       }
       if (sort != null) {
         value['sort'] = sort;
+      }
+      if (category != -1 && category != null) {
+        value['category'] = category;
       }
       Map<String, dynamic> result =
           await searchRepository.loadEventFromRepository(value, page);

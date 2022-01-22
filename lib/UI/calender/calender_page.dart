@@ -8,6 +8,8 @@ import 'package:saffrun_app/UI/utils/table_calender/jalali_table_calendar.dart';
 import 'package:saffrun_app/state_managment/calender/calendar_cubit.dart';
 import 'package:saffrun_app/state_managment/calender/components/reserve_card.dart';
 
+import '../utils/circular_progressbar_component.dart';
+
 class CalenderPage extends StatefulWidget {
   const CalenderPage({Key? key}) : super(key: key);
 
@@ -54,13 +56,13 @@ class _CalenderPageState extends State<CalenderPage> {
               contextCubit = context;
               if (state is CalendarInitial) {
                 BlocProvider.of<CalendarCubit>(context).initCalendar();
-                return const Center(
-                  child: CircularProgressIndicator(),
+                return Center(
+                  child: CircularProgressBar(),
                 );
               }
               if (state is CalendarLoadingDateEvent) {
-                return const Center(
-                  child: CircularProgressIndicator(),
+                return Center(
+                  child: CircularProgressBar(),
                 );
               }
               if (state is CalendarLoadedDateEvent) {
@@ -72,7 +74,7 @@ class _CalenderPageState extends State<CalenderPage> {
                     .selectDate(DateTime(now.year, now.month, now.day));
               }
               return ListView(
-                physics: BouncingScrollPhysics(),
+                physics: AlwaysScrollableScrollPhysics(),
                 padding: const EdgeInsets.only(bottom: 70),
                 children: [
                   const SizedBox(
@@ -136,7 +138,7 @@ class _CalenderPageState extends State<CalenderPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
-                        CircularProgressIndicator(),
+                        CircularProgressBar(),
                       ],
                     ),
                   const Divider(
@@ -184,7 +186,7 @@ class _CalenderPageState extends State<CalenderPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
-                        CircularProgressIndicator(),
+                        CircularProgressBar(),
                       ],
                     ),
                 ],

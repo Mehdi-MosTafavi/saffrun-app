@@ -231,72 +231,88 @@ class _TurnOverState extends State<TurnOver> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'رویداد ها',
-                                        style:
-                                            boldTextStyle(color: colorPallet2),
-                                      ),
-                                      6.width,
-                                      Icon(
-                                        LineAwesomeIcons.gamepad,
-                                        color: colorPallet2,
-                                      )
-                                    ],
-                                  ),
-                                  Text(
-                                    '${Numeral(state.eventPayment)} تومان ',
-                                    style: boldTextStyle(),
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'نوبت ها',
-                                        style:
-                                            boldTextStyle(color: colorPallet2),
-                                      ),
-                                      6.width,
-                                      Icon(
-                                        LineIcons.book,
-                                        color: colorPallet2,
-                                      )
-                                    ],
-                                  ),
-                                  Text(
-                                    '${Numeral(state.reservePayment)} تومان ',
-                                    style: boldTextStyle(),
-                                  ),
-                                ],
-                              ),
-                              Container(
-                                padding: EdgeInsets.all(6),
-                                decoration: BoxDecoration(
-                                    color: colorPallet5,
-                                    borderRadius: BorderRadius.circular(7)),
+                              Expanded(
                                 child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                          'مجموع',
+                                          'رویداد ها',
                                           style: boldTextStyle(
-                                              color: Colors.white),
+                                              color: colorPallet2),
                                         ),
                                         6.width,
+                                        Icon(
+                                          LineAwesomeIcons.gamepad,
+                                          color: colorPallet2,
+                                        )
                                       ],
                                     ),
                                     Text(
-                                      ' ${Numeral(state.totalPayment)}تومان ',
-                                      style: boldTextStyle(color: Colors.white),
+                                      '${Numeral(state.eventPayment)} ت ',
+                                      style: boldTextStyle(),
                                     ),
                                   ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'نوبت ها',
+                                          style: boldTextStyle(
+                                              color: colorPallet2),
+                                        ),
+                                        6.width,
+                                        Icon(
+                                          LineIcons.book,
+                                          color: colorPallet2,
+                                        )
+                                      ],
+                                    ),
+                                    Text(
+                                      '${Numeral(state.reservePayment)} ت ',
+                                      style: boldTextStyle(),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  padding: EdgeInsets.all(6),
+                                  margin: EdgeInsets.only(left: 5),
+                                  decoration: BoxDecoration(
+                                      color: colorPallet5,
+                                      borderRadius: BorderRadius.circular(7)),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'مجموع',
+                                            style: boldTextStyle(
+                                                color: Colors.white),
+                                          ),
+                                          6.width,
+                                        ],
+                                      ),
+                                      Text(
+                                        '${Numeral(state.totalPayment)} ت ',
+                                        style:
+                                            boldTextStyle(color: Colors.white),
+                                        maxLines: 1,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],

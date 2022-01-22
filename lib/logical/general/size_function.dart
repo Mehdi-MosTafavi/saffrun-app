@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart' as intl;
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:saffrun_app/constants/const.dart';
 
@@ -22,18 +23,25 @@ DateTime getTime(String time) {
   return date.toLocal();
 }
 
+bool isRTL(String text) {
+  return intl.Bidi.detectRtlDirectionality(text);
+}
+
 String formatTimeString(DateTime dateTime) {
   Jalali date = Jalali.fromDateTime(dateTime);
   var f = date.formatter;
+  var hour = '0' + dateTime.hour.toString();
+  var minute = '0' + dateTime.minute.toString();
+
   return f.dd +
       ' ' +
       f.mN +
       ' ' +
       f.yyyy +
       ' | ' +
-      dateTime.hour.toString() +
+      (hour).substring(hour.length - 2, hour.length) +
       ':' +
-      dateTime.minute.toString();
+      (minute).substring(minute.length - 2, minute.length);
 }
 
 String getDateForm(DateTime dateTime) {

@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
+import 'package:saffrun_app/logical/general/size_function.dart';
 import 'package:saffrun_app/models/reserve/reserve.dart';
 import 'package:shamsi_date/shamsi_date.dart';
 
@@ -41,15 +43,41 @@ class ReserveCard extends StatelessWidget {
               Expanded(
                 child: Padding(
                   padding:
-                      const EdgeInsets.symmetric(vertical: 16.0, horizontal: 5),
+                  const EdgeInsets.symmetric(vertical: 16.0, horizontal: 5),
                   child: Column(
                     children: <Widget>[
                       Row(
                         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          const CircleAvatar(
-                            backgroundImage:
-                                AssetImage('assets/images/profile.png'),
+                          CachedNetworkImage(
+                            placeholder: (context, strImage) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 4.0,
+                                  ),
+                                  color: Colors.grey.withOpacity(0.85),
+                                ),
+                              );
+                            },
+                            imageUrl: getImageUrlUsers(reserve.adminImage),
+                            imageBuilder: (context, imageProvider) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: Colors.white,
+                                      width: 4.0,
+                                    ),
+                                    image: DecorationImage(
+                                        fit: BoxFit.contain,
+                                        image: imageProvider)),
+                              );
+                            },
+                            width: context.width() * 0.1,
+                            height: context.width() * 0.1,
                           ),
                           Expanded(
                             child: Container(
@@ -83,7 +111,7 @@ class ReserveCard extends StatelessWidget {
                                           fit: BoxFit.scaleDown,
                                           child: Text(
                                               getStringFormatJalali(
-                                                      endDateJalali) +
+                                                  endDateJalali) +
                                                   ' - ' +
                                                   getStringFormatJalali(
                                                       startDateJalali),
@@ -107,7 +135,7 @@ class ReserveCard extends StatelessWidget {
                         },
                         child: Text('جزئیات',
                             style:
-                                primaryTextStyle(size: 16, color: colorPallet4),
+                            primaryTextStyle(size: 16, color: colorPallet4),
                             maxLines: 2),
                       ),
                     ],

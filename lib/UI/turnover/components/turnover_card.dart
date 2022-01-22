@@ -203,7 +203,7 @@ class TurnoverCardWidget extends StatelessWidget {
                                           borderRadius: BorderRadius.only(
                                               bottomLeft: Radius.circular(8)),
                                           image: DecorationImage(
-                                              fit: BoxFit.cover,
+                                              fit: BoxFit.contain,
                                               image: imageProvider)),
                                     );
                                   },
@@ -244,11 +244,18 @@ class TurnoverCardWidget extends StatelessWidget {
                                       MainAxisAlignment.spaceAround,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      turnover_card.event == null
-                                          ? turnover_card.reserve!.adminName
-                                          : turnover_card.event!.title,
-                                      style: boldTextStyle(color: colorPallet3),
+                                    Container(
+                                      constraints: BoxConstraints(
+                                          maxWidth: context.width() * 0.35),
+                                      child: Text(
+                                        turnover_card.event == null
+                                            ? turnover_card.reserve!.adminName
+                                            : turnover_card.event!.title,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style:
+                                            boldTextStyle(color: colorPallet3),
+                                      ),
                                     ),
                                     4.height,
                                     Text(

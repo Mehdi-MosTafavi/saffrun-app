@@ -11,7 +11,7 @@ import 'package:saffrun_app/state_managment/search/search_cubit.dart';
 late Jalali startDate = Jalali(1, 1, 1);
 late Jalali endDate = Jalali(1, 1, 1);
 late String sortField = "";
-late String category;
+late int category = -1;
 
 class FilterButtonWidget extends StatefulWidget {
   Function confirmFilter;
@@ -70,7 +70,6 @@ class _FilterButtonWidgetState extends State<FilterButtonWidget> {
                                           BaseNetworkService().urlServer + ""),
                                       valueReturned: (chosen) {
                                         category = chosen;
-                                        print(chosen);
                                       }),
                                   CustomPaint(painter: DashedLinePainter()),
                                   filterSortField(context, setState),
@@ -135,7 +134,8 @@ class _FilterButtonWidgetState extends State<FilterButtonWidget> {
                 context: context,
                 initialEntryMode: PDatePickerEntryMode.input,
                 helpText: 'دیتا',
-                initialDateRange: JalaliRange(start: startDate, end: endDate),
+                initialDateRange:
+                    JalaliRange(start: Jalali.now(), end: Jalali.now()),
                 firstDate: Jalali(1385, 8),
                 lastDate: Jalali(1450, 9),
               );

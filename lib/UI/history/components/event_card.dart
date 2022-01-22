@@ -99,7 +99,7 @@ class _EventCardWidgetState extends State<EventCardWidget> {
               date.difference(event.finishTime).inSeconds.round();
 
           if (difference_day != 0) {
-            return difference_day.toString() + " روز";
+            return difference_day.abs().toString() + " روز مانده تا اتمام";
           } else {
             return (difference_hour - difference_day * 24).abs().toString() +
                 ":" +
@@ -239,7 +239,7 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                                             borderRadius: BorderRadius.only(
                                                 bottomLeft: Radius.circular(8)),
                                             image: DecorationImage(
-                                                fit: BoxFit.cover,
+                                                fit: BoxFit.contain,
                                                 image: imageProvider)),
                                       );
                                     },
@@ -261,7 +261,7 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                                             widget.event.imageUrls[0])
                                         : DefaultImage,
                                     fit: BoxFit.fill,
-                                    height: context.height() * 0.15,
+                                    height: context.height() * 0.18,
                                     width: context.width() * 0.3,
                                   ),
                                 ),
@@ -280,10 +280,17 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Text(
-                                                widget.event.title,
-                                                style: boldTextStyle(),
-                                              ).paddingOnly(top: 15, right: 10),
+                                              Container(
+                                                constraints: BoxConstraints(
+                                                    maxWidth:
+                                                        context.width() * 0.45),
+                                                child: Text(
+                                                  widget.event.title,
+                                                  style: boldTextStyle(),
+                                                ).paddingOnly(
+                                                    top: 15, right: 10),
+                                              ),
+                                              5.height,
                                               Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.start,

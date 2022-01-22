@@ -49,30 +49,47 @@ class _ProfileUserPageState extends State<ProfileUserPage> {
             Positioned(
               left: 40,
               bottom: 10,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        UserProfile.userLogin.getFullName(),
-                        style: boldTextStyle(color: colorPallet3, size: 19),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        "نام کاربری: ",
-                        style: primaryTextStyle(color: colorPallet3, size: 15),
+              child: Container(
+                width: context.width() * 0.4,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: context.width() * 0.4,
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: context.width() * 0.4,
+                            child: Text(
+                              UserProfile.userLogin.getFullName(),
+                              style:
+                                  boldTextStyle(color: colorPallet3, size: 19),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                          )
+                        ],
                       ),
-                      Text(
-                        UserProfile.userLogin.username,
-                        style: primaryTextStyle(color: colorPallet3, size: 15),
-                      ),
-                    ],
-                  )
-                ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "نام کاربری: ",
+                          style:
+                              primaryTextStyle(color: colorPallet3, size: 15),
+                        ),
+                        SizedBox(
+                          width: context.width() * 0.23,
+                          child: Text(
+                            UserProfile.userLogin.username,
+                            style:
+                                primaryTextStyle(color: colorPallet3, size: 15),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           ],

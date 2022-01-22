@@ -16,7 +16,7 @@ class MyColumn extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: context.width() * 0.085,
+          width: context.width() * 0.09,
           padding: const EdgeInsets.all(12),
           decoration:
               const BoxDecoration(shape: BoxShape.circle, color: colorPallet3),

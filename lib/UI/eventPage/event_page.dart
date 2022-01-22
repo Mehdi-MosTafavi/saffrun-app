@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -135,7 +136,7 @@ class _EventPageState extends State<EventPage> {
                                           margin: EdgeInsets.all(5),
                                           decoration: BoxDecoration(
                                               image: DecorationImage(
-                                                  fit: BoxFit.cover,
+                                                  fit: BoxFit.contain,
                                                   image: imageProvider)),
                                         );
                                       },
@@ -219,81 +220,91 @@ class _EventPageState extends State<EventPage> {
                                     ),
                                   ),
                                   SizedBox(
-                                    height: context.height() * 0.07,
-                                    child: Align(
-                                      alignment: Alignment.centerRight,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Container(
-                                                child: Text(
-                                                  state.event.title,
-                                                  style: boldTextStyle(
-                                                      color: colorPallet1,
-                                                      size: 20),
-                                                ),
+                                    height: context.height() * 0.065,
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              constraints: BoxConstraints(
+                                                  maxWidth:
+                                                      context.width() * 0.51),
+                                              child: Text(
+                                                state.event.title,
+                                                maxLines: 3,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: boldTextStyle(
+                                                    color: colorPallet1,
+                                                    size: 20),
                                               ),
-                                              15.width,
-                                              if (state.event.discount != 0)
-                                                FractionallySizedBox(
-                                                  heightFactor: 0.7,
-                                                  child: Container(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 5),
-                                                    decoration:
-                                                        boxDecorationWithRoundedCorners(
-                                                            backgroundColor:
-                                                                colorPallet5,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        12)),
-                                                    child: Center(
-                                                      child: Text(
-                                                        "${state.event.discount}%",
-                                                        style: primaryTextStyle(
-                                                          color: Colors.white,
-                                                        ),
+                                            ).fit(),
+                                            8.width,
+                                            if (state.event.discount != 0)
+                                              FractionallySizedBox(
+                                                heightFactor: 0.7,
+                                                child: Container(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(horizontal: 5),
+                                                  decoration:
+                                                      boxDecorationWithRoundedCorners(
+                                                          backgroundColor:
+                                                              colorPallet5,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      12)),
+                                                  child: Center(
+                                                    child: Text(
+                                                      "${state.event.discount}%",
+                                                      style: primaryTextStyle(
+                                                        color: Colors.white,
                                                       ),
                                                     ),
                                                   ),
                                                 ),
-                                            ],
-                                          ),
-                                          GestureDetector(
-                                            onTap: () {
-                                              pushNewScreen(
-                                                context,
-                                                screen: AdminPage(
-                                                  adminId: event.ownerId,
-                                                ),
-                                                withNavBar: false,
-                                                // OPTIONAL VALUE. True by default.
+                                              ),
+                                          ],
+                                        ),
+                                        15.width,
+                                        GestureDetector(
+                                          onTap: () {
+                                            pushNewScreen(
+                                              context,
+                                              screen: AdminPage(
+                                                adminId: event.ownerId,
+                                              ),
+                                              withNavBar: false,
+                                              // OPTIONAL VALUE. True by default.
 
-                                                pageTransitionAnimation:
-                                                    PageTransitionAnimation
-                                                        .cupertino,
-                                              );
-                                            },
-                                            child: Container(
-                                              child: Center(
-                                                child: Text(
-                                                  state.event.ownerName,
-                                                  style: boldTextStyle(
-                                                    color: colorPallet5,
-                                                  ),
-                                                ),
+                                              pageTransitionAnimation:
+                                                  PageTransitionAnimation
+                                                      .cupertino,
+                                            );
+                                          },
+                                          child: Container(
+                                            constraints: BoxConstraints(
+                                                maxWidth:
+                                                    context.width() * 0.25),
+                                            child: Text(
+                                              state.event.ownerName,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: boldTextStyle(
+                                                color: colorPallet5,
                                               ),
                                             ),
                                           ),
-                                        ],
-                                      ).paddingLeft(10),
-                                    ),
+                                        ),
+                                      ],
+                                    ).paddingLeft(10),
                                   ),
+                                  10.height,
                                   Row(
                                     children: [
                                       const Icon(
@@ -314,73 +325,82 @@ class _EventPageState extends State<EventPage> {
                                     width: 20.0,
                                   ),
                                   SizedBox(
-                                    height: context.height() * 0.07,
+                                    height: context.height() * 0.092,
                                     child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Wrap(
-                                          // alignment: WrapAlignment.start,
-                                          direction: Axis.vertical,
-                                          textDirection: TextDirection.rtl,
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  'تاریخ شروع: ',
-                                                  style: primaryTextStyle(),
-                                                ),
-                                                Text(
-                                                  formatTimeString(
-                                                      state.event.startTime),
-                                                  style: boldTextStyle(),
-                                                ),
-                                              ],
-                                            ).paddingSymmetric(horizontal: 10),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  'تاریخ پایان: ',
-                                                  style: primaryTextStyle(),
-                                                ),
-                                                Text(
-                                                  formatTimeString(
-                                                      state.event.finishTime),
-                                                  style: boldTextStyle(),
-                                                ),
-                                              ],
-                                            ).paddingSymmetric(horizontal: 10),
-                                          ],
-                                        ),
-                                        Align(
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
+                                        DottedBorderWidget(
+                                          radius: 15,
+                                          color: colorPallet5,
+                                          child: Column(
+                                            // alignment: WrapAlignment.start,
+                                            textDirection: TextDirection.rtl,
                                             children: [
-                                              const Icon(
-                                                Icons
-                                                    .supervised_user_circle_sharp,
-                                                color: colorPallet3,
-                                              ),
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.all(5),
-                                                child: Center(
-                                                  child: Text(
-                                                    state.event.participantCount
-                                                        .toString(),
-                                                    style: primaryTextStyle(
-                                                      color: colorPallet3,
-                                                    ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    'تاریخ شروع: ',
+                                                    style: primaryTextStyle(),
                                                   ),
-                                                ),
-                                              ),
+                                                  Text(
+                                                    formatTimeString(
+                                                        state.event.startTime),
+                                                    style: boldTextStyle(),
+                                                  ),
+                                                ],
+                                              ).paddingSymmetric(
+                                                  horizontal: 10, vertical: 3),
+                                              Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    'تاریخ پایان: ',
+                                                    style: primaryTextStyle(),
+                                                  ),
+                                                  Text(
+                                                    formatTimeString(
+                                                        state.event.finishTime),
+                                                    style: boldTextStyle(),
+                                                  ),
+                                                ],
+                                              ).paddingSymmetric(
+                                                  horizontal: 10, vertical: 3),
                                             ],
                                           ),
+                                        ),
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            const Icon(
+                                              Icons
+                                                  .supervised_user_circle_sharp,
+                                              color: colorPallet3,
+                                            ),
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 5),
+                                              child: Text(
+                                                state.event.participantCount
+                                                    .toString(),
+                                                style: primaryTextStyle(
+                                                  color: colorPallet3,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),
@@ -438,7 +458,11 @@ class _EventPageState extends State<EventPage> {
                                             pageTransitionAnimation:
                                                 PageTransitionAnimation
                                                     .cupertino,
-                                          );
+                                          ).then((value) async {
+                                            await BlocProvider.of<EventCubit>(
+                                                    context)
+                                                .fetchEvent(widget.event.id);
+                                          });
                                         },
                                         child: const Text('نظر دهید ...'),
                                       )

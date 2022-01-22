@@ -4,7 +4,7 @@ import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/data_managment/base_networkservice.dart';
 
 class EnhancedDropDown extends StatefulWidget {
-  final ValueChanged<String> valueReturned;
+  final ValueChanged<int> valueReturned;
 
   ///Constructor that accepts a list of elements to be the data source for the dropdown
   EnhancedDropDown.withData(
@@ -176,6 +176,9 @@ class _EnhancedDropDownState extends State<EnhancedDropDown> {
                         onTap: () {
                           setState(() {
                             _selected = data[index];
+                            print(_data[index + 1].value);
+                            widget
+                                .valueReturned(_data[index + 1].value.toInt());
                           });
                         },
                         child: Text(

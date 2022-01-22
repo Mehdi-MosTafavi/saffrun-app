@@ -11,7 +11,8 @@ class ReserveHomePageCard extends StatelessWidget {
   final Reserve reserve;
   final Function onTapCard;
 
-  const ReserveHomePageCard({Key? key, required this.reserve, required this.onTapCard})
+  const ReserveHomePageCard(
+      {Key? key, required this.reserve, required this.onTapCard})
       : super(key: key);
 
   String getStringFormatJalali(Jalali date) {
@@ -37,7 +38,7 @@ class ReserveHomePageCard extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding:
-                const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0),
+                    const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0),
                 child: Row(
                   children: [
                     Expanded(
@@ -86,9 +87,9 @@ class ReserveHomePageCard extends StatelessWidget {
                                     padding: const EdgeInsets.only(left: 5),
                                     child: Column(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.spaceBetween,
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                       children: [
                                         FittedBox(
                                           fit: BoxFit.scaleDown,
@@ -100,18 +101,36 @@ class ReserveHomePageCard extends StatelessWidget {
                                                   color: Colors.black)),
                                         ),
                                         5.height,
+                                        Row(
+                                          children: [
+                                            Icon(
+                                              LineIcons.calendar_1,
+                                              color: Colors.blueGrey,
+                                            ),
+                                            FittedBox(
+                                              fit: BoxFit.scaleDown,
+                                              child: Text(
+                                                  getDateForm(startDateJalali
+                                                      .toDateTime()),
+                                                  style: primaryTextStyle(
+                                                      color: Colors.blueGrey),
+                                                  maxLines: 2),
+                                            ).paddingRight(5),
+                                          ],
+                                        ),
+                                        5.height,
                                         FittedBox(
                                           fit: BoxFit.scaleDown,
                                           child: Text(
                                               getStringFormatJalali(
-                                                  endDateJalali) +
+                                                      endDateJalali) +
                                                   ' - ' +
                                                   getStringFormatJalali(
                                                       startDateJalali),
                                               style: primaryTextStyle(
                                                   color: Colors.blueGrey),
                                               maxLines: 2),
-                                        ).paddingRight(15)
+                                        ).paddingRight(22)
                                       ],
                                     ),
                                   ),
@@ -135,7 +154,7 @@ class ReserveHomePageCard extends StatelessWidget {
                                 withNavBar: false,
                                 // OPTIONAL VALUE. True by default.
                                 pageTransitionAnimation:
-                                PageTransitionAnimation.cupertino,
+                                    PageTransitionAnimation.cupertino,
                               );
                             },
                             icon: const Icon(

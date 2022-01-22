@@ -272,7 +272,7 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
                                     imageUrl: getImageUrlUsers(
                                         widget.reserve.adminImage),
                                     fit: BoxFit.fill,
-                                    height: context.height() * 0.15,
+                                    height: context.height() * 0.17,
                                     width: context.width() * 0.3,
                                   ),
                                 ),
@@ -291,18 +291,20 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Text(
-                                                widget.reserve.adminName,
-                                                style: boldTextStyle(),
-                                              ).paddingOnly(top: 15, right: 10),
+                                              Container(
+                                                constraints: BoxConstraints(
+                                                    maxWidth:
+                                                        context.width() * 0.4),
+                                                child: Text(
+                                                  widget.reserve.adminName,
+                                                  style: boldTextStyle(),
+                                                ).paddingOnly(top: 15),
+                                              ),
                                               Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.start,
                                                 children: [
                                                   Container(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            right: 16, left: 6),
                                                     child: const Center(
                                                         child: Icon(
                                                       LineIcons.money_bill,
@@ -312,14 +314,13 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
                                                   Text(
                                                     widget.reserve.price == 0
                                                         ? 'رایگان'
-                                                        : '${Numeral(reserve.price)} تومان ',
+                                                        : '${Numeral(reserve.price)} تومان',
                                                     style: boldTextStyle(),
-                                                  ).paddingOnly(
-                                                      top: 0, right: 10),
+                                                  )
                                                 ],
                                               )
                                             ],
-                                          ),
+                                          ).paddingRight(6),
                                           Tooltip(
                                             message:
                                                 getStatus(widget.reserve, now),
@@ -341,8 +342,6 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
                                       Row(
                                         children: [
                                           Container(
-                                            padding: const EdgeInsets.only(
-                                                right: 16, left: 6),
                                             child: Center(
                                                 child: Icon(
                                               LineIcons.calendar_1,
@@ -357,7 +356,7 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
                                                 color: colorPallet3),
                                           )
                                         ],
-                                      ),
+                                      ).paddingRight(6),
                                       FittedBox(
                                         alignment: Alignment.centerRight,
                                         fit: BoxFit.scaleDown,
@@ -381,7 +380,7 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
                                                 maxLines: 2),
                                           ],
                                         ),
-                                      ),
+                                      ).paddingRight(6),
                                       10.height,
                                     ],
                                   ),

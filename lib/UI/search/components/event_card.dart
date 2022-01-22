@@ -35,7 +35,7 @@ class EventCardWidget extends StatelessWidget {
               const SizedBox(width: 10),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: Column(
                     children: <Widget>[
                       Row(
@@ -57,15 +57,27 @@ class EventCardWidget extends StatelessWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(event.title,
+                                      Container(
+                                        constraints: BoxConstraints(
+                                            maxWidth: context.width() * 0.43),
+                                        child: Text(
+                                          event.title,
                                           style: boldTextStyle(
                                               color: Colors.black),
-                                          maxLines: 2),
-                                      Text(event.ownerName,
-                                          style: primaryTextStyle(
-                                              weight: FontWeight.w500,
-                                              color: colorPallet5),
-                                          maxLines: 2),
+                                          maxLines: 3,
+                                          overflow: TextOverflow.ellipsis,
+                                        ).paddingLeft(5),
+                                      ),
+                                      Container(
+                                        constraints: BoxConstraints(
+                                            maxWidth: context.width() * 0.26),
+                                        child: Text(event.ownerName,
+                                            style: primaryTextStyle(
+                                                weight: FontWeight.w500,
+                                                color: colorPallet5),
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1),
+                                      ),
                                     ],
                                   ),
                                   Text(event.description,

@@ -258,6 +258,8 @@ class _AdminPageState extends State<AdminPage> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             admin.title,
@@ -269,13 +271,13 @@ class _AdminPageState extends State<AdminPage> {
                                             // height: context.height() * 0.07,
                                             child: Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                              MainAxisAlignment
+                                                  .spaceBetween,
                                               children: [
                                                 Align(
                                                   child: Row(
                                                     mainAxisAlignment:
-                                                        MainAxisAlignment.start,
+                                                    MainAxisAlignment.start,
                                                     children: [
                                                       const Icon(
                                                         Icons.category_outlined,
@@ -283,15 +285,15 @@ class _AdminPageState extends State<AdminPage> {
                                                       ),
                                                       Container(
                                                         padding:
-                                                            const EdgeInsets
-                                                                .all(5),
+                                                        const EdgeInsets
+                                                            .all(5),
                                                         child: Center(
                                                           child: Text(
                                                             admin.category,
                                                             style:
-                                                                primaryTextStyle(
+                                                            primaryTextStyle(
                                                               color:
-                                                                  colorPallet5,
+                                                              colorPallet5,
                                                             ),
                                                           ),
                                                         ),
@@ -348,7 +350,7 @@ class _AdminPageState extends State<AdminPage> {
                                                               Colors.white),
                                                   child: Center(
                                                     child: Text(
-                                                      'لفو دنبال',
+                                                      'لغو دنبال',
                                                       style: boldTextStyle(
                                                           color: colorPallet3),
                                                     ),
@@ -390,14 +392,14 @@ class _AdminPageState extends State<AdminPage> {
                                           //     second_text: 'following'),
                                           const SizedBox(
                                             // height: 20.0,
-                                            width: 20.0,
+                                            width: 10.0,
                                           ),
                                           MyColumn(
                                               first_text: admin.followerCount,
                                               second_text: 'دنبال کننده'),
                                           const SizedBox(
                                             // height: 20.0,
-                                            width: 25.0,
+                                            width: 15.0,
                                           ),
                                           MyColumn(
                                               first_text: admin.events.length,
@@ -515,9 +517,9 @@ class _AdminPageState extends State<AdminPage> {
                                   ),
                                   state.admin.events.isNotEmpty
                                       ? Container(
-                                          margin: const EdgeInsets.symmetric(
+                                    margin: const EdgeInsets.symmetric(
                                               vertical: 20.0),
-                                          height: 280,
+                                          height: 300,
                                           child: ListView.builder(
                                             scrollDirection: Axis.horizontal,
                                             itemBuilder: (BuildContext context,
@@ -567,7 +569,11 @@ class _AdminPageState extends State<AdminPage> {
                                             pageTransitionAnimation:
                                                 PageTransitionAnimation
                                                     .cupertino,
-                                          );
+                                          ).then((value) async {
+                                            await BlocProvider.of<AdminCubit>(
+                                                    context)
+                                                .fetchEvent(widget.adminId);
+                                          });
                                         },
                                         child: const Text(
                                           'نظر دهید ...',
@@ -625,7 +631,8 @@ class _AdminPageState extends State<AdminPage> {
                                           ),
                                         )
                                       : const Center(
-                                          child: Text("هیچ نظری یافت نشد"))
+                                              child: Text("هیچ نظری یافت نشد"))
+                                          .paddingBottom(30)
                                 ],
                               ),
                             );

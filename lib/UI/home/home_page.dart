@@ -48,6 +48,7 @@ class _HomePageState extends State<HomePage> {
               ),
         backgroundColor: Colors.white,
         body: ListView(
+          physics: NeverScrollableScrollPhysics(),
           padding: const EdgeInsets.only(bottom: 100),
           // crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[

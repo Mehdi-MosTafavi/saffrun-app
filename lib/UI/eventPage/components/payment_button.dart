@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:saffrun_app/UI/utils/numeral/Numeral.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/models/user/user_2.dart';
 
@@ -19,6 +20,7 @@ String getWalletStatus(Event event) {
 void showDialogForPayment(
     BuildContext context, Event event, Function addParticipant) {
   int bank = -1;
+  bool loading = false;
   showDialog(
       context: context,
       // useSafeArea: false,
@@ -92,13 +94,15 @@ void showDialogForPayment(
                                               image: AssetImage(
                                                   'assets/images/wallet.png'),
                                               height: context.height() * 0.4,
-                                              fit: BoxFit.cover),
+                                              fit: BoxFit.contain),
                                         ),
                                       ),
                                       SizedBox(
                                         height: 20,
                                       ),
                                       Container(
+                                        constraints: BoxConstraints(
+                                            maxWidth: context.width() * 0.5),
                                         height: 50,
                                         width: 50,
                                         decoration:
@@ -107,7 +111,7 @@ void showDialogForPayment(
                                                     color: colorPallet3)),
                                         child: Center(
                                           child: Text(
-                                            'مبلغ قابل پرداخت : ${event.price} ت ',
+                                            'مبلغ قابل پرداخت : ${Numeral((event.price * (100 - event.discount)) / 100)} تومان ',
                                             style: boldTextStyle(
                                                 color: colorPallet3),
                                           ),
@@ -120,8 +124,14 @@ void showDialogForPayment(
                                           UserProfile.userLogin.wallet)
                                         MaterialButton(
                                           onPressed: () async {
+                                            setState(() {
+                                              loading = true;
+                                            });
                                             bool status =
                                                 await addParticipant();
+                                            setState(() {
+                                              loading = false;
+                                            });
                                             if (status) {
                                               UserProfile.userLogin.wallet -=
                                                   event.price;
@@ -134,22 +144,32 @@ void showDialogForPayment(
                                                     backgroundColor:
                                                         colorPallet3),
                                             child: Center(
-                                              child: Text(
-                                                getWalletStatus(event),
-                                                style: boldTextStyle(
-                                                    color: Colors.white),
-                                              ),
+                                              child: loading
+                                                  ? CircularProgressIndicator(
+                                                      color: Colors.white,
+                                                    ).paddingAll(8)
+                                                  : Text(
+                                                      getWalletStatus(event),
+                                                      style: boldTextStyle(
+                                                          color: Colors.white),
+                                                    ),
                                             ),
                                           ),
                                         ).paddingSymmetric(horizontal: 15)
                                       else
-                                        Center(
-                                          child: TextButton(
-                                            onPressed: () {},
-                                            child: Text(
-                                              getWalletStatus(event),
-                                              style: boldTextStyle(
-                                                  color: colorPallet3),
+                                        Container(
+                                          constraints: BoxConstraints(
+                                              maxWidth: context.width() * 0.6),
+                                          child: Center(
+                                            child: TextButton(
+                                              onPressed: () {},
+                                              child: Text(
+                                                getWalletStatus(event),
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: boldTextStyle(
+                                                    color: colorPallet3),
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -322,12 +342,12 @@ void showDialogForPayment(
                                         height: 50,
                                         width: 50,
                                         decoration:
-                                        boxDecorationWithRoundedCorners(
-                                            border: Border.all(
-                                                color: colorPallet3)),
+                                            boxDecorationWithRoundedCorners(
+                                                border: Border.all(
+                                                    color: colorPallet3)),
                                         child: Center(
                                           child: Text(
-                                            'مبلغ قابل پرداخت : ${event.price} ت ',
+                                            'مبلغ قابل پرداخت : ${Numeral((event.price * (100 - event.discount)) / 100)} تومان ',
                                             style: boldTextStyle(
                                                 color: colorPallet3),
                                           ),
@@ -338,9 +358,15 @@ void showDialogForPayment(
                                       ),
                                       MaterialButton(
                                         onPressed: () async {
-                                          if (bank != -1) {
+                                          if (bank != -1 && !loading) {
+                                            setState(() {
+                                              loading = true;
+                                            });
                                             bool status =
                                                 await addParticipant();
+                                            setState(() {
+                                              loading = false;
+                                            });
                                             if (status) {}
                                           }
                                         },
@@ -351,7 +377,11 @@ void showDialogForPayment(
                                                   backgroundColor:
                                                       colorPallet3),
                                           child: Center(
-                                            child: getBank(bank),
+                                            child: loading
+                                                ? CircularProgressIndicator(
+                                                    color: Colors.white,
+                                                  ).paddingAll(8)
+                                                : getBank(bank),
                                           ),
                                         ),
                                       ),

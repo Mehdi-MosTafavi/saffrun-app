@@ -89,7 +89,10 @@ class BaseNetworkService {
       }
       http.Response response = await http
           .get(Uri.parse(urlServer + url + urlOfBody), headers: header);
+      print(response.statusCode);
       print(response.body);
+      print(response.request?.url);
+      print(header['Authorization']);
       if (response.statusCode == 200) {
         String body = convert.utf8.decode(response.bodyBytes);
         var _jsonResponse = convert.jsonDecode(body);

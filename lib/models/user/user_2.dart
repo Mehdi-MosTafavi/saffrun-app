@@ -35,9 +35,9 @@ class UserProfile {
         username: json['username'],
         firstName: json['first_name'] ?? "بدون نام",
         lastName: json['last_name'] ?? "بدون نام",
-        email: json['email'] ?? " ",
+        email: json['email'] ?? "",
         gender: getGender(json['gender']),
-        phone: json['phone'] ?? " ",
+        phone: json['phone'] ?? "",
         country: json['country'] ?? " ",
         province: json['province'] ?? " ",
         image: json['avatar']['image'] == null ||

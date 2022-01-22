@@ -236,6 +236,9 @@ class Reserve {
           createdReserve: today,
           targetStartReserve:
               DateFormat('HH:mm:ss').parse(element['start_time']),
+          adminImage: element['image']['image'] == null
+              ? DefaultImage
+              : element['image']['image']['full_size'],
           targetEndReserve: DateFormat('HH:mm:ss').parse(element['end_time'])));
     });
     return reserves;

@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:saffrun_app/UI/utils/circular_progressbar_component.dart';
+import 'package:saffrun_app/UI/utils/text_field_auto.dart';
 import 'package:saffrun_app/models/user/user_2.dart';
 import 'package:saffrun_app/state_managment/settings/setting_cubit.dart';
 
@@ -164,12 +165,19 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
                                                 children: <Widget>[
-                                                  Text(
-                                                      UserProfile.userLogin
-                                                          .getFullName(),
-                                                      style: boldTextStyle(
-                                                          color: white,
-                                                          size: 19)),
+                                                  SizedBox(
+                                                    width:
+                                                        context.width() * 0.6,
+                                                    child: Text(
+                                                        UserProfile.userLogin
+                                                            .getFullName(),
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: boldTextStyle(
+                                                            color: white,
+                                                            size: 19)),
+                                                  ),
                                                   SizedBox(height: 8),
                                                   Text(
                                                       UserProfile
@@ -264,12 +272,20 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                                                       ).paddingTop(10),
                                                       5.width,
                                                       Expanded(
-                                                        child: T2EditTextField(
-                                                          isPassword: false,
-                                                          mController:
-                                                              nameController,
-                                                          fontSize: 16.0,
-                                                        ).paddingLeft(50),
+                                                        child: AutoDirection(
+                                                          text: nameController
+                                                              .text,
+                                                          child:
+                                                              T2EditTextField(
+                                                            isPassword: false,
+                                                            onChanged: (text) {
+                                                              setState(() {});
+                                                            },
+                                                            mController:
+                                                                nameController,
+                                                            fontSize: 16.0,
+                                                          ).paddingLeft(50),
+                                                        ),
                                                       ),
                                                     ],
                                                   ),
@@ -305,12 +321,20 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                                                       ).paddingTop(10),
                                                       5.width,
                                                       Expanded(
-                                                        child: T2EditTextField(
-                                                          isPassword: false,
-                                                          mController:
-                                                              FamilyController,
-                                                          fontSize: 16.0,
-                                                        ).paddingLeft(50),
+                                                        child: AutoDirection(
+                                                          text: FamilyController
+                                                              .text,
+                                                          child:
+                                                              T2EditTextField(
+                                                            isPassword: false,
+                                                            mController:
+                                                                FamilyController,
+                                                            onChanged: (text) {
+                                                              setState(() {});
+                                                            },
+                                                            fontSize: 16.0,
+                                                          ).paddingLeft(50),
+                                                        ),
                                                       ),
                                                     ],
                                                   ),
@@ -402,11 +426,17 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                                                 )).paddingTop(10),
                                             5.width,
                                             Expanded(
-                                              child: T2EditTextField(
-                                                isPassword: false,
-                                                mController: emailController,
-                                                fontSize: 16.0,
-                                              ).paddingLeft(50),
+                                              child: AutoDirection(
+                                                text: emailController.text,
+                                                child: T2EditTextField(
+                                                  isPassword: false,
+                                                  mController: emailController,
+                                                  onChanged: (text) {
+                                                    setState(() {});
+                                                  },
+                                                  fontSize: 16.0,
+                                                ).paddingLeft(50),
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -426,16 +456,21 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                                                       .alternate_phone,
                                                   color: colorPallet2,
                                                   size: 30,
-                                                )).paddingTop(10),
+                                                )),
                                             5.width,
                                             Expanded(
-                                              child: T2EditTextField(
-                                                isPassword: false,
-                                                mController: contactController,
-                                                number: true,
-                                                maxLength: 11,
-                                                fontSize: 16.0,
-                                              ).paddingLeft(50),
+                                              child: Directionality(
+                                                textDirection:
+                                                    TextDirection.ltr,
+                                                child: T2EditTextField(
+                                                  isPassword: false,
+                                                  mController:
+                                                      contactController,
+                                                  number: true,
+                                                  maxLength: 11,
+                                                  fontSize: 16.0,
+                                                ).paddingLeft(50),
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -444,11 +479,17 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                                             style: boldTextStyle(
                                                 color: colorPallet3)),
                                         6.height,
-                                        T2EditTextField(
-                                            isPassword: false,
-                                            maxLine: 4,
-                                            mController: addressController,
-                                            fontSize: 16.0),
+                                        AutoDirection(
+                                          text: addressController.text,
+                                          child: T2EditTextField(
+                                              isPassword: false,
+                                              onChanged: (text) {
+                                                setState(() {});
+                                              },
+                                              maxLine: 4,
+                                              mController: addressController,
+                                              fontSize: 16.0),
+                                        ),
                                       ],
                                     ),
                                   ),

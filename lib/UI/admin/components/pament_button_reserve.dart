@@ -5,6 +5,7 @@ import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/models/user/user_2.dart';
 
 import '../../../models/reserve/reserve.dart';
+import '../../utils/numeral/Numeral.dart';
 
 // import 'package:saffrun_app/models/history/event_model.dart';
 // import 'package:saffrun_app/models/history/reserve_model.dart';
@@ -19,6 +20,7 @@ String getWalletStatus(Reserve event) {
 void showDialogForPaymentReserve(
     BuildContext context, Reserve reserve, Function addParticipant) {
   int bank = -1;
+  bool loading = false;
   showDialog(
       context: context,
       // useSafeArea: false,
@@ -107,10 +109,11 @@ void showDialogForPaymentReserve(
                                                     color: colorPallet3)),
                                         child: Center(
                                           child: Text(
-                                            'مبلغ قابل پرداخت : ${reserve.price} ت ',
+                                            'مبلغ قابل پرداخت : ${Numeral(reserve.price)}تومان ',
                                             style: boldTextStyle(
                                                 color: colorPallet3),
-                                          ),
+                                            maxLines: 1,
+                                          ).fit(),
                                         ),
                                       ),
                                       SizedBox(
@@ -120,11 +123,19 @@ void showDialogForPaymentReserve(
                                           UserProfile.userLogin.wallet)
                                         MaterialButton(
                                           onPressed: () async {
-                                            bool status =
-                                                await addParticipant();
-                                            if (status) {
-                                              UserProfile.userLogin.wallet -=
-                                                  reserve.price;
+                                            if (!loading) {
+                                              setState(() {
+                                                loading = true;
+                                              });
+                                              bool status =
+                                                  await addParticipant();
+                                              setState(() {
+                                                loading = false;
+                                              });
+                                              if (status) {
+                                                UserProfile.userLogin.wallet -=
+                                                    reserve.price;
+                                              }
                                             }
                                           },
                                           child: Container(
@@ -134,11 +145,15 @@ void showDialogForPaymentReserve(
                                                     backgroundColor:
                                                         colorPallet3),
                                             child: Center(
-                                              child: Text(
-                                                getWalletStatus(reserve),
-                                                style: boldTextStyle(
-                                                    color: Colors.white),
-                                              ),
+                                              child: loading
+                                                  ? CircularProgressIndicator(
+                                                      color: Colors.white,
+                                                    ).paddingAll(8)
+                                                  : Text(
+                                                      getWalletStatus(reserve),
+                                                      style: boldTextStyle(
+                                                          color: Colors.white),
+                                                    ),
                                             ),
                                           ),
                                         ).paddingSymmetric(horizontal: 0)
@@ -327,10 +342,11 @@ void showDialogForPaymentReserve(
                                                     color: colorPallet3)),
                                         child: Center(
                                           child: Text(
-                                            'مبلغ قابل پرداخت : ${reserve.price} ت ',
+                                            'مبلغ قابل پرداخت : ${Numeral(reserve.price)}تومان',
                                             style: boldTextStyle(
                                                 color: colorPallet3),
-                                          ),
+                                            maxLines: 1,
+                                          ).fit(),
                                         ),
                                       ),
                                       SizedBox(
@@ -338,9 +354,15 @@ void showDialogForPaymentReserve(
                                       ),
                                       MaterialButton(
                                         onPressed: () async {
-                                          if (bank != -1) {
+                                          if (bank != -1 && !loading) {
+                                            setState(() {
+                                              loading = true;
+                                            });
                                             bool status =
                                                 await addParticipant();
+                                            setState(() {
+                                              loading = false;
+                                            });
                                             if (status) {}
                                           }
                                         },
@@ -351,7 +373,11 @@ void showDialogForPaymentReserve(
                                                   backgroundColor:
                                                       colorPallet3),
                                           child: Center(
-                                            child: getBank(bank),
+                                            child: loading
+                                                ? CircularProgressIndicator(
+                                                    color: Colors.white,
+                                                  ).paddingAll(8)
+                                                : getBank(bank),
                                           ),
                                         ),
                                       ),

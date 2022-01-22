@@ -35,13 +35,17 @@ void showDialogForNotification(BuildContext context, NotificationData notif) {
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              width: context.width() * 0.3,
+                              constraints: BoxConstraints(
+                                maxWidth: context.width() * 0.3,
+                              ),
                               child: Text(
                                 notif.title,
                                 style: boldTextStyle(color: colorPallet3),
-                                // overflow: TextOverflow.ellipsis,
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                             Row(
@@ -50,12 +54,13 @@ void showDialogForNotification(BuildContext context, NotificationData notif) {
                                 const Icon(
                                   LineIcons.clock_1,
                                   color: Colors.black,
+                                  size: 17,
                                 ),
-                                4.width,
+                                2.width,
                                 Text(
                                   formatTimeString(notif.createtime),
                                   style: TextStyle(
-                                      fontSize: 15, letterSpacing: -0.4),
+                                      fontSize: 12, letterSpacing: -0.4),
                                 ),
                               ],
                             ),

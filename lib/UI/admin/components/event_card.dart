@@ -30,7 +30,7 @@ class EventCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 200,
+      width: context.width() * 0.51,
       margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
       decoration: BoxDecoration(
           boxShadow: defaultBoxShadow(),
@@ -131,7 +131,8 @@ class EventCardWidget extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Container(
-                                        width: context.width() * 0.28,
+                                        constraints: BoxConstraints(
+                                            maxWidth: context.width() * 0.22),
                                         child: Text(
                                           event.title,
                                           style: boldTextStyle(
@@ -140,13 +141,17 @@ class EventCardWidget extends StatelessWidget {
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
-                                      Text("کافه رخ",
-                                          style: boldTextStyle(
-                                              // weight: FontWeight.w500,
-                                              size: 13,
-                                              color: colorPallet5),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis),
+                                      Container(
+                                        constraints: BoxConstraints(
+                                            maxWidth: context.width() * 0.18),
+                                        child: Text(event.ownerName,
+                                            style: boldTextStyle(
+                                                // weight: FontWeight.w500,
+                                                size: 13,
+                                                color: colorPallet5),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis),
+                                      ),
                                     ],
                                   ),
                                   5.height,
@@ -160,7 +165,7 @@ class EventCardWidget extends StatelessWidget {
                                       ),
                                       3.width,
                                       Text(
-                                        "سرگرمی",
+                                        event.category,
                                         style: primaryTextStyle(
                                             size: Theme.of(context)
                                                 .textTheme
@@ -181,12 +186,12 @@ class EventCardWidget extends StatelessWidget {
                         ],
                       ).paddingSymmetric(horizontal: 10),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 5),
                     InkWell(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => EventPage(
-                              event: event,
+                                  event: event,
                                   heroTag: event.id.toString() + "profile",
                                 )));
                       },
