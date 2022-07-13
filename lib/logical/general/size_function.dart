@@ -6,15 +6,15 @@ import '../../models/user/user_2.dart';
 
 String getImageUrl() {
   if (DefaultImage == UserProfile.userLogin.image) return DefaultImage;
-  if (UserProfile.userLogin.image.contains("saffrun.mehdi-mostafavi.ir")) {
+  if (UserProfile.userLogin.image.contains("188.121.110.151:9000")) {
     return UserProfile.userLogin.image;
   }
-  return "https://saffrun.mehdi-mostafavi.ir" + UserProfile.userLogin.image;
+  return "http://188.121.110.151:9000" + UserProfile.userLogin.image;
 }
 
 String getImageUrlUsers(String url) {
   if (DefaultImage == url) return DefaultImage;
-  return "https://saffrun.mehdi-mostafavi.ir" + url;
+  return "http://188.121.110.151:9000" + url;
 }
 
 DateTime getTime(String time) {

@@ -9,7 +9,7 @@ Map<String, String> header = {
 };
 
 class BaseNetworkService {
-  String urlServer = "https://saffrun.mehdi-mostafavi.ir/api";
+  String urlServer = "http://188.121.110.151:9000/api";
 
   Future<void> saveToken(String token) async {
     var _prefs = await SharedPreferences.getInstance();
