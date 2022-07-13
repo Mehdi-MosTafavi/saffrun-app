@@ -101,12 +101,17 @@ class NotificationCardWidget extends StatelessWidget {
                             ),
                             Column(
                               children: [
-                                Text(
-                                  formatTimeString(
-                                      notification_card.createtime),
-                                  style: TextStyle(
-                                      letterSpacing: -0.6, fontSize: 12),
-                                ).paddingOnly(top: 12, left: 12),
+                                Container(
+                                  constraints: BoxConstraints(
+                                      maxWidth: context.width() * 0.35),
+                                  child: Text(
+                                    formatTimeString(
+                                        notification_card.createtime),
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                        letterSpacing: -0.6, fontSize: 12),
+                                  ).paddingOnly(top: 12, left: 12),
+                                ),
                                 2.height,
                                 TextButton(
                                   onPressed: () {

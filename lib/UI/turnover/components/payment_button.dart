@@ -191,6 +191,7 @@ void showDialogForPaymentAdd(BuildContext context, Function addParticipant) {
                         child: Center(
                           child: TextFormField(
                             cursorHeight: 20,
+                            textAlignVertical: TextAlignVertical.center,
                             autofocus: false,
                             cursorColor: const Color(0xffea004e),
                             keyboardType: TextInputType.number,
@@ -199,6 +200,7 @@ void showDialogForPaymentAdd(BuildContext context, Function addParticipant) {
                             ],
                             controller: controller,
                             decoration: const InputDecoration(
+                                contentPadding: EdgeInsets.zero,
                                 alignLabelWithHint: true,
                                 filled: true,
                                 fillColor: Colors.white,
@@ -210,10 +212,10 @@ void showDialogForPaymentAdd(BuildContext context, Function addParticipant) {
                                 focusColor: Color(0xffea004e),
                                 focusedBorder: OutlineInputBorder(
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(8))),
+                                    BorderRadius.all(Radius.circular(8))),
                                 border: OutlineInputBorder(
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(8)))),
+                                    BorderRadius.all(Radius.circular(8)))),
                           ),
                         ),
                       ),
@@ -226,12 +228,16 @@ void showDialogForPaymentAdd(BuildContext context, Function addParticipant) {
                             await addParticipant(controller.text.toInt());
                           }
                         },
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        focusElevation: 0.5,
                         child: Container(
                           height: 50,
                           decoration: boxDecorationWithRoundedCorners(
                               backgroundColor: colorPallet3),
                           child: Center(
-                            child: getBank(bank),
+                            child: getBank(bank, context),
                           ),
                         ),
                       ),
@@ -259,11 +265,15 @@ void showDialogForPaymentAdd(BuildContext context, Function addParticipant) {
       });
 }
 
-getBank(int bank) {
+getBank(int bank, BuildContext context) {
   if (bank == -1) {
-    return Text(
-      'لطفا بانک مورد نظر را انتخاب کنید.',
-      style: boldTextStyle(color: Colors.white, size: 15),
+    return Container(
+      constraints: BoxConstraints(maxWidth: context.width() * 0.5),
+      child: Text(
+        'لطفا بانک مورد نظر را انتخاب کنید.',
+        maxLines: 1,
+        style: boldTextStyle(color: Colors.white, size: 14),
+      ),
     );
   } else {
     return Text(

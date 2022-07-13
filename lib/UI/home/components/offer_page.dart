@@ -43,7 +43,7 @@ class _OfferPageState extends State<OfferPage> {
               BlocProvider.of<OfferCubit>(context).fetchOfferPage();
             }
             if (state is OfferLoad) {
-              return Column(
+              return ListView(
                 children: [
                   10.height,
                   Text(
@@ -194,12 +194,15 @@ class _OfferPageState extends State<OfferPage> {
                             ),
                           ),
                         ),
-                  20.height,
+                  const Divider(
+                    color: Color(0xffEFF0F6),
+                    thickness: 5,
+                  ),
                   Text(
                     'رویدادهای پیشنهادی',
                     style: boldTextStyle(),
                   ),
-                  15.height,
+                  20.height,
                   state.events.isNotEmpty
                       ? ListView.builder(
                           scrollDirection: Axis.vertical,

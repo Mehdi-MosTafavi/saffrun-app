@@ -54,6 +54,8 @@ class EventCardWidget extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
@@ -80,6 +82,7 @@ class EventCardWidget extends StatelessWidget {
                                       ),
                                     ],
                                   ),
+                                  5.height,
                                   Text(event.description,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,

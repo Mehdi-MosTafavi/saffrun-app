@@ -1,7 +1,5 @@
 // import 'dart:async';
 
-import 'dart:async';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -36,19 +34,14 @@ class EventCardWidget extends StatefulWidget {
 }
 
 class _EventCardWidgetState extends State<EventCardWidget> {
-  late Timer everySecond;
 
   @override
   void initState() {
     super.initState();
-    everySecond = Timer.periodic(const Duration(seconds: 1), (Timer t) {
-      setState(() {});
-    });
   }
 
   @override
   void dispose() {
-    everySecond.cancel();
     super.dispose();
   }
 
@@ -64,15 +57,16 @@ class _EventCardWidgetState extends State<EventCardWidget> {
     switch (event.status) {
       case "NOT STARTED":
         {
+          return 'شروع نشده';
           final date = DateTime.now();
           final difference_day =
-              date.difference(event.startTime).inDays.round();
+          date.difference(event.startTime).inDays.round();
           final difference_hour =
-              date.difference(event.startTime).inHours.round();
+          date.difference(event.startTime).inHours.round();
           final difference_minute =
-              date.difference(event.startTime).inMinutes.round();
+          date.difference(event.startTime).inMinutes.round();
           final difference_second =
-              date.difference(event.startTime).inSeconds.round();
+          date.difference(event.startTime).inSeconds.round();
 
           if (difference_day != 0) {
             return difference_day.abs().toString() + " روز تا شروع ";
@@ -88,15 +82,16 @@ class _EventCardWidgetState extends State<EventCardWidget> {
 
       case "RUNNING":
         {
+          return 'در حال برگزاری';
           final date = DateTime.now();
           final difference_day =
-              date.difference(event.finishTime).inDays.round();
+          date.difference(event.finishTime).inDays.round();
           final difference_hour =
-              date.difference(event.finishTime).inHours.round();
+          date.difference(event.finishTime).inHours.round();
           final difference_minute =
-              date.difference(event.finishTime).inMinutes.round();
+          date.difference(event.finishTime).inMinutes.round();
           final difference_second =
-              date.difference(event.finishTime).inSeconds.round();
+          date.difference(event.finishTime).inSeconds.round();
 
           if (difference_day != 0) {
             return difference_day.abs().toString() + " روز مانده تا اتمام";
@@ -131,17 +126,17 @@ class _EventCardWidgetState extends State<EventCardWidget> {
         {
           return colorPallet5;
         }
-      // break;
+    // break;
 
       case "RUNNING":
         {
-          return Colors.cyan;
+          return Colors.green;
         }
-      // break;
+    // break;
 
       case "FINISHED":
         {
-          return colorPallet1;
+          return Colors.blueGrey;
         }
       // break;
 
@@ -163,13 +158,13 @@ class _EventCardWidgetState extends State<EventCardWidget> {
 
       case "RUNNING":
         {
-          return colorPallet2;
+          return Colors.green;
         }
       // break;
 
       case "FINISHED":
         {
-          return colorPallet1;
+          return Colors.blueGrey;
         }
       // break;
 
@@ -180,6 +175,8 @@ class _EventCardWidgetState extends State<EventCardWidget> {
       // break;
     }
   }
+
+  bool showStatus = false;
 
   @override
   Widget build(BuildContext context) {
@@ -283,10 +280,13 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                                               Container(
                                                 constraints: BoxConstraints(
                                                     maxWidth:
-                                                        context.width() * 0.45),
+                                                        context.width() * 0.38),
                                                 child: Text(
                                                   widget.event.title,
                                                   style: boldTextStyle(),
+                                                  maxLines: 2,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                 ).paddingOnly(
                                                     top: 15, right: 10),
                                               ),
@@ -321,19 +321,47 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                                               )
                                             ],
                                           ),
-                                          Tooltip(
-                                            message:
-                                                getStatus(widget.event, now),
-                                            child: Container(
-                                              height: 35,
-                                              width: 35,
-                                              decoration:
-                                                  boxDecorationWithRoundedCorners(
-                                                      boxShape: BoxShape.circle,
-                                                      backgroundColor: getColor(
-                                                          widget.event)),
-                                              child: Center(
-                                                  child: Icon(LineIcons.info)),
+                                          GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                showStatus = !showStatus;
+                                              });
+                                            },
+                                            child: AnimatedContainer(
+                                              duration:
+                                                  Duration(milliseconds: 500),
+                                              height: showStatus ? 35 : 28,
+                                              width: showStatus
+                                                  ? context.width() * 0.16
+                                                  : 30,
+                                              decoration: BoxDecoration(
+                                                  borderRadius: showStatus
+                                                      ? BorderRadius.circular(
+                                                          12)
+                                                      : BorderRadius.circular(
+                                                          18),
+                                                  color:
+                                                      getColor(widget.event)),
+                                              child: showStatus
+                                                  ? Center(
+                                                      child: FittedBox(
+                                                        fit: BoxFit.scaleDown,
+                                                        child: Text(
+                                                          getStatus(
+                                                              widget.event,
+                                                              now),
+                                                          style:
+                                                              secondaryTextStyle(
+                                                                  color: Colors
+                                                                      .white),
+                                                        ),
+                                                      ),
+                                                    ).paddingAll(3)
+                                                  : Center(
+                                                      child: Icon(
+                                                      LineIcons.info,
+                                                      size: 20,
+                                                    )),
                                             ).paddingTop(15),
                                           ),
                                         ],

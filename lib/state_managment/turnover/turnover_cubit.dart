@@ -29,4 +29,9 @@ class TurnoverCubit extends Cubit<TurnoverState> {
       emit(TurnoverError());
     }
   }
+
+  Future<bool> addMoneyToWallet(int x) async {
+    return turnoverRepository.turnoverNetworkService.addWallet(x);
+    return false;
+  }
 }

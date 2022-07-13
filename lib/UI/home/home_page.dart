@@ -47,9 +47,7 @@ class _HomePageState extends State<HomePage> {
                 child: Container(),
               ),
         backgroundColor: Colors.white,
-        body: ListView(
-          physics: NeverScrollableScrollPhysics(),
-          padding: const EdgeInsets.only(bottom: 100),
+        body: Column(
           // crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             // mToolbar(context, social_lbl_dashboard, social_ic_setting, onTap: () {
@@ -143,8 +141,9 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             // const SizedBox(height: 16),
-            if (selectedPos == 1) const NearestEventReservePage(),
-            if (selectedPos == 2) const OfferPage(),
+            if (selectedPos == 1)
+              Expanded(child: const NearestEventReservePage()),
+            if (selectedPos == 2) Expanded(child: const OfferPage()),
             // if (selectedPos == 3) SocialHomeCalls()
           ],
         ));

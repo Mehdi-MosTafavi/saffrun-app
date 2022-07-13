@@ -219,111 +219,134 @@ class _EventPageState extends State<EventPage> {
                                       endIndent: 100,
                                     ),
                                   ),
-                                  SizedBox(
-                                    height: context.height() * 0.065,
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            constraints: BoxConstraints(
+                                                maxWidth:
+                                                    context.width() * 0.5),
+                                            child: Text(
+                                              state.event.title,
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: boldTextStyle(
+                                                  color: colorPallet1,
+                                                  size: 20),
+                                            ),
+                                          ),
+                                          8.width,
+                                          if (state.event.discount != 0)
                                             Container(
-                                              constraints: BoxConstraints(
-                                                  maxWidth:
-                                                      context.width() * 0.51),
-                                              child: Text(
-                                                state.event.title,
-                                                maxLines: 3,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: boldTextStyle(
-                                                    color: colorPallet1,
-                                                    size: 20),
-                                              ),
-                                            ).fit(),
-                                            8.width,
-                                            if (state.event.discount != 0)
-                                              FractionallySizedBox(
-                                                heightFactor: 0.7,
-                                                child: Container(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(horizontal: 5),
-                                                  decoration:
-                                                      boxDecorationWithRoundedCorners(
-                                                          backgroundColor:
-                                                              colorPallet5,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      12)),
-                                                  child: Center(
-                                                    child: Text(
-                                                      "${state.event.discount}%",
-                                                      style: primaryTextStyle(
-                                                        color: Colors.white,
-                                                      ),
-                                                    ),
+                                              height: 40,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 5),
+                                              decoration:
+                                                  boxDecorationWithRoundedCorners(
+                                                      backgroundColor:
+                                                          colorPallet5,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12)),
+                                              child: Center(
+                                                child: Text(
+                                                  "${state.event.discount}%",
+                                                  style: primaryTextStyle(
+                                                    color: Colors.white,
                                                   ),
                                                 ),
                                               ),
-                                          ],
-                                        ),
-                                        15.width,
-                                        GestureDetector(
-                                          onTap: () {
-                                            pushNewScreen(
-                                              context,
-                                              screen: AdminPage(
-                                                adminId: event.ownerId,
-                                              ),
-                                              withNavBar: false,
-                                              // OPTIONAL VALUE. True by default.
+                                            ),
+                                        ],
+                                      ),
+                                      15.width,
+                                      GestureDetector(
+                                        onTap: () {
+                                          pushNewScreen(
+                                            context,
+                                            screen: AdminPage(
+                                              adminId: event.ownerId,
+                                            ),
+                                            withNavBar: false,
+                                            // OPTIONAL VALUE. True by default.
 
-                                              pageTransitionAnimation:
-                                                  PageTransitionAnimation
-                                                      .cupertino,
-                                            );
-                                          },
-                                          child: Container(
-                                            constraints: BoxConstraints(
-                                                maxWidth:
-                                                    context.width() * 0.25),
-                                            child: Text(
-                                              state.event.ownerName,
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: boldTextStyle(
-                                                color: colorPallet5,
-                                              ),
+                                            pageTransitionAnimation:
+                                                PageTransitionAnimation
+                                                    .cupertino,
+                                          );
+                                        },
+                                        child: Container(
+                                          constraints: BoxConstraints(
+                                              maxWidth: context.width() * 0.25),
+                                          child: Text(
+                                            state.event.ownerName,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: boldTextStyle(
+                                              color: colorPallet5,
                                             ),
                                           ),
                                         ),
-                                      ],
-                                    ).paddingLeft(10),
-                                  ),
-                                  10.height,
-                                  Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.category_outlined,
-                                        color: colorPallet2,
                                       ),
-                                      Container(
-                                        child: Text(
-                                          state.event.category,
-                                          style: primaryTextStyle(
-                                              color: colorPallet2, size: 18),
-                                        ),
+                                    ],
+                                  ).paddingLeft(10),
+                                  16.height,
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.category_outlined,
+                                            color: colorPallet2,
+                                          ),
+                                          Container(
+                                            child: Text(
+                                              state.event.category,
+                                              style: primaryTextStyle(
+                                                  color: colorPallet2,
+                                                  size: 18),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      30.width,
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          const Icon(
+                                            Icons.supervised_user_circle_sharp,
+                                            color: colorPallet3,
+                                          ),
+                                          Container(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 5),
+                                            child: Text(
+                                              state.event.participantCount
+                                                  .toString(),
+                                              style: boldTextStyle(
+                                                color: colorPallet3,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
-                                  const SizedBox(
-                                    height: 20.0,
-                                    width: 20.0,
-                                  ),
+                                  20.height,
                                   SizedBox(
                                     height: context.height() * 0.092,
                                     child: Row(
@@ -337,6 +360,8 @@ class _EventPageState extends State<EventPage> {
                                           color: colorPallet5,
                                           child: Column(
                                             // alignment: WrapAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             textDirection: TextDirection.rtl,
                                             children: [
                                               Row(
@@ -359,9 +384,9 @@ class _EventPageState extends State<EventPage> {
                                                   horizontal: 10, vertical: 3),
                                               Row(
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                CrossAxisAlignment.start,
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.start,
+                                                MainAxisAlignment.start,
                                                 children: [
                                                   Text(
                                                     'تاریخ پایان: ',
@@ -377,31 +402,7 @@ class _EventPageState extends State<EventPage> {
                                                   horizontal: 10, vertical: 3),
                                             ],
                                           ),
-                                        ),
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            const Icon(
-                                              Icons
-                                                  .supervised_user_circle_sharp,
-                                              color: colorPallet3,
-                                            ),
-                                            Container(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 5),
-                                              child: Text(
-                                                state.event.participantCount
-                                                    .toString(),
-                                                style: primaryTextStyle(
-                                                  color: colorPallet3,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                        ).paddingLeft(4),
                                       ],
                                     ),
                                   ),

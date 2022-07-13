@@ -25,6 +25,7 @@ class FilterButtonWidget extends StatefulWidget {
 class _FilterButtonWidgetState extends State<FilterButtonWidget> {
   @override
   Widget build(BuildContext context) {
+    category = -1;
     return BlocBuilder<SearchCubit, SearchState>(
       builder: (context, state) {
         return InkWell(
@@ -78,12 +79,16 @@ class _FilterButtonWidgetState extends State<FilterButtonWidget> {
                                       widget.confirmFilter();
                                       finish(context);
                                     },
+                                    hoverColor: Colors.white,
+                                    highlightColor: Colors.white,
+                                    focusColor: Colors.white,
+                                    focusElevation: 0.5,
                                     child: Container(
                                       height: 50,
                                       width: 100,
                                       decoration:
-                                      boxDecorationWithRoundedCorners(
-                                          backgroundColor: colorPallet3),
+                                          boxDecorationWithRoundedCorners(
+                                              backgroundColor: colorPallet3),
                                       child: Center(
                                         child: Text(
                                           'تایید',

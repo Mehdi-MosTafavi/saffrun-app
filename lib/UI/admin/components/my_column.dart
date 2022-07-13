@@ -16,8 +16,8 @@ class MyColumn extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: context.width() * 0.09,
-          padding: const EdgeInsets.all(12),
+          width: context.width() * 0.095,
+          padding: const EdgeInsets.all(9),
           decoration:
               const BoxDecoration(shape: BoxShape.circle, color: colorPallet3),
           child: Center(
@@ -29,6 +29,7 @@ class MyColumn extends StatelessWidget {
             ),
           ),
         ),
+        2.height,
         Center(
           child: Text(
             second_text,

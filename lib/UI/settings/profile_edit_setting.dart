@@ -343,7 +343,7 @@ class _ProfileSettingEditPageState extends State<ProfileSettingEditPage> {
                                             ),
                                           ],
                                         ),
-                                        5.height,
+                                        12.height,
                                         Row(
                                           children: [
                                             Text('جنسیت : ',

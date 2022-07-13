@@ -46,7 +46,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  recoverPassword(String userName) async {
+  Future<bool> recoverPassword(String userName) async {
     emit(AuthSendingToServerState());
     try {
       bool status = await authRepository.authNetworkService

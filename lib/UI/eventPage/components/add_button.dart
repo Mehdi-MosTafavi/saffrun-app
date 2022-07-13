@@ -51,6 +51,10 @@ void showDialogForParticipantEvent(
                           onPressed: () {
                             confirmFunction();
                           },
+                          hoverColor: Colors.white,
+                          highlightColor: Colors.white,
+                          focusColor: Colors.white,
+                          focusElevation: 0.5,
                           child: Container(
                             height: 50,
                             width: 100,
@@ -68,6 +72,10 @@ void showDialogForParticipantEvent(
                           onPressed: () {
                             Navigator.pop(context);
                           },
+                          hoverColor: Colors.white,
+                          highlightColor: Colors.white,
+                          focusColor: Colors.white,
+                          focusElevation: 0.5,
                           child: Container(
                             height: 50,
                             width: 100,

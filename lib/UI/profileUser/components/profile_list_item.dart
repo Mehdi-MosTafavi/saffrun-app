@@ -39,7 +39,7 @@ class ProfileListItem extends StatelessWidget {
       decoration: BoxDecoration(
           // borderRadius: BorderRadius.circular(30),
           ),
-      child: InkWell(
+      child: GestureDetector(
         onTap: () {
           onTapRow();
         },
@@ -73,6 +73,7 @@ class ProfileListItem extends StatelessWidget {
                       // setState(() {
                       //   _volume += 10;
                       // });
+                      onTapRow();
                     },
                   ),
               ],

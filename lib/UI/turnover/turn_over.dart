@@ -6,19 +6,10 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:nb_utils/src/extensions/context_extensions.dart';
 import 'package:saffrun_app/UI/utils/appbar/appbar_type1.dart';
 import 'package:saffrun_app/constants/theme_color.dart';
-// import 'package:nb_utils/nb_utils.dart';
-// import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-// import 'package:saffrun_app/UI/history/components/event_card.dart';
-// import 'package:saffrun_app/UI/commentPage/commentpage.dart';
-// import 'package:saffrun_app/UI/eventPage/components/add_button.dart';
-// import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/models/turnover/turnover_card_model.dart';
 import 'package:saffrun_app/models/user/user_2.dart';
 import 'package:saffrun_app/state_managment/turnover/turnover_cubit.dart';
-// import 'package:saffrun_app/models/history/reserve_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-
-// import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 import '../utils/circular_progressbar_component.dart';
 import '../utils/numeral/Numeral.dart';
@@ -144,6 +135,8 @@ class _TurnOverState extends State<TurnOver> {
     'آذر'
   ];
 
+  bool showLoading = false;
+
   @override
   void initState() {
     _chartData = getChartData();
@@ -181,36 +174,51 @@ class _TurnOverState extends State<TurnOver> {
                       height: context.height() * 0.4,
                       child: TopCard(),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        showDialogForPaymentAdd(context, (int x) {
-                          print(x);
-                          UserProfile.userLogin.wallet += x;
-                          finish(context);
-                        });
+                    BlocBuilder<TurnoverCubit, TurnoverState>(
+                      builder: (context, state) {
+                        return GestureDetector(
+                          onTap: () {
+                            showDialogForPaymentAdd(context, (int x) async {
+                              print(x);
+                              setState(() {
+                                showLoading = true;
+                              });
+                              bool status =
+                                  await BlocProvider.of<TurnoverCubit>(context)
+                                      .addMoneyToWallet(x);
+                              setState(() {
+                                showLoading = false;
+                              });
+                              if (status) {
+                                UserProfile.userLogin.wallet += x;
+                                finish(context);
+                              }
+                            });
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                padding: EdgeInsets.only(top: 8, bottom: 8),
+                                decoration: boxDecorationWithRoundedCorners(
+                                    backgroundColor: colorPallet2,
+                                    borderRadius: BorderRadius.circular(8)),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.payment,
+                                        color: Colors.white, size: 24),
+                                    10.width,
+                                    Text('شارژ کیف پول',
+                                        style: primaryTextStyle(
+                                            size: 16, color: Colors.white)),
+                                  ],
+                                ),
+                              ).expand(),
+                            ],
+                          ).paddingAll(16),
+                        );
                       },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.only(top: 8, bottom: 8),
-                            decoration: boxDecorationWithRoundedCorners(
-                                backgroundColor: colorPallet2,
-                                borderRadius: BorderRadius.circular(8)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.payment,
-                                    color: Colors.white, size: 24),
-                                10.width,
-                                Text('شارژ کیف پول',
-                                    style: primaryTextStyle(
-                                        size: 16, color: Colors.white)),
-                              ],
-                            ),
-                          ).expand(),
-                        ],
-                      ).paddingAll(16),
                     )
                   ],
                 ),
@@ -251,9 +259,13 @@ class _TurnOverState extends State<TurnOver> {
                                         )
                                       ],
                                     ),
-                                    Text(
-                                      '${Numeral(state.eventPayment)} ت ',
-                                      style: boldTextStyle(),
+                                    FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Text(
+                                        '${Numeral(state.eventPayment)} ت ',
+                                        style: boldTextStyle(),
+                                        maxLines: 1,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -277,9 +289,13 @@ class _TurnOverState extends State<TurnOver> {
                                         )
                                       ],
                                     ),
-                                    Text(
-                                      '${Numeral(state.reservePayment)} ت ',
-                                      style: boldTextStyle(),
+                                    FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Text(
+                                        '${Numeral(state.reservePayment)} ت ',
+                                        style: boldTextStyle(),
+                                        maxLines: 1,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -305,11 +321,14 @@ class _TurnOverState extends State<TurnOver> {
                                           6.width,
                                         ],
                                       ),
-                                      Text(
-                                        '${Numeral(state.totalPayment)} ت ',
-                                        style:
-                                            boldTextStyle(color: Colors.white),
-                                        maxLines: 1,
+                                      FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Text(
+                                          '${Numeral(state.totalPayment)} ت ',
+                                          style: boldTextStyle(
+                                              color: Colors.white),
+                                          maxLines: 1,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -323,8 +342,9 @@ class _TurnOverState extends State<TurnOver> {
                           // Enable tooltip
                           primaryXAxis: CategoryAxis(
                               labelStyle: TextStyle(fontFamily: 'Dana')),
-                          primaryYAxis: CategoryAxis(
+                          primaryYAxis: NumericAxis(
                               labelStyle: TextStyle(fontFamily: 'Dana')),
+
                           tooltipBehavior: _tooltipBehavior,
                           series: <LineSeries<SalesData, String>>[
                             LineSeries<SalesData, String>(

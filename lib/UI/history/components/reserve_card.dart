@@ -1,7 +1,5 @@
 // import 'dart:async';
 
-import 'dart:async';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -39,20 +37,15 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
   final String item = 'assets/images/mafia1.jpg';
   DateTime now = DateTime.now();
   late final Reserve reserve;
-  late Timer everySecond;
 
   @override
   void initState() {
     super.initState();
     reserve = widget.reserve;
-    everySecond = Timer.periodic(const Duration(seconds: 1), (Timer t) {
-      setState(() {});
-    });
   }
 
   @override
   void dispose() {
-    everySecond.cancel();
     super.dispose();
   }
 
@@ -63,15 +56,16 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
     switch (reserve.status) {
       case "NOT STARTED":
         {
+          return 'شروع نشده';
           final date = DateTime.now();
           final difference_day =
-              date.difference(reserve.targetStartReserve).inDays.round();
+          date.difference(reserve.targetStartReserve).inDays.round();
           final difference_hour =
-              date.difference(reserve.targetStartReserve).inHours.round();
+          date.difference(reserve.targetStartReserve).inHours.round();
           final difference_minute =
-              date.difference(reserve.targetStartReserve).inMinutes.round();
+          date.difference(reserve.targetStartReserve).inMinutes.round();
           final difference_second =
-              date.difference(reserve.targetStartReserve).inSeconds.round();
+          date.difference(reserve.targetStartReserve).inSeconds.round();
           if (difference_day != 0) {
             return difference_day.abs().toString() + " روز مانده تا شروع ";
             // return (difference_hour - difference_day * 24 - hours).toString() + ":" +
@@ -94,15 +88,16 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
 
       case "RUNNING":
         {
+          return 'در حال برگزاری';
           final date = DateTime.now();
           final difference_day =
-              date.difference(reserve.targetEndReserve).inDays.round();
+          date.difference(reserve.targetEndReserve).inDays.round();
           final difference_hour =
-              date.difference(reserve.targetEndReserve).inHours.round();
+          date.difference(reserve.targetEndReserve).inHours.round();
           final difference_minute =
-              date.difference(reserve.targetEndReserve).inMinutes.round();
+          date.difference(reserve.targetEndReserve).inMinutes.round();
           final difference_second =
-              date.difference(reserve.targetEndReserve).inSeconds.round();
+          date.difference(reserve.targetEndReserve).inSeconds.round();
 
           if (difference_day > 0) {
             return difference_day.toString() + " روز";
@@ -141,13 +136,13 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
 
       case "RUNNING":
         {
-          return Colors.cyan;
+          return Colors.green;
         }
     // break;
 
       case "FINISHED":
         {
-          return colorPallet1;
+          return Colors.blueGrey;
         }
     // break;
 
@@ -183,7 +178,7 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
         {
           return colorPallet6;
         }
-    // break;
+      // break;
     }
   }
 
@@ -192,6 +187,7 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
   //       var a=0;
   //   });
   // }
+  bool showStatus = false;
 
   @override
   Widget build(BuildContext context) {
@@ -321,19 +317,47 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
                                               )
                                             ],
                                           ).paddingRight(6),
-                                          Tooltip(
-                                            message:
-                                                getStatus(widget.reserve, now),
-                                            child: Container(
-                                              height: 35,
-                                              width: 35,
-                                              decoration:
-                                                  boxDecorationWithRoundedCorners(
-                                                      boxShape: BoxShape.circle,
-                                                      backgroundColor: getColor(
-                                                          widget.reserve)),
-                                              child: Center(
-                                                  child: Icon(LineIcons.info)),
+                                          GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                showStatus = !showStatus;
+                                              });
+                                            },
+                                            child: AnimatedContainer(
+                                              duration:
+                                                  Duration(milliseconds: 500),
+                                              height: showStatus ? 35 : 28,
+                                              width: showStatus
+                                                  ? context.width() * 0.16
+                                                  : 30,
+                                              decoration: BoxDecoration(
+                                                  borderRadius: showStatus
+                                                      ? BorderRadius.circular(
+                                                          12)
+                                                      : BorderRadius.circular(
+                                                          18),
+                                                  color:
+                                                      getColor(widget.reserve)),
+                                              child: showStatus
+                                                  ? Center(
+                                                      child: FittedBox(
+                                                        fit: BoxFit.scaleDown,
+                                                        child: Text(
+                                                          getStatus(
+                                                              widget.reserve,
+                                                              now),
+                                                          style:
+                                                              secondaryTextStyle(
+                                                                  color: Colors
+                                                                      .white),
+                                                        ),
+                                                      ),
+                                                    ).paddingAll(3)
+                                                  : Center(
+                                                      child: Icon(
+                                                      LineIcons.info,
+                                                      size: 20,
+                                                    )),
                                             ).paddingTop(15),
                                           ),
                                         ],
@@ -380,7 +404,7 @@ class _ReserveCardWidgetState extends State<ReserveCardWidget> {
                                                 maxLines: 2),
                                           ],
                                         ),
-                                      ).paddingRight(6),
+                                      ).paddingRight(8),
                                       10.height,
                                     ],
                                   ),

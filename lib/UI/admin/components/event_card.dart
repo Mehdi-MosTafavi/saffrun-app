@@ -8,12 +8,6 @@ import 'package:saffrun_app/constants/theme_color.dart';
 import 'package:saffrun_app/logical/general/size_function.dart';
 import 'package:saffrun_app/models/event/event_model.dart';
 
-final List<String> imgList2 = [
-  'assets/images/mafia1.jpg',
-  'assets/images/mafia1.jpg',
-  'assets/images/mafia1.jpg',
-  'assets/images/mafia1.jpg'
-];
 
 class EventCardWidget extends StatelessWidget {
   EventCardWidget({
@@ -30,7 +24,7 @@ class EventCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: context.width() * 0.51,
+      width: context.width() * 0.48,
       margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
       decoration: BoxDecoration(
           boxShadow: defaultBoxShadow(),
@@ -132,7 +126,7 @@ class EventCardWidget extends StatelessWidget {
                                     children: [
                                       Container(
                                         constraints: BoxConstraints(
-                                            maxWidth: context.width() * 0.22),
+                                            maxWidth: context.width() * 0.4),
                                         child: Text(
                                           event.title,
                                           style: boldTextStyle(
@@ -141,17 +135,17 @@ class EventCardWidget extends StatelessWidget {
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
-                                      Container(
-                                        constraints: BoxConstraints(
-                                            maxWidth: context.width() * 0.18),
-                                        child: Text(event.ownerName,
-                                            style: boldTextStyle(
-                                                // weight: FontWeight.w500,
-                                                size: 13,
-                                                color: colorPallet5),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis),
-                                      ),
+                                      // Container(
+                                      //   constraints: BoxConstraints(
+                                      //       maxWidth: context.width() * 0.18),
+                                      //   child: Text(event.ownerName,
+                                      //       style: boldTextStyle(
+                                      //           // weight: FontWeight.w500,
+                                      //           size: 13,
+                                      //           color: colorPallet5),
+                                      //       maxLines: 1,
+                                      //       overflow: TextOverflow.ellipsis),
+                                      // ),
                                     ],
                                   ),
                                   5.height,

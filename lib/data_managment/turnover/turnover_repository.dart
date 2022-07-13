@@ -1,4 +1,5 @@
 import 'package:saffrun_app/data_managment/turnover/turnover_networkservice.dart';
+import 'package:saffrun_app/models/user/user_2.dart';
 
 import '../../models/payment/payment.dart';
 
@@ -14,6 +15,9 @@ class TurnoverRepository {
       dynamic result =
           await turnoverNetworkService.getTurnoverFromNetworkService();
       print(result);
+      try {
+        UserProfile.userLogin.wallet = result['wallet'];
+      } catch (e) {}
       Map<String, dynamic> resultMap = {
         'event_payment': result['event_payment'],
         'reserve_payment': result['reserve_payment'],

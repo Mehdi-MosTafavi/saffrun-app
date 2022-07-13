@@ -194,74 +194,114 @@ class TurnoverCardWidget extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Hero(
-                                tag: turnover_card.id,
-                                child: CachedNetworkImage(
-                                  imageBuilder: (context, imageProvider) {
-                                    return Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.only(
-                                              bottomLeft: Radius.circular(8)),
-                                          image: DecorationImage(
-                                              fit: BoxFit.contain,
-                                              image: imageProvider)),
-                                    );
-                                  },
-                                  placeholder: (context, strImage) {
-                                    return Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                            bottomLeft: Radius.circular(5)),
-                                        color: Colors.grey,
-                                        border: Border.all(
-                                          color: Colors.white,
-                                          width: 2.0,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  imageUrl: turnover_card.event == null
-                                      ? getImageUrlUsers(
-                                          turnover_card.reserve!.adminImage)
-                                      : getImageUrlUsers(
-                                          turnover_card.event!.imageUrls[0]),
-                                  fit: BoxFit.fill,
-                                  height: context.height() * 0.15,
-                                  width: context.width() * 0.3,
-                                ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Hero(
+                                    tag: turnover_card.id,
+                                    child: CachedNetworkImage(
+                                      imageBuilder: (context, imageProvider) {
+                                        return Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.only(
+                                                  bottomLeft:
+                                                      Radius.circular(8)),
+                                              image: DecorationImage(
+                                                  fit: BoxFit.contain,
+                                                  image: imageProvider)),
+                                        );
+                                      },
+                                      placeholder: (context, strImage) {
+                                        return Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                                bottomLeft: Radius.circular(5)),
+                                            color: Colors.grey,
+                                            border: Border.all(
+                                              color: Colors.white,
+                                              width: 2.0,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      imageUrl: turnover_card.event == null
+                                          ? getImageUrlUsers(
+                                              turnover_card.reserve!.adminImage)
+                                          : getImageUrlUsers(turnover_card
+                                              .event!.imageUrls[0]),
+                                      fit: BoxFit.fill,
+                                      height: context.height() * 0.15,
+                                      width: context.width() * 0.3,
+                                    ),
+                                  ),
+                                  // SizedBox(
+                                  //   width: context.width() * 0.05,
+                                  // ),
+                                ],
                               ),
-                              // SizedBox(
-                              //   width: context.width() * 0.05,
-                              // ),
-
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  right: 8,
-                                  top: 8,
-                                ),
+                              Expanded(
                                 child: Column(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    Container(
-                                      constraints: BoxConstraints(
-                                          maxWidth: context.width() * 0.35),
-                                      child: Text(
-                                        turnover_card.event == null
-                                            ? turnover_card.reserve!.adminName
-                                            : turnover_card.event!.title,
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        style:
-                                            boldTextStyle(color: colorPallet3),
-                                      ),
-                                    ),
-                                    4.height,
-                                    Text(
-                                      turnover_card.type,
-                                      style: boldTextStyle(
-                                          color: Colors.blueGrey, size: 13),
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                            right: 8,
+                                            top: 8,
+                                          ),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                constraints: BoxConstraints(
+                                                    maxWidth:
+                                                        context.width() * 0.35),
+                                                child: Text(
+                                                  turnover_card.event == null
+                                                      ? turnover_card
+                                                          .reserve!.adminName
+                                                      : turnover_card
+                                                          .event!.title,
+                                                  maxLines: 2,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: boldTextStyle(
+                                                      color: colorPallet3),
+                                                ),
+                                              ),
+                                              4.height,
+                                              Text(
+                                                turnover_card.type,
+                                                style: boldTextStyle(
+                                                    color: Colors.blueGrey,
+                                                    size: 13),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            3.height,
+                                            Text(
+                                              getDateForm(turnover_card.date),
+                                            ).paddingOnly(left: 5, top: 5),
+                                            5.height,
+                                          ],
+                                        ).paddingOnly(left: 5, top: 5),
+                                      ],
                                     ),
                                     6.height,
                                     Row(
@@ -279,22 +319,10 @@ class TurnoverCardWidget extends StatelessWidget {
                                               color: colorPallet2),
                                         ),
                                       ],
-                                    )
+                                    ).paddingRight(6)
                                   ],
                                 ),
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  3.height,
-                                  Text(
-                                    getDateForm(turnover_card.date),
-                                  ).paddingOnly(left: 5, top: 5),
-                                  5.height,
-                                ],
-                              ).paddingOnly(left: 5, top: 5),
                             ],
                           ),
                         ),

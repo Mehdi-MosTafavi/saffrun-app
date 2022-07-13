@@ -30,10 +30,16 @@ class BaseNetworkService {
       http.Response response = await http.post(Uri.parse(urlServer + url),
           headers: header, body: _body);
       print(response.body);
+      print(response.request?.url);
+      print(response.statusCode);
       if (response.statusCode == 200 || response.statusCode == 201) {
-        String body = convert.utf8.decode(response.bodyBytes);
-        var _jsonResponse = convert.jsonDecode(body);
-        return _jsonResponse;
+        try {
+          String body = convert.utf8.decode(response.bodyBytes);
+          var _jsonResponse = convert.jsonDecode(body);
+          return _jsonResponse;
+        } catch (e) {
+          return '200';
+        }
       }
     } catch (e) {
       rethrow;

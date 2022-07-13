@@ -191,26 +191,29 @@ class ListViewForCardSearch extends StatelessWidget {
                         return EventCardWidget(event: event);
                       },
                     ),
-              20.height,
+              7.height,
+              const Divider(
+                color: Color(0xffEFF0F6),
+                thickness: 5,
+              ).paddingSymmetric(horizontal: 12),
+              7.height,
+              Column(
+                children: [
+                  Text(
+                    'کارفرماها',
+                    style: boldTextStyle(),
+                  ).paddingBottom(15)
+                ],
+              ),
               state.admins.length == 0
                   ? Center(child: Text("هیچ کارفرمایی یافت نشد")).paddingTop(30)
                   : ListView.builder(
                       physics: ClampingScrollPhysics(),
                       shrinkWrap: true,
                       controller: controller,
-                      itemCount: state.admins.length + 1,
+                      itemCount: state.admins.length,
                       itemBuilder: (context, i) {
-                        if (i == 0) {
-                          return Column(
-                            children: [
-                              Text(
-                                'کارفرماها',
-                                style: boldTextStyle(),
-                              ).paddingBottom(15)
-                            ],
-                          );
-                        }
-                        int index = i - 1;
+                        int index = i;
                         Admin admin = state.admins[index];
                         return GestureDetector(
                           onTap: () {
@@ -319,7 +322,7 @@ class ListViewForCardSearch extends StatelessWidget {
                           ),
                         );
                       },
-              ),
+                    ),
             ],
           );
         }

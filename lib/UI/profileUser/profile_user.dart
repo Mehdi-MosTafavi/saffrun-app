@@ -47,19 +47,19 @@ class _ProfileUserPageState extends State<ProfileUserPage> {
               child: buildProfileImage(profileHeight),
             ),
             Positioned(
-              left: 40,
+              left: context.width() * 0.072,
               bottom: 10,
               child: Container(
-                width: context.width() * 0.4,
+                width: context.width() * 0.42,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      width: context.width() * 0.4,
+                      width: context.width() * 0.42,
                       child: Row(
                         children: [
                           SizedBox(
-                            width: context.width() * 0.4,
+                            width: context.width() * 0.42,
                             child: Text(
                               UserProfile.userLogin.getFullName(),
                               style:
@@ -189,10 +189,9 @@ class _ProfileListItemsState extends State<ProfileListItems> {
           },
         ),
         15.height,
-        Divider(
-          height: 5,
-          color: Colors.black.withOpacity(0.1),
-          thickness: 1,
+        const Divider(
+          color: Color(0xffEFF0F6),
+          thickness: 4,
         ),
         15.height,
         ProfileListItem(
@@ -208,10 +207,9 @@ class _ProfileListItemsState extends State<ProfileListItems> {
           },
         ),
         15.height,
-        Divider(
-          height: 5,
-          color: Colors.black.withOpacity(0.1),
-          thickness: 1,
+        const Divider(
+          color: Color(0xffEFF0F6),
+          thickness: 4,
         ),
         15.height,
         ProfileListItem(
@@ -227,10 +225,9 @@ class _ProfileListItemsState extends State<ProfileListItems> {
           },
         ),
         15.height,
-        Divider(
-          height: 10,
-          color: Colors.black.withOpacity(0.1),
-          thickness: 1,
+        const Divider(
+          color: Color(0xffEFF0F6),
+          thickness: 4,
         ),
         15.height,
         ProfileListItem(
@@ -240,8 +237,8 @@ class _ProfileListItemsState extends State<ProfileListItems> {
           onTapRow: () {
             showMessage(context, 'خروج', 'آیا از خروج از برنامه اطمینان دارد؟',
                 functionRun: () async {
-                  final _prefs = await SharedPreferences.getInstance();
-                  await _prefs.clear();
+              final _prefs = await SharedPreferences.getInstance();
+              await _prefs.clear();
                   print('1');
                   Phoenix.rebirth(context);
                 });

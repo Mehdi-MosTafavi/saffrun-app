@@ -38,7 +38,7 @@ class _NearestEventReservePageState extends State<NearestEventReservePage> {
                 decoration: const BoxDecoration(
                     // color: Colors.red
                     ),
-                child: Column(
+                child: ListView(
                   children: [
                     24.height,
                     Align(

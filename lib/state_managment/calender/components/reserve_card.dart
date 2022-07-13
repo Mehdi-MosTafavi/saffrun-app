@@ -18,6 +18,13 @@ class ReserveCard extends StatelessWidget {
     return date.minute.toString() + ' : ' + date.hour.toString();
   }
 
+  String getTimeReserve(DateTime time) {
+    var minute = '0' + time.minute.toString();
+    return time.hour.toString() +
+        ':' +
+        (minute).substring(minute.length - 2, minute.length);
+  }
+
   @override
   Widget build(BuildContext context) {
     Jalali startDateJalali = Jalali.fromDateTime(reserve.targetStartReserve);
@@ -110,11 +117,11 @@ class ReserveCard extends StatelessWidget {
                                         child: FittedBox(
                                           fit: BoxFit.scaleDown,
                                           child: Text(
-                                              getStringFormatJalali(
-                                                  endDateJalali) +
+                                              getTimeReserve(endDateJalali
+                                                      .toDateTime()) +
                                                   ' - ' +
-                                                  getStringFormatJalali(
-                                                      startDateJalali),
+                                                  getTimeReserve(startDateJalali
+                                                      .toDateTime()),
                                               style: primaryTextStyle(
                                                   color: Colors.blueGrey),
                                               maxLines: 2),
